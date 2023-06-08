@@ -25,7 +25,4 @@
     <ItemGroup>
         <None Include="..\..\images\nox.png" Pack="true" PackagePath="" />
     </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="JsonSchema.Net.Generation" Version="3.3.0" />
-    </ItemGroup>
 </Project>

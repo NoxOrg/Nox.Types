@@ -1,9 +1,6 @@
-﻿using Json.Schema.Generation;
-
-namespace Nox
+﻿namespace Nox
 {
-    [AdditionalProperties(false)]
-    public class NoxComplexTypeDefinition : NoxSimpleTypeDefinition
+    public class NoxComplexType : NoxSimpleType
     {
         public ObjectTypeOptions? ObjectTypeOptions { get; internal set; }
         public ArrayTypeOptions? CollectionTypeOptions { get; internal set; }

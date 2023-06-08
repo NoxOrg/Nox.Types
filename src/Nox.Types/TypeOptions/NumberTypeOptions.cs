@@ -1,9 +1,5 @@
-﻿using Json.Schema.Generation;
-
-namespace Nox
+﻿namespace Nox
 {
-
-    [AdditionalProperties(false)]
     public class NumberTypeOptions
     {
         public int DecimalDigits { get; internal set; } = 0;

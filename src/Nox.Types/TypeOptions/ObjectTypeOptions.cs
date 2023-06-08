@@ -1,11 +1,9 @@
-﻿using Json.Schema.Generation;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Nox
 {
     public class ObjectTypeOptions 
     {
-        [Required]
-        public List<NoxSimpleTypeDefinition>? Attributes { get; internal set; }
+        public virtual List<NoxSimpleType>? Attributes { get; internal set; }
     }
 }

@@ -1,18 +1,12 @@
-﻿using Json.Schema.Generation;
-
-namespace Nox
+﻿namespace Nox
 {
-    [AdditionalProperties(false)]
-    public class NoxSimpleTypeDefinition
+    public class NoxSimpleType
     {
-        [Required]
-        [Pattern(@"^[^\s]*$")]
-        public string Name { get; internal set; } = string.Empty;
+        public virtual string Name { get; internal set; } = string.Empty;
         
         public string? Description { get; internal set; }
 
-        [Required]
-        public NoxType? Type { get; internal set; }
+        public virtual NoxType? Type { get; internal set; }
 
         #region TypeOptions
 

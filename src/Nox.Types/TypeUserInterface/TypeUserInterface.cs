@@ -1,9 +1,5 @@
-﻿using Json.Schema.Generation;
-
-namespace Nox
+﻿namespace Nox
 {
-
-    [AdditionalProperties(false)]
     public class TypeUserInterface
     {
         public string? Label { get; internal set; }
