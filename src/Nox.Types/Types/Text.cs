@@ -8,48 +8,8 @@ namespace Nox.Types;
 /// <summary>
 /// Represents a Nox <see cref="Text"/> type and value object. 
 /// </summary>
-public class Text : ValueObject, INoxType
+public class Text : ValueObject<string>, INoxType
 {
-    /// <summary>
-    /// The string value of the <see cref="Text"/> object.
-    /// </summary>
-    public string Value => _value;
-    private readonly string _value;
-
-    /// <summary>
-    /// Whether the text object may contain Unicode characters or Ascii characters only.
-    /// </summary>
-    public bool IsUnicode => _isUnicode;
-    private readonly bool _isUnicode;
-
-    /// <summary>
-    /// The minimum length allowed for the <see cref="Text"/> object.
-    /// </summary>
-    public int MinLength => _minLength;
-    private readonly int _minLength;
-
-    /// <summary>
-    /// The maximum length allowed for the <see cref="Text"/> object.
-    /// </summary>
-    public int MaxLength => _maxLength;
-    private readonly int _maxLength;
-
-    /// <summary>
-    /// The casing allowed by the <see cref="Text"/> object. This is automatically applied during construction.
-    /// </summary>
-    public TextTypeCasing Casing => _casing;
-    private readonly TextTypeCasing _casing;
-
-    /// <summary>
-    /// Whether the <see cref="Text"/> object typically contains multiline text or not.
-    /// </summary>
-    public bool IsMultiLine => _isMultiLine;
-    private readonly bool _isMultiLine;
-
-    /// <summary>
-    /// The default .Net <see cref="Type"/> to store the <see cref="Value"/> of the <see cref="Text"/> type.
-    /// </summary>
-    public Type DotNetType() => typeof(string);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Text"/> class.
@@ -67,7 +27,7 @@ public class Text : ValueObject, INoxType
         int minLength = 0,
         int maxLength = 511,
         TextTypeCasing casing = TextTypeCasing.Normal,
-        bool isMultiLine = false)
+        bool isMultiLine = false) : base(value)
     {
 
         if (!isUnicode && value.Any(c => c > 255))
@@ -93,18 +53,13 @@ public class Text : ValueObject, INoxType
             _ => throw new NotImplementedException(),
         };
 
-        _isUnicode = isUnicode;
-        _minLength = minLength;   
-        _maxLength = maxLength;
-        _casing = casing;
-        _isMultiLine = isMultiLine;
     }
 
     /// <summary>
     /// Gets the value property of the text class for equality comparison.
     /// </summary>
-    /// <returns>An <see cref="IEnumerable{object}"/> containing the <see cref="Text"/> object's <see cref="Value"/> property.</returns>
-    protected override IEnumerable<object> GetEqualityComponents()
+    /// <returns>An <see cref="IEnumerable{string}"/> containing the <see cref="Text"/> object's <see cref="Value"/> property.</returns>
+    protected override IEnumerable<string> GetEqualityComponents()
     {
         yield return _value;
     }

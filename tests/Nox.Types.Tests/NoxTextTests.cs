@@ -1,4 +1,6 @@
-﻿namespace Nox.Types.Tests;
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace Nox.Types.Tests;
 
 public class NoxTextTests
 {
@@ -15,13 +17,25 @@ public class NoxTextTests
     }
 
     [Fact]
+    public void Nox_Text_Constructor_SpecifyingNonUnicode_WithNonUnicodeCharacterInput_ReturnsSameValue()
+
+    {
+        var testString = "It's a test designed to provoke an emotional response - Holden";
+
+        var text = new Text(testString, isUnicode: false);
+
+        Assert.Equal(testString, text.Value);
+
+    }
+
+    [Fact]
     public void Nox_Text_Constructor_SpecifyingNonUnicode_WithUnicodeCharacterInput_ThrowsException()
 
     {
         var testString = "二兎を追う者は一兎をも得ず。"; // English translation: “Those who chase two hares won’t even catch one.”
 
-        Assert.Throws<ArgumentException>( () => _ = 
-            new Text(testString, isUnicode: false) 
+        Assert.Throws<ArgumentException>(() => _ =
+            new Text(testString, isUnicode: false)
         );
 
     }

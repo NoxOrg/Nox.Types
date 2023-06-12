@@ -4,23 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 
 [Serializable]
-public abstract class ValueObject
+public abstract class ValueObject<T>
 {
-    protected static bool EqualOperator(ValueObject? left, ValueObject? right)
+
+    protected T _value;
+    
+    public T Value => _value;
+
+    protected ValueObject(T value)
+    {
+        _value = value;
+    }
+
+    protected static bool EqualOperator(ValueObject<T>? left, ValueObject<T>? right)
     {
         if (left is null ^ right is null)
         {
             return false;
         }
-        return ReferenceEquals(left, null) || left.Equals(right);
+        return left is null || left.Equals(right!);
     }
 
-    protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+    protected static bool NotEqualOperator(ValueObject<T> left, ValueObject<T> right)
     {
         return !(EqualOperator(left, right));
     }
 
-    public static bool operator ==(ValueObject? a, ValueObject? b)
+
+    public static bool operator ==(ValueObject<T>? a, ValueObject<T>? b)
     {
         if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
             return true;
@@ -31,21 +42,21 @@ public abstract class ValueObject
         return a.Equals(b);
     }
 
-    public static bool operator !=(ValueObject? a, ValueObject? b)
+    public static bool operator !=(ValueObject<T>? a, ValueObject<T>? b)
     {
         return !(a == b);
     }
 
-    protected abstract IEnumerable<object> GetEqualityComponents();
+    protected abstract IEnumerable<T> GetEqualityComponents();
 
-    public override bool Equals(object? obj)
+    public override bool Equals(object obj)
     {
         if (obj == null || obj.GetType() != GetType())
         {
             return false;
         }
 
-        var other = (ValueObject)obj;
+        var other = (ValueObject<T>)obj;
 
         return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
     }
@@ -57,13 +68,13 @@ public abstract class ValueObject
             .Aggregate((x, y) => x ^ y);
     }
 
-    public ValueObject? GetCopy()
+    public ValueObject<T>? GetCopy()
     {
-        return this.MemberwiseClone() as ValueObject;
+        return this.MemberwiseClone() as ValueObject<T>;
     }
 
     public override string ToString()
     {
-        return string.Join(",",this.GetEqualityComponents().Select(o => o.ToString()).ToArray());
+        return string.Join(",",this.GetEqualityComponents().Select(o => o?.ToString() ?? string.Empty).ToArray());
     }
 }
