@@ -8,13 +8,8 @@ namespace Nox.Types;
 /// <summary>
 /// Represents a Nox <see cref="Number"/> type and value object. 
 /// </summary>
-public class Number : ValueObject, INoxType
+public class Number : ValueObject<decimal>, INoxType
 {
-    /// <summary>
-    /// The string value of the <see cref="Text"/> object.
-    /// </summary>
-    public decimal Value => _value;
-    private readonly decimal _value;
 
     /// <summary>
     /// The minimum length allowed for the <see cref="Text"/> object.
@@ -92,7 +87,7 @@ public class Number : ValueObject, INoxType
         decimal value,
         int decimalDigits = 0,
         decimal minValue = -999999999,
-        decimal maxValue = 999999999)
+        decimal maxValue = 999999999) : base(value)
     {
 
         if (value < minValue)
@@ -110,7 +105,6 @@ public class Number : ValueObject, INoxType
             value = (long)value;
         }
 
-        _value = value;
         _minValue = minValue;
         _maxValue = maxValue;
         _decimalDigits = decimalDigits;
@@ -119,8 +113,8 @@ public class Number : ValueObject, INoxType
     /// <summary>
     /// Gets the value property of the text class for equality comparison.
     /// </summary>
-    /// <returns>An <see cref="IEnumerable{object}"/> containing the <see cref="Text"/> object's <see cref="Value"/> property.</returns>
-    protected override IEnumerable<object> GetEqualityComponents()
+    /// <returns>An <see cref="IEnumerable{decimal}"/> containing the <see cref="Text"/> object's <see cref="Value"/> property.</returns>
+    protected override IEnumerable<decimal> GetEqualityComponents()
     {
         yield return _value;
     }
