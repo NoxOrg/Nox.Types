@@ -1,22 +1,44 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation;
+using FluentValidation.Results;
+
+
+namespace Nox.Types;
 
 [Serializable]
-public abstract class ValueObject<T>
+public abstract class ValueObject<T, TValueObject> : INoxType 
+    where TValueObject : ValueObject<T, TValueObject>, new() 
 {
 
-    protected T _value;
-    
-    public T Value => _value;
+    public T Value { get; protected set; } = default!;
 
-    protected ValueObject(T value)
+    protected ValueObject() {}
+
+    public static TValueObject From(T value)
     {
-        _value = value;
+        var newObject = new TValueObject
+        {
+            Value = value
+        };
+
+        var validationResult = newObject.Validate();
+
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
+
+        return newObject;
     }
 
-    protected static bool EqualOperator(ValueObject<T>? left, ValueObject<T>? right)
+    public virtual ValidationResult Validate()
+    {
+        return new ValidationResult() {};
+    }
+
+    protected static bool EqualOperator(ValueObject<T,TValueObject>? left, ValueObject<T,TValueObject>? right)
     {
         if (left is null ^ right is null)
         {
@@ -25,29 +47,32 @@ public abstract class ValueObject<T>
         return left is null || left.Equals(right!);
     }
 
-    protected static bool NotEqualOperator(ValueObject<T> left, ValueObject<T> right)
+    protected static bool NotEqualOperator(ValueObject<T,TValueObject> left, ValueObject<T, TValueObject> right)
     {
         return !(EqualOperator(left, right));
     }
 
-
-    public static bool operator ==(ValueObject<T>? a, ValueObject<T>? b)
+    public static bool operator ==(ValueObject<T, TValueObject>? a, ValueObject<T, TValueObject>? b)
     {
-        if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+        if (a is null && b is null)
             return true;
 
-        if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+        if (a is null || b is null)
             return false;
 
         return a.Equals(b);
     }
 
-    public static bool operator !=(ValueObject<T>? a, ValueObject<T>? b)
+    public static bool operator !=(ValueObject<T, TValueObject>? a, ValueObject<T, TValueObject>? b)
     {
         return !(a == b);
     }
 
-    protected abstract IEnumerable<T> GetEqualityComponents();
+    protected virtual IEnumerable<KeyValuePair<string, object>> GetEqualityComponents()
+    {
+        yield return new KeyValuePair<string, object>(nameof(Value), Value!);
+    }
+
 
     public override bool Equals(object obj)
     {
@@ -56,7 +81,7 @@ public abstract class ValueObject<T>
             return false;
         }
 
-        var other = (ValueObject<T>)obj;
+        var other = (ValueObject<T, TValueObject>)obj;
 
         return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
     }
@@ -64,17 +89,20 @@ public abstract class ValueObject<T>
     public override int GetHashCode()
     {
         return GetEqualityComponents()
-            .Select(x => x != null ? x.GetHashCode() : 0)
+            .Select(x => x.Value != null ? x.GetHashCode() : 0)
             .Aggregate((x, y) => x ^ y);
     }
 
-    public ValueObject<T>? GetCopy()
+    public ValueObject<T, TValueObject>? GetCopy()
     {
-        return this.MemberwiseClone() as ValueObject<T>;
+        return this.MemberwiseClone() as ValueObject<T, TValueObject>;
     }
 
     public override string ToString()
     {
-        return string.Join(",",this.GetEqualityComponents().Select(o => o?.ToString() ?? string.Empty).ToArray());
+        return string.Join(",",this.GetEqualityComponents().Select(o => o.Value?.ToString() ?? string.Empty).ToArray());
     }
+
+    public virtual Type GetUnderlyingType() => typeof(T);
+
 }
