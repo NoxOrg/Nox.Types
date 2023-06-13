@@ -7,6 +7,10 @@ public enum NoxType
     @Collection,
     @Object,
 
+    //Priority
+
+
+
     // Simple Types
     Area,
     AutoNumber,
@@ -20,6 +24,8 @@ public enum NoxType
     CurrencyCode,
     CurrencyNumber,
     Date,
+    Month,
+    Year,
     DateTime,
     DateTimeDuration,
     DateTimeRange,
