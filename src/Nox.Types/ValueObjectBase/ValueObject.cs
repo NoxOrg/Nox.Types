@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
@@ -11,7 +12,7 @@ namespace Nox.Types;
 public abstract class ValueObject<T, TValueObject> : INoxType 
     where TValueObject : ValueObject<T, TValueObject>, new() 
 {
-
+    [NotMapped]
     public T Value { get; protected set; } = default!;
 
     protected ValueObject() {}
