@@ -15,7 +15,12 @@ public abstract class ValueObject<T, TValueObject> : INoxType
     [NotMapped]
     public T Value { get; protected set; } = default!;
 
-    protected ValueObject() {}
+    public ValueObject() {}
+
+    public TValueObject FromDatabase(T value)
+    {
+        return new TValueObject { Value = value };
+    }
 
     public static TValueObject From(T value)
     {
@@ -73,7 +78,6 @@ public abstract class ValueObject<T, TValueObject> : INoxType
     {
         yield return new KeyValuePair<string, object>(nameof(Value), Value!);
     }
-
 
     public override bool Equals(object obj)
     {
