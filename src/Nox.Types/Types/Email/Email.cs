@@ -19,6 +19,8 @@ public class Email : ValueObject<string, Email>
 
     private string _namePartIfProvided = string.Empty;
 
+    public static readonly Email Unknown = new() { Value = "?" };
+
     new public static Email From(string value)
     {
         var namePartIfProvided = string.Empty;

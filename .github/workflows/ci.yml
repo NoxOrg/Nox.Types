@@ -31,3 +31,5 @@ jobs:
         run: dotnet restore ./src/Nox.Types.sln
       - name: Build
         run: dotnet build ./src/Nox.Types.sln --warnaserror --configuration Release --no-restore
+      - name: Run Tests
+        run: dotnet test ./tests/Nox.Types.Tests --no-restore --verbosity minimal --configuration Release

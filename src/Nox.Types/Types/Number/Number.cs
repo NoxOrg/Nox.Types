@@ -99,12 +99,12 @@ public class Number : ValueObject<decimal, Number>
 
         if (Value < _numberTypeOptions.MinValue)
         {
-            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Number type with value {Value} and less than than the minimum specified value of {_numberTypeOptions.MinValue}"));
+            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Number type as value {Value} is less than than the minimum specified value of {_numberTypeOptions.MinValue}"));
         }
 
         if (Value > _numberTypeOptions.MaxValue)
         {
-            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Number type with value {Value} and greater than than the maximum specified value of {_numberTypeOptions.MaxValue}"));
+            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Number type a value {Value} is greater than than the maximum specified value of {_numberTypeOptions.MaxValue}"));
         }
 
         Value = Math.Round(Value, (int)_numberTypeOptions.DecimalDigits);
