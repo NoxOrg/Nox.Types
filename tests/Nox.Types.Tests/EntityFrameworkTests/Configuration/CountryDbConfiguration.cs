@@ -17,5 +17,6 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
 
         // Configure Multi-value ValueObjects
         builder.OwnsOne(e => e.LatLong);
+        builder.OwnsOne(e => e.Area);
     }
 }

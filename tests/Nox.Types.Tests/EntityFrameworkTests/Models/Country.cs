@@ -9,4 +9,5 @@ public class Country
     public Text Name { get; set; } = null!;
     public Number? Population { get; set; } = null!;
     public LatLong LatLong { get; set; } = null!;
+    public Area Area { get; set; } = null!;
 }

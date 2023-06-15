@@ -28,5 +28,6 @@
     <ItemGroup>
       <PackageReference Include="FluentValidation" Version="11.5.2" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+      <PackageReference Include="UnitsNet" Version="5.19.0" />
     </ItemGroup>
 </Project>
