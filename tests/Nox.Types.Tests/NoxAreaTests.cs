@@ -5,7 +5,25 @@ namespace Nox.Types.Tests;
 public class NoxAreaTests
 {
     [Fact]
-    public void Nox_Area_Constructor_ReturnsSameValueAndUnit()
+    public void Nox_Area_Constructor_ReturnsDefaultValueAndUnit()
+    {
+        var area = new Area();
+
+        Assert.Equal(0, area.Value);
+        Assert.Equal(AreaTypeUnit.SquareMeter, area.Unit);
+    }
+
+    [Fact]
+    public void Nox_Area_Constructor_ReturnsSameValueAndDefaultUnit()
+    {
+        var area = Area.From(12.5);
+
+        Assert.Equal(12.5, area.Value);
+        Assert.Equal(AreaTypeUnit.SquareMeter, area.Unit);
+    }
+
+    [Fact]
+    public void Nox_Area_Constructor_WithUnit_ReturnsSameValueAndUnit()
     {
         var area = Area.From(12.5, AreaTypeUnit.SquareMeter);
 
@@ -14,30 +32,38 @@ public class NoxAreaTests
     }
 
     [Fact]
+    public void Nox_Area_Constructor_WithUnitInSquareMeters_ReturnsSameValueAndUnit()
+    {
+        var area = Area.FromSquareMeters(12.5);
+
+        Assert.Equal(12.5, area.Value);
+        Assert.Equal(AreaTypeUnit.SquareMeter, area.Unit);
+    }
+
+    [Fact]
+    public void Nox_Area_Constructor_WithUnitInSquareFeet_ReturnsSameValueAndUnit()
+    {
+        var area = Area.FromSquareFeet(134.54888020887151);
+
+        Assert.Equal(134.54888020887151, area.Value);
+        Assert.Equal(AreaTypeUnit.SquareFoot, area.Unit);
+    }
+
+    [Fact]
     public void Nox_Area_Constructor_WithNegativeValueInput_ThrowsException()
     {
         var exception = Assert.Throws<ValidationException>(() => _ =
-            Area.From(-12.5, AreaTypeUnit.SquareMeter)
+            Area.From(-12.5)
         );
 
         Assert.Equal("Could not create a Nox Area type as value -12.5 is not allowed.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithZeroValueInput_ThrowsException()
-    {
-        var exception = Assert.Throws<ValidationException>(() => _ =
-            Area.From(0, AreaTypeUnit.SquareMeter)
-        );
-
-        Assert.Equal("Could not create a Nox Area type as value 0 is not allowed.", exception.Errors.First().ErrorMessage);
-    }
-
-    [Fact]
     public void Nox_Area_Constructor_WithNaNValueInput_ThrowsException()
     {
         var exception = Assert.Throws<ValidationException>(() => _ =
-            Area.From(double.NaN, AreaTypeUnit.SquareMeter)
+            Area.From(double.NaN)
         );
 
         Assert.Equal("Could not create a Nox Area type as value NaN is not allowed.", exception.Errors.First().ErrorMessage);
@@ -47,40 +73,66 @@ public class NoxAreaTests
     public void Nox_Area_Constructor_WithPositiveInfinityValueInput_ThrowsException()
     {
         var exception = Assert.Throws<ValidationException>(() => _ =
-            Area.From(double.PositiveInfinity, AreaTypeUnit.SquareMeter)
+            Area.From(double.PositiveInfinity)
         );
 
-        Assert.Equal("Could not create a Nox Area type as value PositiveInfinity or NegativeInfinity are not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox Area type as value ∞ is not allowed.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
     public void Nox_Area_Constructor_WithNegativeInfinityValueInput_ThrowsException()
     {
         var exception = Assert.Throws<ValidationException>(() => _ =
-            Area.From(double.NegativeInfinity, AreaTypeUnit.SquareMeter)
+            Area.From(double.NegativeInfinity)
         );
 
-        Assert.Equal("Could not create a Nox Area type as value PositiveInfinity or NegativeInfinity are not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox Area type as value -∞ is not allowed.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithUnsupportedAreaUnitInput_ThrowsException()
+    public void Nox_Area_ValueInSquareMeters_ReturnsValue()
     {
-        var exception = Assert.Throws<ValidationException>(() => _ =
-            Area.From(12.5)
-        );
+        var squareMeters = 12.5;
+        
+        var area = Area.From(squareMeters);
 
-        Assert.Equal("Could not create a Nox Area type as area unit Unknown is not supported.", exception.Errors.First().ErrorMessage);
+        Assert.Equal(12.5, area.ValueInSquareMeters);
+    }
+
+    [Fact]
+    public void Nox_Area_ValueInSquareFeet_ReturnsValue()
+    {
+        var squareMeters = 12.5;
+
+        var area = Area.From(squareMeters);
+
+        Assert.Equal(134.54888020887151, area.ValueInSquareFeet);
+    }
+
+    [Fact]
+    public void Nox_Area_ValueInSquareMeters_ToString_ReturnsString()
+    {
+        var area = Area.FromSquareMeters(12.5);
+
+        Assert.Equal("12.5 m²", area.ToString());
+    }
+
+    [Fact]
+    public void Nox_Area_ValueInSquareFeet_ToString_ReturnsString()
+    {
+        var area = Area.FromSquareFeet(134.54888020887151);
+
+        Assert.Equal("134.5488802088715 ft²", area.ToString());
     }
 
     [Fact]
     public void Nox_Area_Equality_WithSameAreaUnit_Tests()
     {
-        var squareMetersValue = 12.5;
+        var squareMeters = 12.5;
 
-        var area1 = Area.From(squareMetersValue, AreaTypeUnit.SquareMeter);
+        var area1 = Area.From(squareMeters, AreaTypeUnit.SquareMeter);
 
-        var area2 = Area.From(squareMetersValue, AreaTypeUnit.SquareMeter);
+        var area2 = Area.From(squareMeters, AreaTypeUnit.SquareMeter);
 
         AssertAreEquivalent(area1, area2);
     }
@@ -88,10 +140,10 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Equality_WithDifferentAreaUnit_Tests()
     {
-        var squareMetersValue = 12.5;
-        var area1 = Area.From(squareMetersValue, AreaTypeUnit.SquareMeter);
+        var squareMeters = 12.5;
+        var area1 = Area.From(squareMeters, AreaTypeUnit.SquareMeter);
 
-        var squareFeetValue = 134.54888; // 12.5 m²
+        var squareFeetValue = 134.54888020887151; // 12.5 m²
         var area2 = Area.From(squareFeetValue, AreaTypeUnit.SquareFoot);
 
         AssertAreEquivalent(area1, area2);
@@ -100,11 +152,11 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_NonEquality_SpecifyingAreaUnit_WithSameUnit_Tests()
     {
-        var squareMetersValue1 = 12.5;
-        var area1 = Area.From(squareMetersValue1, AreaTypeUnit.SquareMeter);
+        var squareMeters1 = 12.5;
+        var area1 = Area.From(squareMeters1, AreaTypeUnit.SquareMeter);
 
-        var squareMetersValue2 = 13.0;
-        var area2 = Area.From(squareMetersValue2, AreaTypeUnit.SquareMeter);
+        var squareMeters2 = 13.0;
+        var area2 = Area.From(squareMeters2, AreaTypeUnit.SquareMeter);
 
         AssertAreNotEquivalent(area1, area2);
     }
@@ -112,11 +164,11 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_NonEquality_SpecifyingAreaUnit_WithDifferentUnit_Tests()
     {
-        var squareMetersValue = 12.5;
-        var area1 = Area.From(squareMetersValue, AreaTypeUnit.SquareMeter);
+        var squareMeters = 12.5;
+        var area1 = Area.From(squareMeters, AreaTypeUnit.SquareMeter);
 
-        var squareFeetValue = 139.930835; // 13 m²
-        var area2 = Area.From(squareFeetValue, AreaTypeUnit.SquareFoot);
+        var squareFeet = 139.930835; // 13 m²
+        var area2 = Area.From(squareFeet, AreaTypeUnit.SquareFoot);
 
         AssertAreNotEquivalent(area1, area2);
     }

@@ -25,7 +25,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             Name = Text.From("Switzerland"),
             LatLong = LatLong.From(46.802496, 8.234392),
             Population = Number.From(8_703_654),
-            Area = Area.From(41_290_000, AreaTypeUnit.SquareMeter),
+            Area = Area.From(41_290_000),
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -40,6 +40,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(8.234392, item.LatLong.Longitude);
         Assert.Equal(8_703_654, item.Population?.Value);
         Assert.Equal(41_290_000, item.Area.Value);
+        Assert.Equal(AreaTypeUnit.SquareMeter, item.Area.Unit);
 
     }
 

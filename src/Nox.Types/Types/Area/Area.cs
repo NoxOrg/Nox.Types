@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nox.Types;
 
@@ -10,13 +11,24 @@ namespace Nox.Types;
 /// </summary>
 public class Area : ValueObject<double, Area>
 {
-    public AreaTypeUnit Unit { get; private set; }
+    public AreaTypeUnit Unit { get; private set; } = AreaTypeUnit.SquareMeter;
+
+    private double? _squareMeters;
+    public double ValueInSquareMeters => (_squareMeters ??= GetAreaIn(AreaTypeUnit.SquareMeter));
+
+    private double? _squareFeet;
+    public double ValueInSquareFeet => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
+
+    public Area() { Value = 0; }
 
     public static Area FromSquareMeters(double value)
         => From(value, AreaTypeUnit.SquareMeter);
 
     public static Area FromSquareFeet(double value)
         => From(value, AreaTypeUnit.SquareFoot);
+
+    new public static Area From(double value)
+        => FromSquareMeters(value);
 
     public static Area From(double value, AreaTypeUnit unit)
     {
@@ -36,6 +48,7 @@ public class Area : ValueObject<double, Area>
         return newObject;
     }
 
+
     /// <summary>
     /// Validates a <see cref="Area"/> object.
     /// </summary>
@@ -46,17 +59,12 @@ public class Area : ValueObject<double, Area>
     {
         var result = base.Validate();
 
-        if (Value <= 0 || double.IsNaN(Value))
+        if (Value < 0 || double.IsNaN(Value) || double.IsInfinity(Value))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is not allowed."));
         }
 
-        if (double.IsInfinity(Value))
-        {
-            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value PositiveInfinity or NegativeInfinity are not allowed."));
-        }
-
-        if (!(Enum.TryParse(Unit.ToString(), out AreaTypeUnit unit) && unit != AreaTypeUnit.Unknown))
+        if (!Enum.TryParse(Unit.ToString(), out AreaTypeUnit _))
         {
             result.Errors.Add(new ValidationFailure(nameof(Unit), $"Could not create a Nox Area type as area unit {Unit} is not supported."));
         }
@@ -64,17 +72,22 @@ public class Area : ValueObject<double, Area>
         return result;
     }
 
+    public override string ToString() => $"{Value} {Unit.ToSymbol()}";
+
     protected override IEnumerable<KeyValuePair<string, object>> GetEqualityComponents()
     {
-        yield return new KeyValuePair<string, object>(nameof(Value), GetSquaredMetersValue());
+        yield return new KeyValuePair<string, object>(nameof(Value), ValueInSquareMeters);
     }
 
-    private double GetSquaredMetersValue()
+    public double GetAreaIn(AreaTypeUnit unit)
+        => UnitsNet.Area.From(Value, ToExternalUnit(Unit)).As(ToExternalUnit(unit));
+
+    private static UnitsNet.Units.AreaUnit ToExternalUnit(AreaTypeUnit unit)
     {
-        return Unit switch
+        return unit switch
         {
-            AreaTypeUnit.SquareFoot => UnitsNet.Area.FromSquareFeet(Value).As(UnitsNet.Units.AreaUnit.SquareMeter),
-            _ => Value,
+            AreaTypeUnit.SquareFoot => UnitsNet.Units.AreaUnit.SquareFoot,
+            _ => UnitsNet.Units.AreaUnit.SquareMeter,
         };
     }
 }
