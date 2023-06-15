@@ -29,7 +29,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
 
-        Assert.Equal(CountryId.From(1), newItem.Id);
+        Assert.Equal(1, newItem.Id.Value);
 
         var item = DbContext.Countries.First();
 

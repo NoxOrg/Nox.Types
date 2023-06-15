@@ -72,6 +72,10 @@ public class NoxNumberTests
     {
         Number number;
 
+        byte testByte = 42;
+        number = Number.From(testByte);
+        Assert.Equal(testByte, number.Value);
+
         short testShort = 3;
         number = Number.From(testShort);
         Assert.Equal(testShort, number.Value);

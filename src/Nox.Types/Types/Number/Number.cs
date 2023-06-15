@@ -9,7 +9,7 @@ namespace Nox.Types;
 /// <summary>
 /// Represents a Nox <see cref="Number"/> type and value object. 
 /// </summary>
-public class Number : ValueObject<decimal, Number>
+public class Number : ValueObject<QuantityValue, Number>
 {
     protected NumberTypeOptions _numberTypeOptions = new();
 
@@ -22,7 +22,7 @@ public class Number : ValueObject<decimal, Number>
     /// <param name="options">The <see cref="NumberTypeOptions"/> containing constraints for the value object</param>
     /// <returns></returns>
     /// <exception cref="ValidationException"></exception>
-    public static Number From(decimal value, NumberTypeOptions options)
+    public static Number From(QuantityValue value, NumberTypeOptions options)
     {
         var newObject = new Number
         {
@@ -40,34 +40,25 @@ public class Number : ValueObject<decimal, Number>
         return newObject;
     }
 
-    new public static Number From(decimal value)
+    new public static Number From(QuantityValue value)
         => From(value, new NumberTypeOptions { 
             DecimalDigits = 6,
-            MinValue = Math.Min(value, NumberTypeOptions.DefaultMinValue),
-            MaxValue = Math.Max(value, NumberTypeOptions.DefaultMaxValue),
+            MinValue = Math.Min((decimal)value, NumberTypeOptions.DefaultMinValue),
+            MaxValue = Math.Max((decimal)value, NumberTypeOptions.DefaultMaxValue),
         });
 
     public static Number From(byte value)
     => From((decimal)value, new NumberTypeOptions { DecimalDigits = 0, MinValue = byte.MinValue, MaxValue = byte.MaxValue });
 
-    public static Number From(byte value, NumberTypeOptions options)
-        => From((decimal)value, options);
-
     public static Number From(short value) 
         => From((decimal)value, new NumberTypeOptions { DecimalDigits = 0, MinValue = short.MinValue, MaxValue = short.MaxValue });
     
-    public static Number From(short value, NumberTypeOptions options)
-        => From((decimal)value, options);
-
     public static Number From(int value)
       => From((decimal)value, new NumberTypeOptions { 
           DecimalDigits = 0, 
           MinValue = Math.Min(value,NumberTypeOptions.DefaultMinValue),
           MaxValue = Math.Max(value,NumberTypeOptions.DefaultMaxValue),
       });
-
-    public static Number From(int value, NumberTypeOptions options)
-        => From((decimal)value, options);
 
     public static Number From(long value)
         => From((decimal)value, new NumberTypeOptions { 
@@ -76,18 +67,12 @@ public class Number : ValueObject<decimal, Number>
             MaxValue = Math.Max(value, NumberTypeOptions.DefaultMaxValue),
         });
 
-    public static Number From(long value, NumberTypeOptions options)
-        => From((decimal)value, options);
-
     public static Number From(double value)
         => From((decimal)value, new NumberTypeOptions { 
             DecimalDigits = 6,
             MinValue = Math.Min((decimal)value, NumberTypeOptions.DefaultMinValue),
             MaxValue = Math.Max((decimal)value, NumberTypeOptions.DefaultMaxValue),
         });
-
-    public static Number From(double value, NumberTypeOptions options)
-        => From((decimal)value, options);
 
     /// <summary>
     /// Validates a <see cref="Number"/> object.
@@ -107,7 +92,7 @@ public class Number : ValueObject<decimal, Number>
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Number type a value {Value} is greater than than the maximum specified value of {_numberTypeOptions.MaxValue}"));
         }
 
-        Value = Math.Round(Value, (int)_numberTypeOptions.DecimalDigits);
+        Value = Math.Round((decimal)Value, (int)_numberTypeOptions.DecimalDigits);
 
         return result;
     }
@@ -131,14 +116,4 @@ public class Number : ValueObject<decimal, Number>
         return typeof(decimal);
     }
 }
-
-
-// int
-// Domain Concepts
-// Number
-// Amount (math)
-// Money (Currency and Amount)
-// Year (year)
-// AgeOfPerson (age)
-
 

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using FluentValidation;
 using FluentValidation.Results;
 
+[assembly: InternalsVisibleToAttribute("Nox.Types.EntityFramework")]
 
 namespace Nox.Types;
 
@@ -17,7 +19,7 @@ public abstract class ValueObject<T, TValueObject> : INoxType
 
     public ValueObject() {}
 
-    public TValueObject FromDatabase(T value)
+    internal TValueObject FromDatabase(T value)
     {
         return new TValueObject { Value = value };
     }
