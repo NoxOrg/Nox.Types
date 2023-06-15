@@ -156,4 +156,45 @@ public class NoxMoneyTests
         // Assert
         Assert.Equal("$1,000", result);
     }
+    
+   
+    
+    [Fact]
+    public void Moneys_Should_Equal_When_Their_Value_And_Currency_Same()
+    {
+        // Arrange
+        var money = new Money(1455453.55m, CurrencyCode.USD);
+        var money2 = new Money(1455453.55m, CurrencyCode.USD);
+        
+        // Act
+        var result = money.Equals(money2);
+        
+        // Assert
+        Assert.True(result);
+        Assert.Equal(money, money2);
+        
+    }
+    
+    [Fact]
+    public void Moneys_Should_Not_Equal_When_Their_Value_And_Currency_Different()
+    {
+        // Arrange
+        var money = new Money(1455453.55m, CurrencyCode.USD);
+        var money2 = new Money(1455453.55m, CurrencyCode.TRY);
+        
+        var money3 = new Money(1455453.55m, CurrencyCode.USD);
+        var money4 = new Money(1455453.56m, CurrencyCode.USD);
+        
+        // Act
+        var result = money.Equals(money2);
+        var result2 = money3.Equals(money4);
+        
+        // Assert
+
+        Assert.False(result);
+        Assert.False(result2);
+        Assert.NotEqual(money, money2);
+        Assert.NotEqual(money3, money4);
+        
+    }
 }

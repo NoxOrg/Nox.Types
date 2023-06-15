@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Cryptography;
 using FluentValidation.Results;
@@ -9,7 +10,7 @@ namespace Nox.Types;
 /// Represents a value object for representing monetary values.
 /// </summary>
 [Serializable]
-public class Money : ValueObject<decimal, Money>
+public sealed class Money : ValueObject<decimal, Money>
 {
     /// <summary>
     ///  Gets the monetary value.
@@ -53,7 +54,15 @@ public class Money : ValueObject<decimal, Money>
         return new Money(value, currencyCode);
     }
 
-    
+    /// <summary>
+    /// Returns properties that are used to determine equality between two <see cref="Money"/> objects.
+    /// </summary>
+    protected override IEnumerable<KeyValuePair<string, object>> GetEqualityComponents()
+    {
+        yield return new KeyValuePair<string, object>(nameof(Amount), Amount);
+        yield return new KeyValuePair<string, object>(nameof(CurrencyCode), CurrencyCode);
+    }
+
     /// <summary>
     /// Returns a string representation of the <see cref="Money"/> object using the specified <paramref name="amountFormat"/>.
     /// </summary>
