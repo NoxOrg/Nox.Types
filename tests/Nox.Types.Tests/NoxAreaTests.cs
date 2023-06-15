@@ -100,23 +100,23 @@ public class NoxAreaTests
     }
 
     [Fact]
-    public void Nox_Area_ValueInSquareMeters_ReturnsValue()
+    public void Nox_Area_ToSquareMeters_ReturnsValue()
     {
         var squareMeters = 12.5;
         
         var area = Area.From(squareMeters);
 
-        Assert.Equal(12.5, area.ValueInSquareMeters);
+        Assert.Equal(12.5, area.ToSquareMeters());
     }
 
     [Fact]
-    public void Nox_Area_ValueInSquareFeet_ReturnsValue()
+    public void Nox_Area_ToSquareFeet_ReturnsValue()
     {
         var squareMeters = 12.5;
 
         var area = Area.From(squareMeters);
 
-        Assert.Equal(134.54888020887151, area.ValueInSquareFeet);
+        Assert.Equal(134.54888020887151, area.ToSquareFeet());
     }
 
     [Fact]

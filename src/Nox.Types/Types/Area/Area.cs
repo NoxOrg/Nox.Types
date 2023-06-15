@@ -2,7 +2,6 @@
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nox.Types;
 
@@ -13,22 +12,16 @@ public class Area : ValueObject<double, Area>
 {
     public AreaTypeUnit Unit { get; private set; } = AreaTypeUnit.SquareMeter;
 
-    private double? _squareMeters;
-    public double ValueInSquareMeters => (_squareMeters ??= GetAreaIn(AreaTypeUnit.SquareMeter));
-
-    private double? _squareFeet;
-    public double ValueInSquareFeet => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
-
     public Area() { Value = 0; }
 
     public static Area FromSquareMeters(double value)
-        => From(value, AreaTypeUnit.SquareMeter);
+        => From(value);
 
     public static Area FromSquareFeet(double value)
         => From(value, AreaTypeUnit.SquareFoot);
 
     new public static Area From(double value)
-        => FromSquareMeters(value);
+        => From(value, AreaTypeUnit.SquareMeter);
 
     /// <summary>
     /// Creates a new instance of <see cref="Area"/> with the specified <see cref="AreaTypeUnit"/>
@@ -83,10 +76,16 @@ public class Area : ValueObject<double, Area>
 
     protected override IEnumerable<KeyValuePair<string, object>> GetEqualityComponents()
     {
-        yield return new KeyValuePair<string, object>(nameof(Value), ValueInSquareMeters);
+        yield return new KeyValuePair<string, object>(nameof(Value), ToSquareMeters());
     }
 
-    public double GetAreaIn(AreaTypeUnit unit)
+    private double? _squareMeters;
+    public double ToSquareMeters() => (_squareMeters ??= GetAreaIn(AreaTypeUnit.SquareMeter));
+
+    private double? _squareFeet;
+    public double ToSquareFeet() => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
+
+    private double GetAreaIn(AreaTypeUnit unit)
         => UnitsNet.Area.From(Value, ToExternalUnit(Unit)).As(ToExternalUnit(unit));
 
     private static UnitsNet.Units.AreaUnit ToExternalUnit(AreaTypeUnit unit)
