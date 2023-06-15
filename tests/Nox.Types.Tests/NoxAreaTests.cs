@@ -96,7 +96,7 @@ public class NoxAreaTests
             Area.From(12.5, (AreaTypeUnit)1001)
         );
 
-        Assert.Equal("Could not create a Nox Area type as area unit 1001 is not supported.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox Area type as unit 1001 is not supported.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
