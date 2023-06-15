@@ -30,6 +30,13 @@ public class Area : ValueObject<double, Area>
     new public static Area From(double value)
         => FromSquareMeters(value);
 
+    /// <summary>
+    /// Creates a new instance of <see cref="Area"/> with the specified <see cref="AreaTypeUnit"/>
+    /// </summary>
+    /// <param name="value">The value to create the <see cref="Area"/> with</param>
+    /// <param name="unit">The <see cref="AreaTypeUnit"/> to create the <see cref="Area"/> with</param>
+    /// <returns></returns>
+    /// <exception cref="ValidationException"></exception>
     public static Area From(double value, AreaTypeUnit unit)
     {
         var newObject = new Area
@@ -53,7 +60,7 @@ public class Area : ValueObject<double, Area>
     /// Validates a <see cref="Area"/> object.
     /// </summary>
     /// <returns>
-    /// true if the <see cref="Area"/> value is valid according to the default or specified <see cref="AreaTypeOptions"/>.
+    /// true if the <see cref="Area"/> value is valid.
     /// </returns>
     public override ValidationResult Validate()
     {
