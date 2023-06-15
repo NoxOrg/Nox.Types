@@ -64,7 +64,7 @@ public class Area : ValueObject<double, Area>
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is not allowed."));
         }
 
-        if (!Enum.TryParse(Unit.ToString(), out AreaTypeUnit _))
+        if (!Enum.IsDefined(typeof(AreaTypeUnit), Unit))
         {
             result.Errors.Add(new ValidationFailure(nameof(Unit), $"Could not create a Nox Area type as area unit {Unit} is not supported."));
         }

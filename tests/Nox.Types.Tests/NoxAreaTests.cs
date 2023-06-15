@@ -90,6 +90,16 @@ public class NoxAreaTests
     }
 
     [Fact]
+    public void Nox_Area_Constructor_WithWithUnsupportedUnitInput_ThrowsException()
+    {
+        var exception = Assert.Throws<ValidationException>(() => _ =
+            Area.From(12.5, (AreaTypeUnit)1001)
+        );
+
+        Assert.Equal("Could not create a Nox Area type as area unit 1001 is not supported.", exception.Errors.First().ErrorMessage);
+    }
+
+    [Fact]
     public void Nox_Area_ValueInSquareMeters_ReturnsValue()
     {
         var squareMeters = 12.5;
