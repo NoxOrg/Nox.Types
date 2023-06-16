@@ -34,7 +34,7 @@ public class Area : ValueObject<double, Area>
     {
         var newObject = new Area
         {
-            Value = value,
+            Value = Round(value),
             Unit = unit,
         };
 
@@ -86,7 +86,7 @@ public class Area : ValueObject<double, Area>
     public double ToSquareFeet() => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
 
     private double GetAreaIn(AreaTypeUnit unit)
-        => UnitsNet.Area.From(Value, ToExternalUnit(Unit)).As(ToExternalUnit(unit));
+        => Round(UnitsNet.Area.From(Value, ToExternalUnit(Unit)).As(ToExternalUnit(unit)));
 
     private static UnitsNet.Units.AreaUnit ToExternalUnit(AreaTypeUnit unit)
     {
@@ -96,4 +96,7 @@ public class Area : ValueObject<double, Area>
             _ => UnitsNet.Units.AreaUnit.SquareMeter,
         };
     }
+
+    private static double Round(double value)
+        => Math.Round(value, 6);
 }

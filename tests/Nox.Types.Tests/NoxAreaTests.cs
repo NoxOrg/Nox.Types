@@ -45,7 +45,7 @@ public class NoxAreaTests
     {
         var area = Area.FromSquareFeet(134.54888020887151);
 
-        Assert.Equal(134.54888020887151, area.Value);
+        Assert.Equal(134.54888, area.Value);
         Assert.Equal(AreaTypeUnit.SquareFoot, area.Unit);
     }
 
@@ -116,7 +116,7 @@ public class NoxAreaTests
 
         var area = Area.From(squareMeters);
 
-        Assert.Equal(134.54888020887151, area.ToSquareFeet());
+        Assert.Equal(134.54888, area.ToSquareFeet());
     }
 
     [Fact]
@@ -132,7 +132,7 @@ public class NoxAreaTests
     {
         var area = Area.FromSquareFeet(134.54888020887151);
 
-        Assert.Equal("134.5488802088715 ft²", area.ToString());
+        Assert.Equal("134.54888 ft²", area.ToString());
     }
 
     [Fact]
@@ -153,7 +153,7 @@ public class NoxAreaTests
         var squareMeters = 12.5;
         var area1 = Area.From(squareMeters, AreaTypeUnit.SquareMeter);
 
-        var squareFeetValue = 134.54888020887151; // 12.5 m²
+        var squareFeetValue = 134.54888; // 12.5 m²
         var area2 = Area.From(squareFeetValue, AreaTypeUnit.SquareFoot);
 
         AssertAreEquivalent(area1, area2);
