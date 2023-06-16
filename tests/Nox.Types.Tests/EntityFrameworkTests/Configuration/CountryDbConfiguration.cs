@@ -14,6 +14,7 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(e => e.Id).IsRequired().ValueGeneratedOnAdd().HasConversion(v => v.Value, v => CountryId.From(v));
         builder.Property(e => e.Name).IsRequired().HasMaxLength(255).HasConversion<TextConverter>();
         builder.Property(e => e.Population).HasConversion<NumberToInt32Converter>();
+        builder.Property(e => e.CountryCode2).HasConversion<CountryCode2Converter>();
 
         // Configure Multi-value ValueObjects
         builder.OwnsOne(e => e.LatLong);
