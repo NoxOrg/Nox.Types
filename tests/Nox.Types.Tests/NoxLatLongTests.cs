@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Globalization;
+using FluentValidation;
 
 namespace Nox.Types.Tests;
 
@@ -62,12 +63,18 @@ public class NoxLatLongTests
         Assert.NotEqual(coords1, coords2);
     }
 
-    [Fact]
-    public void Nox_LatLong_ToString_ReturnsString()
+    [Theory]
+    [InlineData("en-us","46.948090 7.447440")]
+    [InlineData("pt-PT","46,948090 7,447440")]
+    public void Nox_LatLong_ToString_ReturnsString(string culture, string expectedResult)
     {
-        var coords = LatLong.From(46.94809, 7.44744);
+        void Test()
+        {
+            var coords = LatLong.From(46.94809, 7.44744);
+            Assert.Equal(expectedResult, coords.ToString());
+        }
 
-        Assert.Equal("46.948090 7.447440", coords.ToString());
+        TestUtility.RunInCulture(Test,culture);
     }
 
     [Fact]
