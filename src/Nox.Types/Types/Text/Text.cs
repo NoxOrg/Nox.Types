@@ -1,5 +1,4 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Linq;
@@ -9,9 +8,9 @@ namespace Nox.Types;
 /// <summary>
 /// Represents a Nox <see cref="Text"/> type and value object. 
 /// </summary>
-public class Text : ValueObject<string,Text>
+public sealed class Text : ValueObject<string,Text>
 {
-    protected TextTypeOptions _textTypeOptions = new();
+    private TextTypeOptions _textTypeOptions = new();
 
     public Text() { Value = string.Empty; }
 

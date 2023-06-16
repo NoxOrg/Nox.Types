@@ -11,7 +11,7 @@ namespace Nox.Types;
 /// <summary>
 /// Represents a Nox <see cref="Email"/> type and value object. 
 /// </summary>
-public class Email : ValueObject<string, Email>
+public sealed class Email : ValueObject<string, Email>
 {
     private static readonly Regex _emailRegex = new(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", RegexOptions.Compiled, new TimeSpan(0, 0, 1));
 

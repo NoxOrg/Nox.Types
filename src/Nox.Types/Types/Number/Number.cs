@@ -1,17 +1,15 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
-using System.Globalization;
 
 namespace Nox.Types;
 
 /// <summary>
 /// Represents a Nox <see cref="Number"/> type and value object. 
 /// </summary>
-public class Number : ValueObject<decimal, Number>
+public sealed class Number : ValueObject<decimal, Number>
 {
-    protected NumberTypeOptions _numberTypeOptions = new();
+    private NumberTypeOptions _numberTypeOptions = new();
 
     public Number() { Value = 0; }
 

@@ -1,15 +1,12 @@
-﻿
-using FluentValidation;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using System;
-using System.Globalization;
 
 namespace Nox.Types;
 
 /// <summary>
 /// Represents a Nox <see cref="LatLong"/> type and value object. 
 /// </summary>
-public class LatLong : ValueObject<(double Latitude, double Longitude), LatLong>
+public sealed class LatLong : ValueObject<(double Latitude, double Longitude), LatLong>
 {
     public LatLong() { Value = (Latitude: 0, Longitude: 0); } // Null Island
 

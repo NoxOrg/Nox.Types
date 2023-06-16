@@ -8,7 +8,6 @@ using FluentValidation.Results;
 
 namespace Nox.Types;
 
-[Serializable]
 public abstract class ValueObject<T, TValueObject> : INoxType 
     where TValueObject : ValueObject<T, TValueObject>, new() 
 {
