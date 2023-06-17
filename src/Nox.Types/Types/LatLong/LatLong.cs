@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using System;
+﻿using System;
 
 namespace Nox.Types;
 
@@ -21,7 +20,7 @@ public sealed class LatLong : ValueObject<(double Latitude, double Longitude), L
     /// Validates a <see cref="LatLong"/> object.
     /// </summary>
     /// <returns>true if the <see cref="LatLong"/> value is valid geo coordinate.</returns>
-    public override ValidationResult Validate()
+    internal override ValidationResult Validate()
     {
         var result = base.Validate();
 

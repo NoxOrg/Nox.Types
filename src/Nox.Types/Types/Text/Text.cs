@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using System;
+﻿using System;
 using System.Linq;
 
 namespace Nox.Types;
@@ -33,7 +31,7 @@ public sealed class Text : ValueObject<string,Text>
 
         if (!validationResult.IsValid)
         {
-            throw new ValidationException(validationResult.Errors);
+            throw new TypeValidationException(validationResult.Errors);
         }
 
         return newObject;
@@ -44,7 +42,7 @@ public sealed class Text : ValueObject<string,Text>
     /// </summary>
     /// <returns>true if the <see cref="Text"/> value is valid according to the default or specified <see cref="TextTypeOptions"/>.</returns>
     /// <exception cref="NotImplementedException">If the <see cref="TextTypeCasing"/> is not implemented by this method.</exception>
-    public override ValidationResult Validate()
+    internal override ValidationResult Validate()
     {
         var result = base.Validate();
 
