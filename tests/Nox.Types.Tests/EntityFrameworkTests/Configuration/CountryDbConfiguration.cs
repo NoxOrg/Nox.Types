@@ -17,6 +17,6 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(e => e.CountryCode2).HasConversion<CountryCode2Converter>();
 
         // Configure Multi-value ValueObjects
-        builder.OwnsOne(e => e.LatLong);
+        builder.OwnsOne(e => e.LatLong).Ignore(p => p.Value);
     }
 }

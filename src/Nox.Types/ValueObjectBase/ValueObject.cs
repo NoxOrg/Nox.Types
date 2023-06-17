@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using FluentValidation;
-using FluentValidation.Results;
 
 
 namespace Nox.Types;
@@ -11,7 +8,7 @@ namespace Nox.Types;
 public abstract class ValueObject<T, TValueObject> : INoxType 
     where TValueObject : ValueObject<T, TValueObject>, new() 
 {
-    [NotMapped]
+
     public T Value { get; protected set; } = default!;
 
     public ValueObject() {}
@@ -32,13 +29,13 @@ public abstract class ValueObject<T, TValueObject> : INoxType
 
         if (!validationResult.IsValid)
         {
-            throw new ValidationException(validationResult.Errors);
+            throw new TypeValidationException(validationResult.Errors);
         }
 
         return newObject;
     }
 
-    public virtual ValidationResult Validate()
+    internal virtual ValidationResult Validate()
     {
         return new ValidationResult() {};
     }
