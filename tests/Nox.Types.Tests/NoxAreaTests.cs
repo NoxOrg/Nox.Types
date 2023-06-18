@@ -23,6 +23,15 @@ public class NoxAreaTests
     }
 
     [Fact]
+    public void Nox_Area_Constructor_ReturnsRoundedValueAndDefaultUnit()
+    {
+        var area = Area.From(12.54888020887151);
+
+        Assert.Equal(12.548880, area.Value);
+        Assert.Equal(AreaTypeUnit.SquareMeter, area.Unit);
+    }
+
+    [Fact]
     public void Nox_Area_Constructor_WithUnit_ReturnsSameValueAndUnit()
     {
         var area = Area.From(12.5, AreaTypeUnit.SquareMeter);
@@ -43,9 +52,9 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Constructor_WithUnitInSquareFeet_ReturnsSameValueAndUnit()
     {
-        var area = Area.FromSquareFeet(134.54888020887151);
+        var area = Area.FromSquareFeet(134.548880);
 
-        Assert.Equal(134.54888, area.Value);
+        Assert.Equal(134.548880, area.Value);
         Assert.Equal(AreaTypeUnit.SquareFoot, area.Unit);
     }
 
@@ -100,6 +109,16 @@ public class NoxAreaTests
     }
 
     [Fact]
+    public void Nox_Area_Constructor_WithNotAllowedValueInput_ThrowsException()
+    {
+        var exception = Assert.Throws<ValidationException>(() => _ =
+            Area.From(510_072_000_000_001)
+        );
+
+        Assert.Equal($"Could not create a Nox Area type as value 510072000000001 is greater than the surface area of the Earth.", exception.Errors.First().ErrorMessage);
+    }
+
+    [Fact]
     public void Nox_Area_ToSquareMeters_ReturnsValue()
     {
         var squareMeters = 12.5;
@@ -130,7 +149,7 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_ValueInSquareFeet_ToString_ReturnsString()
     {
-        var area = Area.FromSquareFeet(134.54888020887151);
+        var area = Area.FromSquareFeet(134.548880);
 
         Assert.Equal("134.54888 ft²", area.ToString());
     }

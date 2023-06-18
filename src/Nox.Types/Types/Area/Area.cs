@@ -8,19 +8,21 @@ namespace Nox.Types;
 /// <summary>
 /// Represents a Nox <see cref="Area"/> type and value object.
 /// </summary>
-public class Area : ValueObject<double, Area>
+public class Area : ValueObject<QuantityValue, Area>
 {
+    private readonly AreaUnitConverter _converter;
+
     public AreaTypeUnit Unit { get; private set; } = AreaTypeUnit.SquareMeter;
 
-    public Area() { Value = 0; }
+    public Area() { Value = 0; _converter = new AreaUnitConverter(this); }
 
-    public static Area FromSquareMeters(double value)
+    public static Area FromSquareMeters(QuantityValue value)
         => From(value);
 
-    public static Area FromSquareFeet(double value)
+    public static Area FromSquareFeet(QuantityValue value)
         => From(value, AreaTypeUnit.SquareFoot);
 
-    new public static Area From(double value)
+    new public static Area From(QuantityValue value)
         => From(value, AreaTypeUnit.SquareMeter);
 
     /// <summary>
@@ -30,7 +32,7 @@ public class Area : ValueObject<double, Area>
     /// <param name="unit">The <see cref="AreaTypeUnit"/> to create the <see cref="Area"/> with</param>
     /// <returns></returns>
     /// <exception cref="ValidationException"></exception>
-    public static Area From(double value, AreaTypeUnit unit)
+    public static Area From(QuantityValue value, AreaTypeUnit unit)
     {
         var newObject = new Area
         {
@@ -59,7 +61,7 @@ public class Area : ValueObject<double, Area>
     {
         var result = base.Validate();
 
-        if (Value < 0 || double.IsNaN(Value) || double.IsInfinity(Value))
+        if (Value < 0 || double.IsNaN((double)Value) || double.IsInfinity((double)Value))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is not allowed."));
         }
@@ -68,35 +70,29 @@ public class Area : ValueObject<double, Area>
         {
             result.Errors.Add(new ValidationFailure(nameof(Unit), $"Could not create a Nox Area type as unit {Unit} is not supported."));
         }
+        else if (ToSquareMeters() > 510_072_000_000_000)
+        {
+            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is greater than the surface area of the Earth."));
+        }
 
         return result;
     }
 
-    public override string ToString() => $"{Value} {Unit.ToSymbol()}";
+    public override string ToString() => $"{Value:G} {Unit.ToSymbol()}";
 
     protected override IEnumerable<KeyValuePair<string, object>> GetEqualityComponents()
     {
         yield return new KeyValuePair<string, object>(nameof(Value), ToSquareMeters());
     }
 
-    private double? _squareMeters;
-    public double ToSquareMeters() => (_squareMeters ??= GetAreaIn(AreaTypeUnit.SquareMeter));
+    private QuantityValue? _squareMeters;
+    public QuantityValue ToSquareMeters() => (_squareMeters ??= GetAreaIn(AreaTypeUnit.SquareMeter));
 
-    private double? _squareFeet;
-    public double ToSquareFeet() => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
+    private QuantityValue? _squareFeet;
+    public QuantityValue ToSquareFeet() => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
 
-    private double GetAreaIn(AreaTypeUnit unit)
-        => Round(UnitsNet.Area.From(Value, ToExternalUnit(Unit)).As(ToExternalUnit(unit)));
+    private QuantityValue GetAreaIn(AreaTypeUnit unit) => Round(_converter.To(unit));
 
-    private static UnitsNet.Units.AreaUnit ToExternalUnit(AreaTypeUnit unit)
-    {
-        return unit switch
-        {
-            AreaTypeUnit.SquareFoot => UnitsNet.Units.AreaUnit.SquareFoot,
-            _ => UnitsNet.Units.AreaUnit.SquareMeter,
-        };
-    }
-
-    private static double Round(double value)
-        => Math.Round(value, 6);
+    private static QuantityValue Round(QuantityValue value, int decimals = 6)
+        => value.IsDecimal ? Math.Round((decimal)value, decimals) : Math.Round((double)value, decimals);
 }
