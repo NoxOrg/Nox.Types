@@ -37,10 +37,20 @@ public sealed class Money : ValueObject<decimal, Money>
     /// </summary>
     /// <param name="value">The monetary value.</param>
     /// <param name="currencyCode">The currency code enum.</param>
-    public Money(decimal value, CurrencyCode currencyCode)
+    private Money(decimal value, CurrencyCode currencyCode)
     {
         Value = value;
         CurrencyCode = currencyCode;
+    }
+    
+    /// <summary>
+    /// Creates a new instance of the <see cref="Money"/> class with the specified values.
+    /// </summary>
+    /// <param name="value">The monetary value.</param>
+    /// <returns>A new instance of the <see cref="Money"/> class.</returns>
+    public new static Money From(decimal value)
+    {
+        return new Money(value, CurrencyCode.USD);
     }
 
     /// <summary>
@@ -63,12 +73,17 @@ public sealed class Money : ValueObject<decimal, Money>
         yield return new KeyValuePair<string, object>(nameof(CurrencyCode), CurrencyCode);
     }
 
+    public override string ToString()
+    {
+        return ToString(CultureInfo.InvariantCulture);
+    }
+
     /// <summary>
     /// Returns a string representation of the <see cref="Money"/> object using the specified <paramref name="amountFormat"/>.
     /// </summary>
     /// <param name="amountFormat">The format specifier for the amount value.</param>
     /// <returns>A string representation of the <see cref="Money"/> object with the amount formatted using the specified format and Invariant culture .</returns>
-    public string ToString(string amountFormat = "N2")
+    public string ToString(string amountFormat)
     {
         return ToString(CultureInfo.InvariantCulture, amountFormat);
     }
@@ -79,11 +94,11 @@ public sealed class Money : ValueObject<decimal, Money>
     /// <param name="cultureInfo">The culture-specific information used to format the amount.</param>
     /// <param name="amountFormat">The format specifier for the amount value.</param>
     /// <returns>A string representation of the <see cref="Money"/> object with the amount formatted using the specified culture and format.</returns>
-    public string ToString(CultureInfo cultureInfo, string amountFormat = "N2")
+    public string ToString(CultureInfo cultureInfo, string amountFormat = "G")
     {
         if (cultureInfo == null) throw new ArgumentNullException(nameof(cultureInfo));
         if (amountFormat == null) throw new ArgumentNullException(nameof(amountFormat));
-        return $"{Amount.ToString(amountFormat, cultureInfo)} {CurrencyCode}";
+        return $"{Amount.ToString(amountFormat, cultureInfo)}";
     }
 
     /// <summary>
@@ -107,23 +122,5 @@ public sealed class Money : ValueObject<decimal, Money>
         if (cultureInfo == null) throw new ArgumentNullException(nameof(cultureInfo));
         if (amountFormat == null) throw new ArgumentNullException(nameof(amountFormat));
         return $"{CurrencyConverter.GetCurrencySymbol(CurrencyCode)}{Amount.ToString(amountFormat, cultureInfo)}";
-    }
-
-
-    /// <summary>
-    /// Performs validation on the money value.
-    /// </summary>
-    /// <returns>A <see cref="ValidationResult"/> indicating the validation status.</returns>
-    public override ValidationResult Validate()
-    {
-        var result = base.Validate();
-
-        if (Value < 0)
-        {
-            result.Errors.Add(new ValidationFailure(nameof(Value),
-                $"Could not create a Money object as the value {Value} is negative."));
-        }
-
-        return result;
     }
 }

@@ -24,7 +24,7 @@ public class NoxMoneyTests
         var currency = CurrencyCode.EUR;
 
         // Act
-        var money = new Money(value, currency);
+        var money = Money.From(value, currency);
 
         // Assert
         Assert.Equal(value, money.Value);
@@ -47,62 +47,39 @@ public class NoxMoneyTests
     }
 
     [Fact]
-    public void ToFormattedString_ReturnsFormattedString()
+    public void ToString_ReturnsFormattedString()
     {
         // Arrange
-        var money = new Money(1455453.55m, currencyCode: CurrencyCode.TRY);
+        var money = Money.From(-16325.62m);
 
-
+        
         // Act
-        string formattedString = money.ToString(CultureInfo.InvariantCulture);
-
+        string defaultString = money.ToString();
+        string gFormattedString = money.ToString("G");
+        string fFormattedString = money.ToString("F");
+        string cFormattedString = money.ToString( new CultureInfo("en-US"), "C");
+        
         // Assert
-        Assert.Equal("1,455,453.55 TRY", formattedString);
+        Assert.Equal("-16325.62", defaultString);
+        Assert.Equal("-16325.62", gFormattedString);
+        Assert.Equal("-16325.62", fFormattedString);
+        Assert.Equal("-$16,325.62", cFormattedString);
+        
     }
 
     [Fact]
     public void ToFormattedStringWithCurrency_ReturnsFormattedStringWithCurrency()
     {
         // Arrange
-        var money = new Money(1455453.55m,  CurrencyCode.TRY);
+        var money = Money.From(1455453.55m,  CurrencyCode.TRY);
 
         // Act
-        string formattedString = money.ToString(CultureInfo.InvariantCulture);
+        string formattedString = money.ToString(CultureInfo.InvariantCulture, "N2");
 
         // Assert
-        Assert.Equal("1,455,453.55 TRY", formattedString);
+        Assert.Equal("1,455,453.55", formattedString);
     }
 
-    [Fact]
-    public void Validate_ValidMoneyObject_ReturnsValidValidationResult()
-    {
-        // Arrange
-        var money = new Money(1000m, CurrencyCode.USD);
-
-        // Act
-        ValidationResult validationResult = money.Validate();
-
-        // Assert
-        Assert.True(validationResult.IsValid);
-        Assert.Empty(validationResult.Errors);
-    }
-
-    [Fact]
-    public void Validate_NegativeValue_ReturnsInvalidValidationResult()
-    {
-        // Arrange
-        var money = new Money(-100m, CurrencyCode.USD);
-
-        // Act
-        ValidationResult validationResult = money.Validate();
-
-        // Assert
-        Assert.False(validationResult.IsValid);
-        Assert.NotEmpty(validationResult.Errors);
-        Assert.Single(validationResult.Errors);
-        Assert.Equal(nameof(money.Value), validationResult.Errors[0].PropertyName);
-    }
-    
     [Fact]
     public void ToStringWithSymbol_ShouldReturnFormattedString_WithDefaultAmountFormat()
     {
@@ -163,8 +140,8 @@ public class NoxMoneyTests
     public void Moneys_Should_Equal_When_Their_Value_And_Currency_Same()
     {
         // Arrange
-        var money = new Money(1455453.55m, CurrencyCode.USD);
-        var money2 = new Money(1455453.55m, CurrencyCode.USD);
+        var money = Money.From(1455453.55m, CurrencyCode.USD);
+        var money2 = Money.From(1455453.55m, CurrencyCode.USD);
         
         // Act
         var result = money.Equals(money2);
@@ -179,11 +156,11 @@ public class NoxMoneyTests
     public void Moneys_Should_Not_Equal_When_Their_Value_And_Currency_Different()
     {
         // Arrange
-        var money = new Money(1455453.55m, CurrencyCode.USD);
-        var money2 = new Money(1455453.55m, CurrencyCode.TRY);
+        var money = Money.From(1455453.55m, CurrencyCode.USD);
+        var money2 = Money.From(1455453.55m, CurrencyCode.TRY);
         
-        var money3 = new Money(1455453.55m, CurrencyCode.USD);
-        var money4 = new Money(1455453.56m, CurrencyCode.USD);
+        var money3 = Money.From(1455453.55m, CurrencyCode.USD);
+        var money4 = Money.From(1455453.56m, CurrencyCode.USD);
         
         // Act
         var result = money.Equals(money2);
