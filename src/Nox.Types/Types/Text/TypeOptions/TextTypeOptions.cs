@@ -1,9 +1,8 @@
 ﻿
 namespace Nox.Types;
 
-public struct TextTypeOptions
+public class TextTypeOptions
 {
-    public TextTypeOptions() { }
     public uint MinLength { get; set; } = 0;
     public uint MaxLength { get; set; } = 255;
     public bool IsUnicode { get; set; } = true;

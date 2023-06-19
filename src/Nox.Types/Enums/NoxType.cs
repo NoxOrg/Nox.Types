@@ -7,10 +7,6 @@ public enum NoxType
     @Collection,
     @Object,
 
-    //Priority
-
-
-
     // Simple Types
     Area,
     AutoNumber,
@@ -48,7 +44,7 @@ public enum NoxType
     Json,
     JwtToken,
     Language,
-    Latlong,
+    LatLong,
     Length,
     MacAddress,
     Markdown,

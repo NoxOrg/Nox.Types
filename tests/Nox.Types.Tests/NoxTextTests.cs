@@ -15,6 +15,17 @@ public class NoxTextTests
     }
 
     [Fact]
+    public void Nox_TextOptions_Constructor_ReturnsDefaults()
+    {
+        var textOptions = new TextTypeOptions();
+
+        Assert.True(textOptions.IsUnicode);
+        Assert.Equal(0u,textOptions.MinLength);
+        Assert.Equal(255u, textOptions.MaxLength);
+        Assert.Equal(TextTypeCasing.Normal,textOptions.Casing);
+    }
+
+    [Fact]
     public void Nox_Text_Constructor_SpecifyingNonUnicode_WithNonUnicodeCharacterInput_ReturnsSameValue()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
