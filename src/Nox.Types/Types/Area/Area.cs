@@ -10,6 +10,9 @@ namespace Nox.Types;
 /// </summary>
 public class Area : ValueObject<QuantityValue, Area>
 {
+    private const int QUANTITY_VALUE_DECIMAL_PRECISION = 6;
+    private const long EARTHS_SURFACE_AREA_IN_SQUARE_METERS = 510_072_000_000_000;
+
     private readonly AreaUnitConverter _converter;
 
     public AreaTypeUnit Unit { get; private set; } = AreaTypeUnit.SquareMeter;
@@ -61,7 +64,7 @@ public class Area : ValueObject<QuantityValue, Area>
     {
         var result = base.Validate();
 
-        if (Value < 0 || double.IsNaN((double)Value) || double.IsInfinity((double)Value))
+        if (Value < 0 || !Value.IsDecimal && (double.IsNaN((double)Value) || double.IsInfinity((double)Value)))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is not allowed."));
         }
@@ -70,7 +73,7 @@ public class Area : ValueObject<QuantityValue, Area>
         {
             result.Errors.Add(new ValidationFailure(nameof(Unit), $"Could not create a Nox Area type as unit {Unit} is not supported."));
         }
-        else if (ToSquareMeters() > 510_072_000_000_000)
+        else if (ToSquareMeters() > EARTHS_SURFACE_AREA_IN_SQUARE_METERS)
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is greater than the surface area of the Earth."));
         }
@@ -93,6 +96,6 @@ public class Area : ValueObject<QuantityValue, Area>
 
     private QuantityValue GetAreaIn(AreaTypeUnit unit) => Round(_converter.To(unit));
 
-    private static QuantityValue Round(QuantityValue value, int decimals = 6)
-        => value.IsDecimal ? Math.Round((decimal)value, decimals) : Math.Round((double)value, decimals);
+    private static QuantityValue Round(QuantityValue value)
+        => value.IsDecimal ? Math.Round((decimal)value, QUANTITY_VALUE_DECIMAL_PRECISION) : Math.Round((double)value, QUANTITY_VALUE_DECIMAL_PRECISION);
 }
