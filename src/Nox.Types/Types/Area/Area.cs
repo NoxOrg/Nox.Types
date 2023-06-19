@@ -1,8 +1,5 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Nox.Types;
 
@@ -48,7 +45,7 @@ public class Area : ValueObject<QuantityValue, Area>
 
         if (!validationResult.IsValid)
         {
-            throw new ValidationException(validationResult.Errors);
+            throw new TypeValidationException(validationResult.Errors);
         }
 
         return newObject;
@@ -61,7 +58,7 @@ public class Area : ValueObject<QuantityValue, Area>
     /// <returns>
     /// true if the <see cref="Area"/> value is valid.
     /// </returns>
-    public override ValidationResult Validate()
+    internal override ValidationResult Validate()
     {
         var result = base.Validate();
 

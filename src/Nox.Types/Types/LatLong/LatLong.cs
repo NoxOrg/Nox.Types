@@ -1,15 +1,11 @@
-﻿
-using FluentValidation;
-using FluentValidation.Results;
-using System;
-using System.Globalization;
+﻿using System;
 
 namespace Nox.Types;
 
 /// <summary>
 /// Represents a Nox <see cref="LatLong"/> type and value object. 
 /// </summary>
-public class LatLong : ValueObject<(double Latitude, double Longitude), LatLong>
+public sealed class LatLong : ValueObject<(double Latitude, double Longitude), LatLong>
 {
     public LatLong() { Value = (Latitude: 0, Longitude: 0); } // Null Island
 
@@ -24,7 +20,7 @@ public class LatLong : ValueObject<(double Latitude, double Longitude), LatLong>
     /// Validates a <see cref="LatLong"/> object.
     /// </summary>
     /// <returns>true if the <see cref="LatLong"/> value is valid geo coordinate.</returns>
-    public override ValidationResult Validate()
+    internal override ValidationResult Validate()
     {
         var result = base.Validate();
 

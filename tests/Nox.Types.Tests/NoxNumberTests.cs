@@ -1,6 +1,4 @@
 ﻿
-using FluentValidation;
-
 namespace Nox.Types.Tests;
 
 public class NoxNumberTests
@@ -20,7 +18,7 @@ public class NoxNumberTests
     {
         var testNumber = 3.14m;
 
-        Assert.Throws<ValidationException>(() => _ =
+        Assert.Throws<TypeValidationException>(() => _ =
             Number.From(testNumber, new NumberTypeOptions { MaxValue = 1 })
         );
     }
@@ -30,7 +28,7 @@ public class NoxNumberTests
     {
         var testNumber = 3.14m;
 
-        Assert.Throws<ValidationException>(() => _ =
+        Assert.Throws<TypeValidationException>(() => _ =
             Number.From(testNumber, new NumberTypeOptions { MinValue = 42 })
         );
     }
@@ -58,13 +56,18 @@ public class NoxNumberTests
     [Fact]
     public void Nox_Number_ToString_Returns_Value()
     {
-        var testNumber = 3.14m;
+        void Test()
+        {
+            var testNumber = 3.14m;
 
-        var number = Number.From(testNumber);
+            var number = Number.From(testNumber);
 
-        var numberAsString = number.ToString();
+            var numberAsString = number.ToString();
 
-        Assert.Equal("3.14", numberAsString);
+            Assert.Equal("3.14", numberAsString);
+        }
+
+        TestUtility.RunInInvariantCulture(Test);
     }
 
     [Fact]

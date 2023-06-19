@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests;
 
 public class NoxAreaTests
 {
@@ -61,7 +59,7 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Constructor_WithNegativeValueInput_ThrowsException()
     {
-        var exception = Assert.Throws<ValidationException>(() => _ =
+        var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(-12.5)
         );
 
@@ -71,7 +69,7 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Constructor_WithNaNValueInput_ThrowsException()
     {
-        var exception = Assert.Throws<ValidationException>(() => _ =
+        var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(double.NaN)
         );
 
@@ -81,7 +79,7 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Constructor_WithPositiveInfinityValueInput_ThrowsException()
     {
-        var exception = Assert.Throws<ValidationException>(() => _ =
+        var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(double.PositiveInfinity)
         );
 
@@ -91,7 +89,7 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Constructor_WithNegativeInfinityValueInput_ThrowsException()
     {
-        var exception = Assert.Throws<ValidationException>(() => _ =
+        var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(double.NegativeInfinity)
         );
 
@@ -101,7 +99,7 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Constructor_WithWithUnsupportedUnitInput_ThrowsException()
     {
-        var exception = Assert.Throws<ValidationException>(() => _ =
+        var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(12.5, (AreaTypeUnit)1001)
         );
 
@@ -111,7 +109,7 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Constructor_WithNotAllowedValueInput_ThrowsException()
     {
-        var exception = Assert.Throws<ValidationException>(() => _ =
+        var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(510_072_000_000_001)
         );
 

@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests;
 
 public class NoxEmailTests
 {
@@ -19,7 +17,7 @@ public class NoxEmailTests
     {
         var testEmail = "It's a test designed to provoke an emotional response - Holden";
 
-        Assert.Throws<ValidationException>(() => _ =
+        Assert.Throws<TypeValidationException>(() => _ =
             Email.From(testEmail)
         );
     }

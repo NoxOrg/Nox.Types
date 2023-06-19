@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Globalization;
-using FluentValidation.Results;
 
 namespace Nox.Types;
 
@@ -324,7 +323,7 @@ public readonly struct QuantityValue : IFormattable, IEquatable<QuantityValue>, 
 
     #endregion
 
-    public ValidationResult Validate()
+    internal ValidationResult Validate()
     {
         var result = new ValidationResult();
 
