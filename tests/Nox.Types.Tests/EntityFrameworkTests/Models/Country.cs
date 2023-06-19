@@ -8,6 +8,6 @@ public sealed class Country
     public Text Name { get; set; } = null!;
     public Number? Population { get; set; } = null!;
     public LatLong LatLong { get; set; } = null!;
-
     public CountryCode2 CountryCode2 { get; set; } = null!;
+    public Area Area { get; set; } = null!;
 }
