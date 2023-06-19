@@ -10,4 +10,5 @@ public sealed class Country
     public LatLong LatLong { get; set; } = null!;
 
     public CountryCode2 CountryCode2 { get; set; } = null!;
+    public CountryNumber CountryNumber { get; set; } = null!;
 }
