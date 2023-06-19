@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Cryptography;
-using FluentValidation.Results;
 
 namespace Nox.Types;
 
