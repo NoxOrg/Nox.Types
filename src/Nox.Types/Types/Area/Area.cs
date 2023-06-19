@@ -9,13 +9,12 @@ namespace Nox.Types;
 public class Area : ValueObject<QuantityValue, Area>
 {
     private const int QUANTITY_VALUE_DECIMAL_PRECISION = 6;
+    
     private const long EARTHS_SURFACE_AREA_IN_SQUARE_METERS = 510_072_000_000_000;
-
-    private readonly AreaUnitConverter _converter;
 
     public AreaTypeUnit Unit { get; private set; } = AreaTypeUnit.SquareMeter;
 
-    public Area() { Value = 0; _converter = new AreaUnitConverter(this); }
+    public Area() { Value = 0; }
 
     public static Area FromSquareMeters(QuantityValue value)
         => From(value);
@@ -51,7 +50,6 @@ public class Area : ValueObject<QuantityValue, Area>
         return newObject;
     }
 
-
     /// <summary>
     /// Validates a <see cref="Area"/> object.
     /// </summary>
@@ -60,21 +58,19 @@ public class Area : ValueObject<QuantityValue, Area>
     /// </returns>
     internal override ValidationResult Validate()
     {
-        var result = base.Validate();
-
-        var valueResult = Value.Validate();
-        result.Errors.AddRange(valueResult.Errors);    
+        var result = Value.Validate();
 
         if (Value < 0)
         {
-            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is not allowed."));
+            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as negative area value {Value} is not allowed."));
         }
 
         if (!Enum.IsDefined(typeof(AreaTypeUnit), Unit))
         {
             result.Errors.Add(new ValidationFailure(nameof(Unit), $"Could not create a Nox Area type as unit {Unit} is not supported."));
         }
-        else if (ToSquareMeters() > EARTHS_SURFACE_AREA_IN_SQUARE_METERS)
+        
+        if (ToSquareMeters() > EARTHS_SURFACE_AREA_IN_SQUARE_METERS)
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is greater than the surface area of the Earth."));
         }
@@ -95,8 +91,20 @@ public class Area : ValueObject<QuantityValue, Area>
     private QuantityValue? _squareFeet;
     public QuantityValue ToSquareFeet() => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
 
-    private QuantityValue GetAreaIn(AreaTypeUnit unit) => Round(_converter.To(unit));
+    private QuantityValue GetAreaIn(AreaTypeUnit unit)
+    {
+        if (Unit == unit)
+            return Round(Value);
+
+        else if (Unit == AreaTypeUnit.SquareMeter && unit == AreaTypeUnit.SquareFoot)
+            return Round(Value * 10.76391042);
+
+        else if (Unit == AreaTypeUnit.SquareFoot && unit == AreaTypeUnit.SquareMeter)
+            return Round(Value * 0.09290304);
+
+        throw new NotImplementedException($"No conversion defined from {Unit} to {unit}");
+    }
 
     private static QuantityValue Round(QuantityValue value)
-        => value.IsDecimal ? Math.Round((decimal)value, QUANTITY_VALUE_DECIMAL_PRECISION) : Math.Round((double)value, QUANTITY_VALUE_DECIMAL_PRECISION);
+        => Math.Round((double)value, QUANTITY_VALUE_DECIMAL_PRECISION);
 }

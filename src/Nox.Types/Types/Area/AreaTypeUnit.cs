@@ -1,4 +1,6 @@
-﻿namespace Nox.Types;
+﻿using System;
+
+namespace Nox.Types;
 
 public enum AreaTypeUnit
 {
@@ -13,7 +15,8 @@ public static class AreaTypeUnitExtensions
         return unit switch
         {
             AreaTypeUnit.SquareFoot => "ft²",
-            _ => "m²",
+            AreaTypeUnit.SquareMeter => "m²",
+            _ => throw new NotImplementedException($"No symbol defined for unit {unit}.")
         };
     }
 }
