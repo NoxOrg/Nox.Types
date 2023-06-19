@@ -65,11 +65,6 @@ public class Area : ValueObject<QuantityValue, Area>
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as negative area value {Value} is not allowed."));
         }
 
-        if (!Enum.IsDefined(typeof(AreaTypeUnit), Unit))
-        {
-            result.Errors.Add(new ValidationFailure(nameof(Unit), $"Could not create a Nox Area type as unit {Unit} is not supported."));
-        }
-        
         if (ToSquareMeters() > EARTHS_SURFACE_AREA_IN_SQUARE_METERS)
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is greater than the surface area of the Earth."));
@@ -102,7 +97,7 @@ public class Area : ValueObject<QuantityValue, Area>
         else if (Unit == AreaTypeUnit.SquareFoot && unit == AreaTypeUnit.SquareMeter)
             return Round(Value * 0.09290304);
 
-        throw new NotImplementedException($"No conversion defined from {Unit} to {unit}");
+        throw new NotImplementedException($"No conversion defined from {Unit} to {unit}.");
     }
 
     private static QuantityValue Round(QuantityValue value)
