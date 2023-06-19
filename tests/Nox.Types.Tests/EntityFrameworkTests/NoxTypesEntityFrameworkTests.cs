@@ -28,6 +28,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             Population = Number.From(8_703_654),
             CountryCode2 = CountryCode2.From("CH"),
             Area = Area.From(41_290_000),
+            Culture = Culture.From("de-CH", "German (Switzerland)")
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -44,7 +45,8 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal("CH", item.CountryCode2?.Value);
         Assert.Equal(41_290_000, item.Area.Value);
         Assert.Equal(AreaTypeUnit.SquareMeter, item.Area.Unit);
-
+        Assert.Equal("de-CH", item.Culture.Code);
+        Assert.Equal("German (Switzerland)", item.Culture.DisplayName);
     }
 
 
