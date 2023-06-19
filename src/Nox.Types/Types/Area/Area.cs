@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nox.Types;
 
@@ -64,7 +65,10 @@ public class Area : ValueObject<QuantityValue, Area>
     {
         var result = base.Validate();
 
-        if (Value < 0 || !Value.IsDecimal && (double.IsNaN((double)Value) || double.IsInfinity((double)Value)))
+        var valueResult = Value.Validate();
+        result.Errors.AddRange(valueResult.Errors);    
+
+        if (Value < 0)
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is not allowed."));
         }

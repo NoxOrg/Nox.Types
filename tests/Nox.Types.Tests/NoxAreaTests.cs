@@ -75,7 +75,7 @@ public class NoxAreaTests
             Area.From(double.NaN)
         );
 
-        Assert.Equal("Could not create a Nox Area type as value NaN is not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox type as value NaN is not allowed.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public class NoxAreaTests
             Area.From(double.PositiveInfinity)
         );
 
-        Assert.Equal("Could not create a Nox Area type as value ∞ is not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox type as value ∞ is not allowed.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class NoxAreaTests
             Area.From(double.NegativeInfinity)
         );
 
-        Assert.Equal("Could not create a Nox Area type as value -∞ is not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox type as value -∞ is not allowed.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
