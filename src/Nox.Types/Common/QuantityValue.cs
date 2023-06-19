@@ -327,9 +327,14 @@ public readonly struct QuantityValue : IFormattable, IEquatable<QuantityValue>, 
     {
         var result = new ValidationResult();
 
-        if (!IsDecimal && (double.IsNaN(_doubleValue) || double.IsInfinity(_doubleValue)))
+        if (!IsDecimal && double.IsNaN(_doubleValue))
         {
-            result.Errors.Add(new ValidationFailure("Value", $"Could not create a Nox type as value {_doubleValue} is not allowed."));
+            result.Errors.Add(new ValidationFailure("Value", $"Could not create a Nox type as value NaN is not allowed."));
+        }
+
+        if (!IsDecimal && double.IsInfinity(_doubleValue))
+        {
+            result.Errors.Add(new ValidationFailure("Value", $"Could not create a Nox type as value Infinity is not allowed."));
         }
 
         return result;

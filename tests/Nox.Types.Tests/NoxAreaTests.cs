@@ -83,7 +83,7 @@ public class NoxAreaTests
             Area.From(double.PositiveInfinity)
         );
 
-        Assert.Equal("Could not create a Nox type as value ∞ is not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox type as value Infinity is not allowed.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
@@ -93,7 +93,7 @@ public class NoxAreaTests
             Area.From(double.NegativeInfinity)
         );
 
-        Assert.Equal("Could not create a Nox type as value -∞ is not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox type as value Infinity is not allowed.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
