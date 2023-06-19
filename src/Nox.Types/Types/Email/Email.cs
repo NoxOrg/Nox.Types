@@ -1,6 +1,4 @@
 ﻿
-using FluentValidation;
-using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -11,7 +9,7 @@ namespace Nox.Types;
 /// <summary>
 /// Represents a Nox <see cref="Email"/> type and value object. 
 /// </summary>
-public class Email : ValueObject<string, Email>
+public sealed class Email : ValueObject<string, Email>
 {
     private static readonly Regex _emailRegex = new(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", RegexOptions.Compiled, new TimeSpan(0, 0, 1));
 
@@ -47,7 +45,7 @@ public class Email : ValueObject<string, Email>
 
         if (!validationResult.IsValid)
         {
-            throw new ValidationException(validationResult.Errors);
+            throw new  TypeValidationException(validationResult.Errors);
         }
 
         return newObject;
@@ -57,7 +55,7 @@ public class Email : ValueObject<string, Email>
     /// Validates a <see cref="Email"/> object.
     /// </summary>
     /// <returns>true if the <see cref="Email"/> value is valid .</returns>
-    public override ValidationResult Validate()
+    internal override ValidationResult Validate()
     {
         var result = base.Validate();
 

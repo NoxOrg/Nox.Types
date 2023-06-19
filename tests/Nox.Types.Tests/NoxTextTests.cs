@@ -31,7 +31,7 @@ public class NoxTextTests
     {
         var testString = "二兎を追う者は一兎をも得ず。"; // English translation: “Those who chase two hares won’t even catch one.”
 
-        Assert.Throws<ValidationException>(() => _ =
+        Assert.Throws<TypeValidationException>(() => _ =
             Text.From(testString, new TextTypeOptions { IsUnicode = false })
         );
 
@@ -42,7 +42,7 @@ public class NoxTextTests
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
-        Assert.Throws<ValidationException>(() => _ =
+        Assert.Throws<TypeValidationException>(() => _ =
             Text.From(testString, new TextTypeOptions { MaxLength = 3 })
         );
     }
@@ -52,7 +52,7 @@ public class NoxTextTests
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
-        Assert.Throws<ValidationException>(() => _ = 
+        Assert.Throws<TypeValidationException>(() => _ = 
             Text.From(testString, new TextTypeOptions { MinLength = 100 })
         );
     }

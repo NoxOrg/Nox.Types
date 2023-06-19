@@ -1,17 +1,13 @@
-﻿
-using FluentValidation;
-using FluentValidation.Results;
-using System;
-using System.Globalization;
+﻿using System;
 
 namespace Nox.Types;
 
 /// <summary>
 /// Represents a Nox <see cref="Number"/> type and value object. 
 /// </summary>
-public class Number : ValueObject<decimal, Number>
+public sealed class Number : ValueObject<decimal, Number>
 {
-    protected NumberTypeOptions _numberTypeOptions = new();
+    private NumberTypeOptions _numberTypeOptions = new();
 
     public Number() { Value = 0; }
 
@@ -34,7 +30,7 @@ public class Number : ValueObject<decimal, Number>
 
         if (!validationResult.IsValid)
         {
-            throw new ValidationException(validationResult.Errors);
+            throw new TypeValidationException(validationResult.Errors);
         }
 
         return newObject;
@@ -93,7 +89,7 @@ public class Number : ValueObject<decimal, Number>
     /// Validates a <see cref="Number"/> object.
     /// </summary>
     /// <returns>true if the <see cref="Number"/> value is valid according to the default or specified <see cref="NumberTypeOptions"/>.</returns>
-    public override ValidationResult Validate()
+    internal override ValidationResult Validate()
     {
         var result = base.Validate();
 

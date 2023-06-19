@@ -1,9 +1,8 @@
-﻿
 namespace Nox.Types.Tests.EntityFrameworkTests;
 
 public class CountryId : ValueObject<int, CountryId> { }
 
-public class Country
+public sealed class Country
 {
     /// <summary>
     /// Gets or sets the identifier.
@@ -26,4 +25,6 @@ public class Country
     /// Gets or sets the gross domestic product(GDP).
     /// </summary>
     public Money GrossDomesticProduct { get; set; } = null!;
+
+    public CountryCode2 CountryCode2 { get; set; } = null!;
 }
