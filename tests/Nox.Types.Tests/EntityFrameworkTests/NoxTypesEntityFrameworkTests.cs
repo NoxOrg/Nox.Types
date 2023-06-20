@@ -1,4 +1,4 @@
-﻿
+
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Nox.Types;
@@ -26,9 +26,10 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             Name = Text.From("Switzerland"),
             LatLong = LatLong.From(46.802496, 8.234392),
             Population = Number.From(8_703_654),
+            GrossDomesticProduct = Money.From(717_341_603_000, CurrencyCode.CHF),
             CountryCode2 = CountryCode2.From("CH"),
-            Area = Area.From(41_290_000),
-            Culture = Culture.From("de-CH", "German (Switzerland)")
+            AreaInSqKm = Area.From(41_290_000),
+            Culture = Culture.From("de-CH", "German (Switzerland)"),
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -42,9 +43,12 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(46.802496, item.LatLong.Latitude);
         Assert.Equal(8.234392, item.LatLong.Longitude);
         Assert.Equal(8_703_654, item.Population?.Value);
+        Assert.Equal("CHF", item.GrossDomesticProduct.CurrencyCode);
+        Assert.Equal(CurrencyCode.CHF, item.GrossDomesticProduct.Value.CurrencyCode);
+        Assert.Equal(717_341_603_000, item.GrossDomesticProduct.Amount);
         Assert.Equal("CH", item.CountryCode2?.Value);
-        Assert.Equal(41_290_000, item.Area.Value);
-        Assert.Equal(AreaTypeUnit.SquareMeter, item.Area.Unit);
+        Assert.Equal(41_290_000, item.AreaInSqKm.Value);
+        Assert.Equal(AreaTypeUnit.SquareMeter, item.AreaInSqKm.Unit);
         Assert.Equal("de-CH", item.Culture.Code);
         Assert.Equal("German (Switzerland)", item.Culture.DisplayName);
     }
