@@ -22,7 +22,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             LatLong = LatLong.From(46.802496, 8.234392),
             Population = Number.From(8_703_654),
             CountryCode2 = CountryCode2.From("CH"),
-            CountryNumber = CountryNumber.From("756"),
+            CountryNumber = CountryNumber.From(756),
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -37,6 +37,6 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(8.234392, item.LatLong.Longitude);
         Assert.Equal(8_703_654, item.Population?.Value);
         Assert.Equal("CH", item.CountryCode2?.Value);
-        Assert.Equal("756", item.CountryNumber.Value);
+        Assert.Equal(756, item.CountryNumber.Value);
     }
 }
