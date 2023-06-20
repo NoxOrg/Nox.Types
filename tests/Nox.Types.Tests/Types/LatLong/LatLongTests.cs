@@ -1,6 +1,7 @@
-﻿namespace Nox.Types.Tests;
+﻿// ReSharper disable once CheckNamespace
+namespace Nox.Types.Tests.Types;
 
-public class NoxLatLongTests
+public class LatLongTests
 {
     [Fact]
     public void Nox_LatLong_Constructor_ReturnsSameValue()
@@ -62,8 +63,8 @@ public class NoxLatLongTests
 
     [Theory]
     [InlineData("en-us","46.948090 7.447440")]
-    [InlineData("pt-PT","46,948090 7,447440")]
-    public void Nox_LatLong_ToString_ReturnsString(string culture, string expectedResult)
+    [InlineData("pt-PT","46.948090 7.447440")]
+    public void ToString_IsCultureIndependent(string culture, string expectedResult)
     {
         void Test()
         {

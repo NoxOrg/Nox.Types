@@ -1,4 +1,4 @@
-﻿namespace Nox.Types.Tests;
+namespace Nox.Types.Tests;
 
 public class NoxAreaTests
 {
@@ -65,8 +65,7 @@ public class NoxAreaTests
                 Area.From(-12.5)
             );
 
-            Assert.Equal("Could not create a Nox Area type as negative area value -12.5 is not allowed.",
-                exception.Errors.First().ErrorMessage);
+            Assert.Equal("Could not create a Nox Area type as negative area value -12.5 is not allowed.", exception.Errors.First().ErrorMessage);
         }
 
         TestUtility.RunInInvariantCulture(Test);
