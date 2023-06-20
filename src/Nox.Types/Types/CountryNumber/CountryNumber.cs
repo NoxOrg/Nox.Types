@@ -13,7 +13,12 @@ public class CountryNumber : ValueObject<string, CountryNumber>
     {
         var result = base.Validate();
 
-        if (!_countryNumberRegex.IsMatch(Value))
+        if (string.IsNullOrWhiteSpace(Value))
+        {
+            result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox CountryNumber type as value needs to be specified."));
+        }
+
+        else if (!_countryNumberRegex.IsMatch(Value))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox CountryNumber type as value {Value} is not allowed."));
         }

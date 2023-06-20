@@ -260,6 +260,18 @@ public class NoxCountryNumberTest
         Assert.Equal(value, countryNumber.Value);
     }
 
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData(null)]
+    public void Nox_CountryNumber_Constructor_WithUnspecifiedValue_ThrowsException(string? value)
+    {
+        var exception = Assert.Throws<TypeValidationException>(() => _ =
+            CountryNumber.From(value!)
+        );
+
+        Assert.Equal($"Could not create a Nox CountryNumber type as value needs to be specified.", exception.Errors.First().ErrorMessage);
+    }
 
     [Theory]
     [InlineData("1")]
