@@ -1,6 +1,4 @@
 ﻿
-using FluentValidation;
-
 namespace Nox.Types.Tests;
 
 public class NoxNumberTests

@@ -21,10 +21,19 @@ public sealed class Country
     /// Gets or sets the latitude and longitude.
     /// </summary>
     public LatLong LatLong { get; set; } = null!;
+
     /// <summary>
     /// Gets or sets the gross domestic product(GDP).
     /// </summary>
     public Money GrossDomesticProduct { get; set; } = null!;
 
+    /// <summary>
+    /// Gets or sets the country ISO code.
+    /// </summary>
     public CountryCode2 CountryCode2 { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the area in square Kilometers.
+    /// </summary>
+    public Area AreaInSquareKm { get; set; } = null!;
 }

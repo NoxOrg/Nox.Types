@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using FluentValidation;
-
-namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests;
 
 public class NoxLatLongTests
 {

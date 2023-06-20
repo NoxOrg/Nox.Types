@@ -126,6 +126,26 @@ public sealed class Number : ValueObject<decimal, Number>
         }
         return typeof(decimal);
     }
+
+    public static Type GetUnderlyingType(NumberTypeOptions numberTypeOptions)
+    {
+        if (numberTypeOptions.DecimalDigits == 0)
+        {
+            if (numberTypeOptions.MaxValue <= byte.MaxValue && numberTypeOptions.MinValue >= byte.MinValue)
+                return typeof(byte);
+
+            if (numberTypeOptions.MaxValue <= short.MaxValue && numberTypeOptions.MinValue >= short.MinValue)
+                return typeof(short);
+
+            else if (numberTypeOptions.MaxValue <= int.MaxValue && numberTypeOptions.MinValue >= int.MinValue)
+                return typeof(int);
+
+            else if (numberTypeOptions.MaxValue <= long.MaxValue && numberTypeOptions.MinValue >= long.MinValue)
+                return typeof(long);
+        }
+        return typeof(decimal);
+    }
+
 }
 
 

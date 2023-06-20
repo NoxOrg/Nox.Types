@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests;
 
 public class NoxTextTests
 {
@@ -12,6 +10,17 @@ public class NoxTextTests
         var text = Text.From(testString);
 
         Assert.Equal(testString, text.Value);
+    }
+
+    [Fact]
+    public void Nox_TextOptions_Constructor_ReturnsDefaults()
+    {
+        var textOptions = new TextTypeOptions();
+
+        Assert.True(textOptions.IsUnicode);
+        Assert.Equal(0u,textOptions.MinLength);
+        Assert.Equal(255u, textOptions.MaxLength);
+        Assert.Equal(TextTypeCasing.Normal,textOptions.Casing);
     }
 
     [Fact]
