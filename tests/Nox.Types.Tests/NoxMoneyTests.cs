@@ -98,11 +98,19 @@ public class NoxMoneyTests
     [Fact]
     public void Money_ToString_With_C_Format_ReturnsCurrencySymbolAndAmount()
     {
-        var money1 = Money.From(1455453.5m, CurrencyCode.ZAR);
-        var money2 = Money.From(1455453.5m, CurrencyCode.GBP);
+        void Test()
+        {
+            var area = Area.FromSquareMeters(12.5);
 
-        Assert.Equal("R1,455,453.50", money1.ToString("C", new CultureInfo("en-ZA")));
-        Assert.Equal("£1,455,453.50", money2.ToString("C", new CultureInfo("en-GB")));
+            Assert.Equal("12.5 m²", area.ToString());
 
+            var money1 = Money.From(1455453.5m, CurrencyCode.ZAR);
+            var money2 = Money.From(1455453.5m, CurrencyCode.GBP);
+
+            Assert.Equal("R1,455,453.50", money1.ToString("C", new CultureInfo("en-ZA")));
+            Assert.Equal("£1,455,453.50", money2.ToString("C", new CultureInfo("en-GB")));
+        }
+
+        TestUtility.RunInInvariantCulture(Test);
     }
 }

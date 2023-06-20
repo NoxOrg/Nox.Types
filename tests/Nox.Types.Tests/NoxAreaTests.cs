@@ -59,11 +59,16 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_Constructor_WithNegativeValueInput_ThrowsException()
     {
-        var exception = Assert.Throws<TypeValidationException>(() => _ =
-            Area.From(-12.5)
-        );
+        void Test()
+        {
+            var exception = Assert.Throws<TypeValidationException>(() => _ =
+                Area.From(-12.5)
+            );
 
-        Assert.Equal("Could not create a Nox Area type as negative area value -12.5 is not allowed.", exception.Errors.First().ErrorMessage);
+            Assert.Equal("Could not create a Nox Area type as negative area value -12.5 is not allowed.", exception.Errors.First().ErrorMessage);
+        }
+
+        TestUtility.RunInInvariantCulture(Test);
     }
 
     [Fact]
@@ -139,17 +144,27 @@ public class NoxAreaTests
     [Fact]
     public void Nox_Area_ValueInSquareMeters_ToString_ReturnsString()
     {
-        var area = Area.FromSquareMeters(12.5);
+        void Test()
+        {
+            var area = Area.FromSquareMeters(12.5);
 
-        Assert.Equal("12.5 m²", area.ToString());
+            Assert.Equal("12.5 m²", area.ToString());
+        }
+
+        TestUtility.RunInInvariantCulture(Test);
     }
 
     [Fact]
     public void Nox_Area_ValueInSquareFeet_ToString_ReturnsString()
     {
-        var area = Area.FromSquareFeet(134.548880);
+        void Test()
+        {
+            var area = Area.FromSquareFeet(134.548880);
 
-        Assert.Equal("134.54888 ft²", area.ToString());
+            Assert.Equal("134.54888 ft²", area.ToString());
+        }
+
+        TestUtility.RunInInvariantCulture(Test);
     }
 
     [Fact]
