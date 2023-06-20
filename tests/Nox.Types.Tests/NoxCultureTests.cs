@@ -2,44 +2,65 @@ namespace Nox.Types.Tests;
 
 public class NoxCultureTests
 {
-    [Fact]
-    public void Culture_WithValidValues_ShouldBeValid()
+    [Theory]
+    [InlineData("en")]
+    [InlineData("tr-TR")]
+    [InlineData("az-AZ-Latn")]
+    public void Culture_ValidCultureCode_ShouldBeAbleToCreate(string cultureCode)
     {
-        // Arrange
-        string code = "en-US";
-        string displayName = "English (United States)";
-
         // Act
-        var culture = Culture.From(code, displayName);
+        var culture = Culture.From(cultureCode);
 
         // Assert
-        Assert.Equal(code, culture.Code);
-        Assert.Equal(displayName, culture.DisplayName);
+        Assert.NotNull(culture);
+       
     }
 
     [Theory]
-    [InlineData(null, "English (United States)")]
-    [InlineData("", "English (United States)")]
-    [InlineData("en-US", null)]
-    [InlineData("en-US", "")]
-    public void Culture_WithInvalidValues_ShouldBeInvalid(string code, string displayName)
+    [InlineData("eng")]
+    [InlineData("tR")]
+    [InlineData("Sr-Sp")]
+    [InlineData("sr-SP-CYRL")]
+    [InlineData("invalid")]
+    public void Culture_InvalidCultureCode_ShouldBeInvalid(string cultureCode)
     {
-        // Arrange & Act & Assert
-        Assert.Throws<TypeValidationException>(() => Culture.From(code, displayName));
-    }
-
-    [Fact]
-    public void Culture_ToString_ReturnsCode()
-    {
-        // Arrange
-        string code = "en-US";
-        string displayName = "English (United States)";
-        var culture = Culture.From(code, displayName);
-
-        // Act
-        string result = culture.ToString();
+        
+        // Arrange & Act
+        var exception = Assert.Throws<TypeValidationException>(() => _ = Culture.From(cultureCode));
 
         // Assert
-        Assert.Equal(code, result);
+        Assert.Equal($"Could not create a Nox Culture type with unsupported value '{cultureCode}'.", exception.Errors.First().ErrorMessage);
+    }
+    
+    [Fact]
+    public void Nox_Culture_Equality_Tests()
+    {
+        // Arrange & Act
+        var culture1 = Culture.From("tr-TR");
+        var culture2 =  Culture.From("tr-TR");
+
+        // Assert
+        Assert.Equal(culture1, culture2);
+    }
+    
+    [Fact]
+    public void Nox_Culture_NotEqual_Tests()
+    {
+        // Arrange & Act
+        var culture1 = Culture.From("tr-TR");
+        var culture2 =  Culture.From("en-US");
+
+        // Assert
+        Assert.NotEqual(culture1, culture2);
+    }
+    
+    [Fact]
+    public void Nox_Culture_ToString_ReturnsString()
+    {
+        // Arrange & Act
+        var culture = Culture.From("tr-TR");
+
+        // Assert
+        Assert.Equal("tr-TR", culture.ToString());
     }
 }
