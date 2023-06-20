@@ -36,5 +36,9 @@ public sealed class Country
     /// Gets or sets the area in square Kilometers.
     /// </summary>
     public Area AreaInSqKm { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets the culture.
+    /// </summary>
     public Culture Culture { get; set; } = null!;
 }
