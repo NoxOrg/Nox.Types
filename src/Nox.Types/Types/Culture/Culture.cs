@@ -7,9 +7,9 @@ namespace Nox.Types;
 /// </summary>
 public class Culture : ValueObject<string, Culture>
 {
-    private const string TwoLetterCultureCode = @"^[a-z]{2}$";
-    private const string FiveLetterCultureCode = @"^[a-z]{2}-[A-Z]{2}$";
-    private const string TenLetterCultureCode = @"^[a-z]{2}-[A-Z]{2}-[A-Z][a-z]{3}$";
+    private const string TwoLettersCultureCode = @"^[a-z]{2}$";
+    private const string FiveLettersCultureCode = @"^[a-z]{2}-[A-Z]{2}$";
+    private const string TenLettersCultureCode = @"^[a-z]{2}-[A-Z]{2}-[A-Z][a-z]{3}$";
 
     /// <summary>
     /// Validates the <see cref="Culture"/> object.
@@ -19,7 +19,7 @@ public class Culture : ValueObject<string, Culture>
     {
         var result = base.Validate();
         
-        if (!Regex.IsMatch(Value, TwoLetterCultureCode) && !Regex.IsMatch(Value, FiveLetterCultureCode) && !Regex.IsMatch(Value, TenLetterCultureCode))
+        if (!Regex.IsMatch(Value, TwoLettersCultureCode) && !Regex.IsMatch(Value, FiveLettersCultureCode) && !Regex.IsMatch(Value, TenLettersCultureCode))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Culture type with unsupported value '{Value}'."));
         }
