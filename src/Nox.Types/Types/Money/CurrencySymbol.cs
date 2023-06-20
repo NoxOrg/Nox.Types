@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Nox.Types;
 
-public static class CurrencyConverter
+public static class CurrencySymbol
 {
     private static readonly Dictionary<CurrencyCode, string> CurrencySymbols = new()
     {
@@ -171,7 +171,6 @@ public static class CurrencyConverter
         { CurrencyCode.ZMW, "ZK" },
         { CurrencyCode.WON, "₩" }
     };
-
 
     public static string GetCurrencySymbol(CurrencyCode currencyCode)
     {

@@ -26,7 +26,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             Name = Text.From("Switzerland"),
             LatLong = LatLong.From(46.802496, 8.234392),
             Population = Number.From(8_703_654),
-            GrossDomesticProduct = Money.From(678_965_000_000, CurrencyCode.CHF),
+            GrossDomesticProduct = Money.From(717_341_603_000, CurrencyCode.CHF),
             CountryCode2 = CountryCode2.From("CH")
         };
         DbContext.Countries.Add(newItem);
@@ -41,8 +41,9 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(46.802496, item.LatLong.Latitude);
         Assert.Equal(8.234392, item.LatLong.Longitude);
         Assert.Equal(8_703_654, item.Population?.Value);
-        Assert.Equal(CurrencyCode.CHF, item.GrossDomesticProduct.CurrencyCode);
-        Assert.Equal("678965000000", item.GrossDomesticProduct.ToString());
+        Assert.Equal("CHF", item.GrossDomesticProduct.CurrencyCode);
+        Assert.Equal(CurrencyCode.CHF, item.GrossDomesticProduct.Value.CurrencyCode);
+        Assert.Equal(717_341_603_000, item.GrossDomesticProduct.Amount);
         Assert.Equal("CH", item.CountryCode2?.Value);
 
     }

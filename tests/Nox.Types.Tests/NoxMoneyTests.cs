@@ -12,8 +12,9 @@ public class NoxMoneyTests
         Money money = new Money();
 
         // Assert
-        Assert.Equal(0, money.Value);
-        Assert.Equal(CurrencyCode.USD, money.CurrencyCode);
+        Assert.Equal(0, money.Amount);
+        Assert.Equal("USD", money.CurrencyCode);
+        Assert.Equal(CurrencyCode.USD, money.Value.CurrencyCode);
     }
 
     [Fact]
@@ -27,8 +28,9 @@ public class NoxMoneyTests
         var money = Money.From(value, currency);
 
         // Assert
-        Assert.Equal(value, money.Value);
-        Assert.Equal(currency, money.CurrencyCode);
+        Assert.Equal(value, money.Amount);
+        Assert.Equal("EUR", money.CurrencyCode);
+        Assert.Equal(CurrencyCode.EUR, money.Value.CurrencyCode);
     }
 
     [Fact]
@@ -42,100 +44,11 @@ public class NoxMoneyTests
         var money = Money.From(value, currency);
 
         // Assert
-        Assert.Equal(value, money.Value);
-        Assert.Equal(currency, money.CurrencyCode);
+        Assert.Equal(value, money.Amount);
+        Assert.Equal("GBP", money.CurrencyCode);
+        Assert.Equal(CurrencyCode.GBP, money.Value.CurrencyCode);
     }
 
-    [Fact]
-    public void ToString_ReturnsFormattedString()
-    {
-        // Arrange
-        var money = Money.From(-16325.62m);
-
-        
-        // Act
-        string defaultString = money.ToString();
-        string gFormattedString = money.ToString("G");
-        string fFormattedString = money.ToString("F");
-        string cFormattedString = money.ToString( new CultureInfo("en-US"), "C");
-        
-        // Assert
-        Assert.Equal("-16325.62", defaultString);
-        Assert.Equal("-16325.62", gFormattedString);
-        Assert.Equal("-16325.62", fFormattedString);
-        Assert.Equal("-$16,325.62", cFormattedString);
-        
-    }
-
-    [Fact]
-    public void ToFormattedStringWithCurrency_ReturnsFormattedStringWithCurrency()
-    {
-        // Arrange
-        var money = Money.From(1455453.55m,  CurrencyCode.TRY);
-
-        // Act
-        string formattedString = money.ToString(CultureInfo.InvariantCulture, "N2");
-
-        // Assert
-        Assert.Equal("1,455,453.55", formattedString);
-    }
-
-    [Fact]
-    public void ToStringWithSymbol_ShouldReturnFormattedString_WithDefaultAmountFormat()
-    {
-        // Arrange
-        Money money = Money.From(1000, CurrencyCode.EUR);
-
-        // Act
-        string result = money.ToStringWithSymbol();
-
-        // Assert
-        Assert.Equal("€1,000.00", result);
-    }
-
-    [Fact]
-    public void ToStringWithSymbol_ShouldReturnFormattedString_WithCustomAmountFormat()
-    {
-        // Arrange
-        Money money = Money.From(1000, CurrencyCode.EUR);
-
-        // Act
-        string result = money.ToStringWithSymbol("N0");
-
-        // Assert
-        Assert.Equal("€1,000", result);
-    }
-
-    [Fact]
-    public void ToStringWithSymbol_WithCultureInfo_ShouldReturnFormattedString_WithDefaultAmountFormat()
-    {
-        // Arrange
-        Money money = Money.From(1000, CurrencyCode.USD);
-        CultureInfo cultureInfo = new CultureInfo("en-US");
-
-        // Act
-        string result = money.ToStringWithSymbol(cultureInfo);
-
-        // Assert
-        Assert.Equal("$1,000.00", result);
-    }
-
-    [Fact]
-    public void ToStringWithSymbol_WithCultureInfo_ShouldReturnFormattedString_WithCustomAmountFormat()
-    {
-        // Arrange
-        Money money = Money.From(1000, CurrencyCode.USD);
-        CultureInfo cultureInfo = new CultureInfo("en-US");
-
-        // Act
-        string result = money.ToStringWithSymbol(cultureInfo, "N0");
-
-        // Assert
-        Assert.Equal("$1,000", result);
-    }
-    
-   
-    
     [Fact]
     public void Moneys_Should_Equal_When_Their_Value_And_Currency_Same()
     {
@@ -173,5 +86,24 @@ public class NoxMoneyTests
         Assert.NotEqual(money, money2);
         Assert.NotEqual(money3, money4);
         
+    }
+
+    [Fact]
+    public void Money_ToString_ReturnsCurrencyAndAmount()
+    {
+        var money = Money.From(1455453.55m, CurrencyCode.TRY);
+
+        Assert.Equal("TRY 1455453.55", money.ToString());
+    }
+
+    [Fact]
+    public void Money_ToString_With_C_Format_ReturnsCurrencySymbolAndAmount()
+    {
+        var money1 = Money.From(1455453.5m, CurrencyCode.ZAR);
+        var money2 = Money.From(1455453.5m, CurrencyCode.GBP);
+
+        Assert.Equal("R1,455,453.50", money1.ToString("C", new CultureInfo("en-ZA")));
+        Assert.Equal("£1,455,453.50", money2.ToString("C", new CultureInfo("en-GB")));
+
     }
 }
