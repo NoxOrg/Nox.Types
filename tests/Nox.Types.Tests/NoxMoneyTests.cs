@@ -1,5 +1,4 @@
 using System.Globalization;
-using FluentValidation.Results;
 
 namespace Nox.Types.Tests;
 
