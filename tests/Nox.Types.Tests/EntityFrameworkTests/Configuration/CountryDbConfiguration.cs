@@ -16,6 +16,7 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(e => e.Population).HasConversion<NumberToInt32Converter>();
         builder.Property(e => e.CountryCode2).HasConversion<CountryCode2Converter>();
         builder.Property(e => e.AreaInSqKm).HasConversion<AreaToSquareMeterConverter>();
+        builder.Property(e=>e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
 
         // Configure Multi-value ValueObjects
         builder.OwnsOne(e => e.LatLong).Ignore(p => p.Value);

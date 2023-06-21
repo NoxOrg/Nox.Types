@@ -36,4 +36,10 @@ public sealed class Country
     /// Gets or sets the area in square Kilometers.
     /// </summary>
     public Area AreaInSqKm { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets the month when the most tourists come to the country.
+    /// </summary>
+    public Month MonthOfPeakTourism { get; set; } = null!;
+    
 }
