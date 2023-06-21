@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Nox.Types\Nox.Types.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

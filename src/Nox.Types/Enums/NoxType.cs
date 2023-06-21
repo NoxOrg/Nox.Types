@@ -7,9 +7,12 @@ public enum NoxType
     @Collection,
     @Object,
 
-    //Priority
-
-
+    // Compound Types - requires multiple fields to pesist
+    [CompoundType] Entity,
+    [CompoundType] LatLong,
+    [CompoundType] Money,
+    [CompoundType] StreetAddress,
+    [CompoundType] TranslatedText,
 
     // Simple Types
     Area,
@@ -33,7 +36,6 @@ public enum NoxType
     Distance,
     Email,
     EncryptedText,
-    Entity,
     File,
     Formula,
     Guid,
@@ -48,21 +50,17 @@ public enum NoxType
     Json,
     JwtToken,
     Language,
-    Latlong,
     Length,
     MacAddress,
     Markdown,
-    Money,
     Nuid,
     Number,
     Password,
     Percentage,
     PhoneNumber,
-    StreetAddress,
     Temperature,
     Text,
     Time,
-    TranslatedText,
     Uri,
     Url,
     User,
