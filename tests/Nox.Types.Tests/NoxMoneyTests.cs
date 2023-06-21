@@ -54,37 +54,35 @@ public class NoxMoneyTests
         // Arrange
         var money = Money.From(1455453.55m, CurrencyCode.USD);
         var money2 = Money.From(1455453.55m, CurrencyCode.USD);
-        
+
         // Act
         var result = money.Equals(money2);
-        
+
         // Assert
         Assert.True(result);
         Assert.Equal(money, money2);
-        
     }
-    
+
     [Fact]
     public void Moneys_Should_Not_Equal_When_Their_Value_And_Currency_Different()
     {
         // Arrange
         var money = Money.From(1455453.55m, CurrencyCode.USD);
         var money2 = Money.From(1455453.55m, CurrencyCode.TRY);
-        
+
         var money3 = Money.From(1455453.55m, CurrencyCode.USD);
         var money4 = Money.From(1455453.56m, CurrencyCode.USD);
-        
+
         // Act
         var result = money.Equals(money2);
         var result2 = money3.Equals(money4);
-        
+
         // Assert
 
         Assert.False(result);
         Assert.False(result2);
         Assert.NotEqual(money, money2);
         Assert.NotEqual(money3, money4);
-        
     }
 
     [Fact]
@@ -98,11 +96,19 @@ public class NoxMoneyTests
     [Fact]
     public void Money_ToString_With_C_Format_ReturnsCurrencySymbolAndAmount()
     {
-        var money1 = Money.From(1455453.5m, CurrencyCode.ZAR);
-        var money2 = Money.From(1455453.5m, CurrencyCode.GBP);
+        void Test()
+        {
+            var area = Area.FromSquareMeters(12.5);
 
-        Assert.Equal("R1,455,453.50", money1.ToString("C", new CultureInfo("en-ZA")));
-        Assert.Equal("£1,455,453.50", money2.ToString("C", new CultureInfo("en-GB")));
+            Assert.Equal("12.5 m²", area.ToString());
 
+            var money1 = Money.From(1455453.5m, CurrencyCode.ZAR);
+            var money2 = Money.From(1455453.5m, CurrencyCode.GBP);
+
+            Assert.Equal("R1,455,453.50", money1.ToString("C", new CultureInfo("en-ZA")));
+            Assert.Equal("£1,455,453.50", money2.ToString("C", new CultureInfo("en-GB")));
+        }
+
+        TestUtility.RunInInvariantCulture(Test);
     }
 }
