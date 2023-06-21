@@ -36,4 +36,9 @@ public sealed class Country
     /// Gets or sets the area in square Kilometers.
     /// </summary>
     public Area AreaInSqKm { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the distance in kilometers.
+    /// </summary>
+    public Distance DistanceInKm { get; set; } = null!;
 }

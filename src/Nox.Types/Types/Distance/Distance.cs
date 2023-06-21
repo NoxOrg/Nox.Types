@@ -18,7 +18,17 @@ public class Distance : ValueObject<QuantityValue, Distance>
     /// <returns></returns>
     /// <exception cref="TypeValidationException"></exception>
     public static Distance FromKilometers(QuantityValue value)
-        => From(value);
+        => From(value, DistanceTypeUnit.Kilometer);
+
+    /// <summary>
+    /// Creates a new instance of <see cref="Distance"/> object in kilometers.
+    /// </summary>
+    /// <param name="origin">The origin <see cref="LatLong"/> to create the <see cref="Distance"/> with</param>
+    /// <param name="destination">The destination <see cref="LatLong"/> to create the <see cref="Distance"/> with</param>
+    /// <returns></returns>
+    /// <exception cref="TypeValidationException"></exception>
+    public static Distance FromKilometers(LatLong origin, LatLong destination)
+        => FromKilometers(CalculateDistanceInKilometers(origin, destination));
 
     /// <summary>
     /// Creates a new instance of <see cref="Distance"/> object in miles.
@@ -30,12 +40,32 @@ public class Distance : ValueObject<QuantityValue, Distance>
         => From(value, DistanceTypeUnit.Mile);
 
     /// <summary>
-    /// Creates a new instance of <see cref="Distance"/> with the specified <see cref="DistanceTypeUnit"/>
+    /// Creates a new instance of <see cref="Distance"/> object in miles.
+    /// </summary>
+    /// <param name="origin">The origin <see cref="LatLong"/> to create the <see cref="Distance"/> with</param>
+    /// <param name="destination">The destination <see cref="LatLong"/> to create the <see cref="Distance"/> with</param>
+    /// <returns></returns>
+    /// <exception cref="TypeValidationException"></exception>
+    public static Distance FromMiles(LatLong origin, LatLong destination)
+    {
+        var distanceInKm = FromKilometers(origin, destination);
+        return FromMiles(distanceInKm.ToMiles());
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="Distance"/> object in kilometers.
     /// </summary>
     /// <param name="value">The value to create the <see cref="Distance"/> with</param>
-    /// <param name="unit">
-    /// The <see cref="DistanceTypeUnit"/> to create the <see cref="Distance"/> with
-    /// </param>
+    /// <returns></returns>
+    /// <exception cref="TypeValidationException"></exception>
+    public new static Distance From(QuantityValue value)
+        => From(value, DistanceTypeUnit.Kilometer);
+
+    /// <summary>
+    /// Creates a new instance of <see cref="Distance"/> object with the specified <see cref="DistanceTypeUnit"/>.
+    /// </summary>
+    /// <param name="value">The value to create the <see cref="Distance"/> with</param>
+    /// <param name="unit">The <see cref="DistanceTypeUnit"/> to create the <see cref="Distance"/> with</param>
     /// <returns></returns>
     /// <exception cref="TypeValidationException"></exception>
     public static Distance From(QuantityValue value, DistanceTypeUnit unit)
@@ -108,4 +138,7 @@ public class Distance : ValueObject<QuantityValue, Distance>
 
     private static QuantityValue Round(QuantityValue value)
         => Math.Round((double)value, QUANTITY_VALUE_DECIMAL_PRECISION);
+
+    private static double CalculateDistanceInKilometers(LatLong origin, LatLong destination)
+        => new HaversineDistanceCalculator().Calculate(origin, destination);
 }

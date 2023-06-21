@@ -30,11 +30,35 @@ public class NoxDistanceTests
     }
 
     [Fact]
+    public void Nox_Distance_Constructor_WithLatLongAndUnitInKilometers_ReturnsCalculatedValueAndSameUnit()
+    {
+        var origin = LatLong.From(46.94809, 7.44744);
+        var destination = LatLong.From(46.204391, 6.143158);
+
+        var distance = Distance.FromKilometers(origin, destination);
+
+        Assert.Equal(129.522785, distance.Value);
+        Assert.Equal(DistanceTypeUnit.Kilometer, distance.Unit);
+    }
+
+    [Fact]
     public void Nox_Distance_Constructor_WithUnitInMiles_ReturnsSameValueAndUnit()
     {
         var distance = Distance.FromMiles(195.209);
 
         Assert.Equal(195.209, distance.Value);
+        Assert.Equal(DistanceTypeUnit.Mile, distance.Unit);
+    }
+
+    [Fact]
+    public void Nox_Distance_Constructor_WithLatLongAndUnitInMiles_ReturnsCalculatedValueAndSameUnit()
+    {
+        var origin = LatLong.From(46.94809, 7.44744);
+        var destination = LatLong.From(46.204391, 6.143158);
+
+        var distance = Distance.FromMiles(origin, destination);
+
+        Assert.Equal(80.481727, distance.Value);
         Assert.Equal(DistanceTypeUnit.Mile, distance.Unit);
     }
 
