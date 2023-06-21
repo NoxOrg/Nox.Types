@@ -7,7 +7,7 @@ public enum NoxType
     @Collection,
     @Object,
 
-    // Compound Types - requires multiple fields to pesist
+    // Compound Types - requires multiple fields to persist
     [CompoundType] Entity,
     [CompoundType] LatLong,
     [CompoundType] Money,

@@ -1,4 +1,4 @@
-﻿namespace Nox.Types.Tests;
+namespace Nox.Types.Tests;
 
 public class NoxAreaTests
 {
@@ -88,7 +88,8 @@ public class NoxAreaTests
             Area.From(double.PositiveInfinity)
         );
 
-        Assert.Equal("Could not create a Nox type as value Infinity is not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox type as value Infinity is not allowed.",
+            exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
@@ -98,7 +99,8 @@ public class NoxAreaTests
             Area.From(double.NegativeInfinity)
         );
 
-        Assert.Equal("Could not create a Nox type as value Infinity is not allowed.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox type as value Infinity is not allowed.",
+            exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
@@ -118,14 +120,16 @@ public class NoxAreaTests
             Area.From(510_072_000_000_001)
         );
 
-        Assert.Equal($"Could not create a Nox Area type as value 510072000000001 is greater than the surface area of the Earth.", exception.Errors.First().ErrorMessage);
+        Assert.Equal(
+            $"Could not create a Nox Area type as value 510072000000001 is greater than the surface area of the Earth.",
+            exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
     public void Nox_Area_ToSquareMeters_ReturnsValue()
     {
         var squareMeters = 12.5;
-        
+
         var area = Area.From(squareMeters);
 
         Assert.Equal(12.5, area.ToSquareMeters());
