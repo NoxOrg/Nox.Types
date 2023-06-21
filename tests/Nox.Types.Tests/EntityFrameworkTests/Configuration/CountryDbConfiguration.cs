@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Nox.Types.EntityFramework;
+using Nox.Types.EntityFramework.Types;
 
 namespace Nox.Types.Tests.EntityFrameworkTests;
 

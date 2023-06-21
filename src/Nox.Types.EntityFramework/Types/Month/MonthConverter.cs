@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Nox.Types.EntityFramework;
+namespace Nox.Types.EntityFramework.Types;
 
 public class MonthToByteConverter: ValueConverter<Month, byte>
 {

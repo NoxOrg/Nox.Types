@@ -1,4 +1,5 @@
-namespace Nox.Types.Tests;
+// ReSharper disable once CheckNamespace
+namespace Nox.Types.Tests.Types;
 
 public class NoxMonthTests
 {
