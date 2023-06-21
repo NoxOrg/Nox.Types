@@ -38,6 +38,11 @@ public sealed class Country
     public Area AreaInSqKm { get; set; } = null!;
     
     /// <summary>
+    /// Gets or sets the culture.
+    /// </summary>
+    public Culture Culture { get; set; } = null!;
+
+    /// <summary>
     /// Gets or sets the country number.
     /// </summary>
     public CountryNumber CountryNumber { get; set; } = null!;
