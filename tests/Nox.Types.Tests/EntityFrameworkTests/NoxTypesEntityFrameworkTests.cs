@@ -28,6 +28,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryNumber = CountryNumber.From(756),
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
+            CountryCode3 = CountryCode3.From("CHE")
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
