@@ -1,5 +1,5 @@
 ﻿namespace Nox.Types.Tests;
-public class NoxCurrencyCode2Tests
+public class NoxCurrencyCode3Tests
 {
     [InlineData("AED")]
     [InlineData("AFN")]
@@ -133,49 +133,49 @@ public class NoxCurrencyCode2Tests
     [InlineData("SRD")]
     [InlineData("STD")]
     [Theory]
-    public void Nox_CurrencyCode2_Constructor_ReturnsSameValue_AllCurrencies(string currencyCode2String)
+    public void Nox_CurrencyCode3_Constructor_ReturnsSameValue_AllCurrencies(string currencyCode3String)
     {
-        var currencyCode2 = CurrencyCode2.From(currencyCode2String);
+        var currencyCode3 = CurrencyCode3.From(currencyCode3String);
 
-        Assert.Equal(currencyCode2String, currencyCode2.Value);
+        Assert.Equal(currencyCode3String, currencyCode3.Value);
     }
 
     [Fact]
-    public void Nox_CurrencyCode2_Constructor_WithUnsupportedCurrencyCode2_ThrowsValidationException()
+    public void Nox_CurrencyCode3_Constructor_WithUnsupportedCurrencyCode3_ThrowsValidationException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
-          CurrencyCode2.From("ABC")
+          CurrencyCode3.From("ABC")
         );
 
-        Assert.Equal("Could not create a Nox CurrencyCode2 type with unsupported value 'ABC'.", exception.Errors.First().ErrorMessage);
+        Assert.Equal("Could not create a Nox CurrencyCode3 type with unsupported value 'ABC'.", exception.Errors.First().ErrorMessage);
     }
 
     [Fact]
-    public void Nox_CurrencyCode2_Equality_Tests()
+    public void Nox_CurrencyCode3_Equality_Tests()
     {
-        var currencyCode2_1 = CurrencyCode2.From("USD");
+        var currencyCode3_1 = CurrencyCode3.From("USD");
 
-        var currencyCode2_2 = CurrencyCode2.From("USD");
+        var currencyCode3_2 = CurrencyCode3.From("USD");
 
-        Assert.Equal(currencyCode2_1, currencyCode2_2);
+        Assert.Equal(currencyCode3_1, currencyCode3_2);
     }
 
     [Fact]
-    public void Nox_CurrencyCode2_NotEqual_Tests()
+    public void Nox_CurrencyCode3_NotEqual_Tests()
     {
-        var currencyCode2_1 = CurrencyCode2.From("RWF");
+        var currencyCode3_1 = CurrencyCode3.From("RWF");
 
-        var currencyCode2_2 = CurrencyCode2.From("SHP");
+        var currencyCode3_2 = CurrencyCode3.From("SHP");
 
-        Assert.NotEqual(currencyCode2_1, currencyCode2_2);
+        Assert.NotEqual(currencyCode3_1, currencyCode3_2);
     }
 
     [Fact]
-    public void Nox_CurrencyCode2_ToString_ReturnsString()
+    public void Nox_CurrencyCode3_ToString_ReturnsString()
     {
-        var currencyCode2 = CountryCode2.From("USD");
+        var currencyCode3 = CountryCode2.From("USD");
 
-        Assert.Equal("USD", currencyCode2.ToString());
+        Assert.Equal("USD", currencyCode3.ToString());
     }
 }
 
