@@ -29,6 +29,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             GrossDomesticProduct = Money.From(717_341_603_000, CurrencyCode.CHF),
             CountryCode2 = CountryCode2.From("CH"),
             AreaInSqKm = Area.From(41_290_000),
+            DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -48,8 +49,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal("CH", item.CountryCode2?.Value);
         Assert.Equal(41_290_000, item.AreaInSqKm.Value);
         Assert.Equal(AreaTypeUnit.SquareMeter, item.AreaInSqKm.Unit);
-
+        Assert.Equal(new DateTime(2023, 01, 01), item.DateTimeRange.Start);
+        Assert.Equal(new DateTime(2023, 02, 01), item.DateTimeRange.End);
     }
-
-
 }

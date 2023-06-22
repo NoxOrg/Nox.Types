@@ -19,6 +19,7 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
 
         // Configure Multi-value ValueObjects
         builder.OwnsOne(e => e.LatLong).Ignore(p => p.Value);
-        builder.OwnsOne(e => e.GrossDomesticProduct).Ignore(p=>p.Value);
+        builder.OwnsOne(e => e.GrossDomesticProduct).Ignore(p => p.Value);
+        builder.OwnsOne(e => e.DateTimeRange).Ignore(p => p.Value);
     }
 }
