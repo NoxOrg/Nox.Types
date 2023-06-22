@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Nox.Types.EntityFramework;
+using Nox.Types.EntityFramework.Types;
 
 namespace Nox.Types.Tests.EntityFrameworkTests;
 
@@ -18,6 +19,7 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(e => e.AreaInSqKm).HasConversion<AreaToSquareMeterConverter>();
         builder.Property(e => e.Culture).HasConversion<CultureConverter>();
         builder.Property(e => e.CountryNumber).HasMaxLength(3).HasConversion<CountryNumberConverter>();
+        builder.Property(e=>e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
 
 
         // Configure Multi-value ValueObjects

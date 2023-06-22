@@ -46,4 +46,10 @@ public sealed class Country
     /// Gets or sets the country number.
     /// </summary>
     public CountryNumber CountryNumber { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets the month when the most tourists come to the country.
+    /// </summary>
+    public Month MonthOfPeakTourism { get; set; } = null!;
+    
 }
