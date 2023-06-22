@@ -1,12 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Globalization;
 
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text.RegularExpressions;
+namespace Nox.Types.Tests.Types;
 
-namespace Nox.Types.Tests;
-
-public class NoxDateTimeRangeTests
+public class DateTimeRangeTests
 {
     [Fact]
     public void Nox_DateTimeRange_Constructor_ReturnsSameValue()
@@ -51,7 +47,7 @@ public class NoxDateTimeRangeTests
     public void Nox_DateTimeRange_Constructor_WithInvalidDates_ThrowsValidationException()
     {
         void Test()
-        { 
+        {
             var start = new DateTime(2023, 05, 01);
             var end = new DateTime(2023, 04, 01);
             var exception = Assert.Throws<TypeValidationException>(() => _ =
