@@ -1,4 +1,6 @@
-﻿namespace Nox.Types.EntityFramework;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+namespace Nox.Types.EntityFramework;
 
 /// <summary>
 /// Class for three-letters currency code (ISO 4217).
