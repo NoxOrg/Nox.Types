@@ -1,6 +1,6 @@
-﻿namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests.Types;
 
-public class NoxEmailTests
+public class EmailTests
 {
     [Fact]
     public void Nox_Email_Constructor_ReturnsSameValue()

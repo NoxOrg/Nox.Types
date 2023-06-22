@@ -1,6 +1,6 @@
-namespace Nox.Types.Tests;
+namespace Nox.Types.Tests.Types;
 
-public class NoxAreaTests
+public class AreaTests
 {
     [Fact]
     public void Nox_Area_Constructor_ReturnsDefaultValueAndUnit()

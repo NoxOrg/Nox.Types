@@ -52,4 +52,9 @@ public sealed class Country
     /// </summary>
     public Month MonthOfPeakTourism { get; set; } = null!;
     
+
+    /// <summary>
+    /// Gets or sets the distance in kilometers.
+    /// </summary>
+    public Distance DistanceInKm { get; set; } = null!;
 }

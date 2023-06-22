@@ -1,6 +1,6 @@
-﻿namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests.Types;
 
-public class NoxCountryNumberTest
+public class CountryNumberTests
 {
     [Theory]
     [InlineData(004)]

@@ -1,6 +1,6 @@
-﻿namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests.Types;
 
-public class NoxTextTests
+public class TextTests
 {
     [Fact]
     public void Nox_Text_Constructor_ReturnsSameValue()
