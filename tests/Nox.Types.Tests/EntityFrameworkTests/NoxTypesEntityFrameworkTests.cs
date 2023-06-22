@@ -26,6 +26,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             AreaInSqKm = Area.From(41_290_000),
             Culture = Culture.From("de-CH"),
             CountryNumber = CountryNumber.From(756),
+            MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
         };
         DbContext.Countries.Add(newItem);
@@ -48,6 +49,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(AreaTypeUnit.SquareMeter, item.AreaInSqKm.Unit);
         Assert.Equal("de-CH", item.Culture.Value);
         Assert.Equal(756, item.CountryNumber.Value);
+        Assert.Equal(7, item.MonthOfPeakTourism.Value);
         Assert.Equal(129.522785, item.DistanceInKm.Value);
         Assert.Equal(DistanceTypeUnit.Kilometer, item.DistanceInKm.Unit);
     }
