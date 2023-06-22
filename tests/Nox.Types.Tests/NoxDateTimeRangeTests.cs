@@ -50,13 +50,18 @@ public class NoxDateTimeRangeTests
     [Fact]
     public void Nox_DateTimeRange_Constructor_WithInvalidDates_ThrowsValidationException()
     {
-        var start = new DateTime(2023, 05, 01);
-        var end = new DateTime(2023, 04, 01);
-        var exception = Assert.Throws<TypeValidationException>(() => _ =
-          DateTimeRange.From(start, end)
-        );
+        void Test()
+        { 
+            var start = new DateTime(2023, 05, 01);
+            var end = new DateTime(2023, 04, 01);
+            var exception = Assert.Throws<TypeValidationException>(() => _ =
+              DateTimeRange.From(start, end)
+            );
 
-        Assert.Equal("Could not create a Nox DateTimeRange type with Start value 5/1/2023 12:00:00 AM and End value 4/1/2023 12:00:00 AM as start of the time range must be the same or after the end of the time range.", exception.Errors.First().ErrorMessage);
+            Assert.Equal("Could not create a Nox DateTimeRange type with Start value 01/05/2023 00:00:00 and End value 01/04/2023 00:00:00 as start of the time range must be the same or after the end of the time range.", exception.Errors.First().ErrorMessage);
+        }
+
+        TestUtility.RunInCulture(Test, "en-GB");
     }
 
     [Fact]
