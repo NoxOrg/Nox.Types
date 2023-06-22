@@ -16,13 +16,31 @@ public class Area : ValueObject<QuantityValue, Area>
 
     public Area() { Value = 0; }
 
+    /// <summary>
+    /// Creates a new instance of <see cref="Area"/> object in square meters.
+    /// </summary>
+    /// <param name="value">The value to create the <see cref="Area"/> with</param>
+    /// <returns></returns>
+    /// <exception cref="TypeValidationException"></exception>
     public static Area FromSquareMeters(QuantityValue value)
         => From(value);
 
+    /// <summary>
+    /// Creates a new instance of <see cref="Area"/> object in square feet.
+    /// </summary>
+    /// <param name="value">The value to create the <see cref="Area"/> with</param>
+    /// <returns></returns>
+    /// <exception cref="TypeValidationException"></exception>
     public static Area FromSquareFeet(QuantityValue value)
         => From(value, AreaTypeUnit.SquareFoot);
 
-    new public static Area From(QuantityValue value)
+    /// <summary>
+    /// Creates a new instance of <see cref="Area"/> object in square meters.
+    /// </summary>
+    /// <param name="value">The value to create the <see cref="Area"/> with</param>
+    /// <returns></returns>
+    /// <exception cref="TypeValidationException"></exception>
+    public new static Area From(QuantityValue value)
         => From(value, AreaTypeUnit.SquareMeter);
 
     /// <summary>

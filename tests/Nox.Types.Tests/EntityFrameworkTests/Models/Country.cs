@@ -36,6 +36,27 @@ public sealed class Country
     /// Gets or sets the area in square Kilometers.
     /// </summary>
     public Area AreaInSqKm { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets the culture.
+    /// </summary>
+    public Culture Culture { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the country number.
+    /// </summary>
+    public CountryNumber CountryNumber { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets the month when the most tourists come to the country.
+    /// </summary>
+    public Month MonthOfPeakTourism { get; set; } = null!;
+    
+
+    /// <summary>
+    /// Gets or sets the distance in kilometers.
+    /// </summary>
+    public Distance DistanceInKm { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the date time range.

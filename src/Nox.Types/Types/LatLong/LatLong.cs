@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Nox.Types;
 
@@ -39,7 +40,8 @@ public sealed class LatLong : ValueObject<(double Latitude, double Longitude), L
 
     public override string ToString()
     {
-        return $"{Value.Latitude:0.000000} {Value.Longitude:0.000000}";
+
+        return $"{Value.Latitude.ToString("0.000000", CultureInfo.InvariantCulture)} {Value.Longitude.ToString("0.000000", CultureInfo.InvariantCulture)}";
     }
 
     public string ToString(string format)

@@ -59,6 +59,6 @@ public sealed class Money : ValueObject<(decimal Amount, CurrencyCode CurrencyCo
         if (format == "C")
             return CurrencySymbol.GetCurrencySymbol(Value.CurrencyCode) + Value.Amount.ToString("N");
 
-        return Value.CurrencyCode.ToString() + " " + Value.Amount.ToString(format, cultureInfo);
+        return Value.CurrencyCode + " " + Value.Amount.ToString(format, cultureInfo);
     }
 }
