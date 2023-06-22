@@ -1,6 +1,6 @@
 namespace Nox.Types.Tests.Types;
 
-public class CultureTests
+public class CultureCodeTests
 {
     [Theory]
     [InlineData("en")]
@@ -9,7 +9,7 @@ public class CultureTests
     public void Culture_ValidCultureCode_ShouldBeAbleToCreate(string cultureCode)
     {
         // Act
-        var culture = Culture.From(cultureCode);
+        var culture = CultureCode.From(cultureCode);
 
         // Assert
         Assert.NotNull(culture);
@@ -26,18 +26,18 @@ public class CultureTests
     {
         
         // Arrange & Act
-        var exception = Assert.Throws<TypeValidationException>(() => _ = Culture.From(cultureCode));
+        var exception = Assert.Throws<TypeValidationException>(() => _ = CultureCode.From(cultureCode));
 
         // Assert
-        Assert.Equal($"Could not create a Nox Culture type with unsupported value '{cultureCode}'.", exception.Errors.First().ErrorMessage);
+        Assert.Equal($"Could not create a Nox CultureCode type with unsupported value '{cultureCode}'.", exception.Errors.First().ErrorMessage);
     }
     
     [Fact]
     public void Nox_Culture_Equality_Tests()
     {
         // Arrange & Act
-        var culture1 = Culture.From("tr-TR");
-        var culture2 =  Culture.From("tr-TR");
+        var culture1 = CultureCode.From("tr-TR");
+        var culture2 =  CultureCode.From("tr-TR");
 
         // Assert
         Assert.Equal(culture1, culture2);
@@ -47,8 +47,8 @@ public class CultureTests
     public void Nox_Culture_NotEqual_Tests()
     {
         // Arrange & Act
-        var culture1 = Culture.From("tr-TR");
-        var culture2 =  Culture.From("en-US");
+        var culture1 = CultureCode.From("tr-TR");
+        var culture2 =  CultureCode.From("en-US");
 
         // Assert
         Assert.NotEqual(culture1, culture2);
@@ -58,7 +58,7 @@ public class CultureTests
     public void Nox_Culture_ToString_ReturnsString()
     {
         // Arrange & Act
-        var culture = Culture.From("tr-TR");
+        var culture = CultureCode.From("tr-TR");
 
         // Assert
         Assert.Equal("tr-TR", culture.ToString());
