@@ -1,7 +1,6 @@
-﻿
-namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests.Types;
 
-public class NoxNumberTests
+public class NumberTests
 {
     [Fact]
     public void Nox_Number_Constructor_ReturnsSameValue()

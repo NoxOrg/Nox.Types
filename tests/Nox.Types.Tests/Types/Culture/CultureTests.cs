@@ -1,6 +1,6 @@
-namespace Nox.Types.Tests;
+namespace Nox.Types.Tests.Types;
 
-public class NoxCultureTests
+public class CultureTests
 {
     [Theory]
     [InlineData("en")]

@@ -1,6 +1,6 @@
-﻿namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests.Types;
 
-public class NoxCountryCode2Test
+public class CountryCode2Tests
 {
     [InlineData("AF")]
     [InlineData("AX")]

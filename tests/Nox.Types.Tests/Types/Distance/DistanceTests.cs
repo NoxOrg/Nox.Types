@@ -1,6 +1,6 @@
-﻿namespace Nox.Types.Tests;
+﻿namespace Nox.Types.Tests.Types;
 
-public class NoxDistanceTests
+public class DistanceTests
 {
     [Fact]
     public void Nox_Distance_Constructor_ReturnsSameValueAndDefaultUnit()

@@ -1,8 +1,8 @@
 using System.Globalization;
 
-namespace Nox.Types.Tests;
+namespace Nox.Types.Tests.Types;
 
-public class NoxMoneyTests
+public class MoneyTests
 {
     [Fact]
     public void Money_DefaultConstructor_InitializedWithDefaultValues()
