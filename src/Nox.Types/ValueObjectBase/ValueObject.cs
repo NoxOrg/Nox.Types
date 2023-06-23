@@ -99,11 +99,22 @@ public abstract class ValueObject<T, TValueObject> : INoxType
         return this.MemberwiseClone() as ValueObject<T, TValueObject>;
     }
 
+    
+    /// <remarks>
+    ///  Nox does not follow the usual convention for ToString(),
+    ///  The ToString() should return the same result independently of the current culture, for example for DateTime, Currency, etc... dependent types. 
+    ///  The reasoning behind this is to ensure a fully predictable result that facilitates ETL process's and interopability with other systems.
+    ///  
+    ///  The same is expected for the ToString(string format) overload.
+    ///  
+    ///  If you need a culture dependent representation create an overload with a <seealso cref="IFormatProvider"/> parameter, example ToString(IFormatProvider formatProvider)
+    /// </remarks>
+    /// <returns></returns>
     public override string ToString()
-    {
+    {                
         return string.Join(",",this.GetEqualityComponents().Select(o => o.Value?.ToString() ?? string.Empty).ToArray());
     }
-
+   
     public virtual Type GetUnderlyingType() => typeof(T);
 
 }

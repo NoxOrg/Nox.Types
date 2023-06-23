@@ -40,8 +40,12 @@ public sealed class LatLong : ValueObject<(double Latitude, double Longitude), L
 
     public override string ToString()
     {
-
         return $"{Value.Latitude.ToString("0.000000", CultureInfo.InvariantCulture)} {Value.Longitude.ToString("0.000000", CultureInfo.InvariantCulture)}";
+    }
+
+    public string ToString(IFormatProvider formatProvider)
+    {
+        return $"{Value.Latitude.ToString(formatProvider)} {Value.Longitude.ToString(formatProvider)}";
     }
 
     public string ToString(string format)

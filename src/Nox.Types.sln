@@ -7,9 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nox.Types", "Nox.Types\Nox.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nox.Types.Tests", "..\tests\Nox.Types.Tests\Nox.Types.Tests.csproj", "{8CC6C453-FCE8-4301-83F6-25D18755266C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nox.Types.EntityFramework", "Nox.Types.EntityFramework\Nox.Types.EntityFramework.csproj", "{5504A78A-9DDC-41A5-AC11-BAA84DB296B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nox.Types.EntityFramework", "Nox.Types.EntityFramework\Nox.Types.EntityFramework.csproj", "{5504A78A-9DDC-41A5-AC11-BAA84DB296B5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{4E819E2B-6E88-47DA-AA56-1194B9921B31}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{3CAC7BB8-DCA2-4565-887D-3B6B29A22486}"
 	ProjectSection(SolutionItems) = preProject
@@ -39,10 +42,10 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {62250591-1880-4EA6-A7E9-71F9F3BBF0A4}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3CAC7BB8-DCA2-4565-887D-3B6B29A22486} = {4E819E2B-6E88-47DA-AA56-1194B9921B31}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62250591-1880-4EA6-A7E9-71F9F3BBF0A4}
 	EndGlobalSection
 EndGlobal
