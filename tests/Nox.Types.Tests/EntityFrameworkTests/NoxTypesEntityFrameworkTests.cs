@@ -24,7 +24,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             GrossDomesticProduct = Money.From(717_341_603_000, CurrencyCode.CHF),
             CountryCode2 = CountryCode2.From("CH"),
             AreaInSqKm = Area.From(41_290_000),
-            Culture = Culture.From("de-CH"),
+            CultureCode = CultureCode.From("de-CH"),
             CountryNumber = CountryNumber.From(756),
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
@@ -47,7 +47,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal("CH", item.CountryCode2?.Value);
         Assert.Equal(41_290_000, item.AreaInSqKm.Value);
         Assert.Equal(AreaTypeUnit.SquareMeter, item.AreaInSqKm.Unit);
-        Assert.Equal("de-CH", item.Culture.Value);
+        Assert.Equal("de-CH", item.CultureCode.Value);
         Assert.Equal(756, item.CountryNumber.Value);
         Assert.Equal(7, item.MonthOfPeakTourism.Value);
         Assert.Equal(129.522785, item.DistanceInKm.Value);
