@@ -16,6 +16,7 @@ public enum NoxType
 
     // Simple Types
     Area,
+    Test
     AutoNumber,
     Boolean,
     Color,
