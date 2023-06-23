@@ -173,7 +173,7 @@ public class NoxCurrencyCode3Tests
     [Fact]
     public void Nox_CurrencyCode3_ToString_ReturnsString()
     {
-        var currencyCode3 = CountryCode2.From("USD");
+        var currencyCode3 = CurrencyCode3.From("USD");
 
         Assert.Equal("USD", currencyCode3.ToString());
     }
