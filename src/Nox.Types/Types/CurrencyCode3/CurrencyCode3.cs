@@ -8,7 +8,7 @@ namespace Nox.Types;
 /// </summary>
 public sealed class CurrencyCode3 : ValueObject<string, CurrencyCode3>
 {
-    private const string ThreeLettersCurrencyCode = @"^[A-Z]{3}$";
+    private readonly string ThreeLettersCurrencyCode = @"^[A-Z]+$";
 
     /// <summary>
     /// Validates the <see cref="CurrencyCode3"/> object.
@@ -18,7 +18,7 @@ public sealed class CurrencyCode3 : ValueObject<string, CurrencyCode3>
     {
         var result = base.Validate();
 
-        if (!Regex.IsMatch(Value, ThreeLettersCurrencyCode) && !Enum.TryParse<CurrencyCode>(Value, out _))
+        if (!Regex.IsMatch(Value, ThreeLettersCurrencyCode) || !Enum.TryParse<CurrencyCode>(Value, out _))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox CurrencyCode3 type with unsupported value '{Value}'."));
         }
