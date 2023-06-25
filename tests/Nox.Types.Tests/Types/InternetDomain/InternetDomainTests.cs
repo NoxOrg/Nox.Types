@@ -1,11 +1,73 @@
 ﻿// ReSharper disable once CheckNamespace
 namespace Nox.Types.Tests.Types;
 
-public class InternetDomain
+public class InternetDomainTests
 {
-    [Fact]
-    public void When_Create_Should()
+    [Theory]
+    [InlineData("example.com")]
+    [InlineData("example.org")]
+    [InlineData("example1.net")]
+    [InlineData("example.co.uk")]
+    [InlineData("example.com.au")]
+    public void InternetDomain_WithValidDomain_ShouldBeValid(string validDomain)
     {
+       
+        // Arrange & Act
+        var internetDomain = InternetDomain.From(validDomain);
 
+        // Assert
+        Assert.NotNull(internetDomain);
+        Assert.Equal(validDomain, internetDomain.Value);
+    }
+
+    [Theory] 
+    [InlineData(null)]
+    [InlineData("")]
+    public void InternetDomain_WithNullOrEmptyDomain_ShouldBeInvalid(string invalidDomain)
+    {
+        // Arrange & Act
+        var exception = Assert.Throws<TypeValidationException> (() => _ = InternetDomain.From(invalidDomain));
+
+        // Assert
+        Assert.NotNull(exception);
+        Assert.Equal("Could not create a Nox InternetDomain type with an empty value.", exception.Errors.First().ErrorMessage);
+        
+    }
+    
+    
+    [Theory] 
+    [InlineData("example")]
+    [InlineData("example.123")]
+    [InlineData("example.org.1234")]
+    public void InternetDomain_WithInvalidDomain_ShouldBeInvalid(string invalidDomain)
+    {
+        // Arrange & Act
+        var exception = Assert.Throws<TypeValidationException>(() => _ = InternetDomain.From(invalidDomain));
+
+        // Assert
+        Assert.NotNull(exception);
+        Assert.Equal($"Could not create a Nox InternetDomain type with unsupported value '{invalidDomain}'.", exception.Errors.First().ErrorMessage);
+    }
+    
+    [Fact]
+    public void Nox_InternetDomain_Equality_Tests()
+    {
+        // Arrange & Act
+        var internetDomain1 = InternetDomain.From("example.com");
+        var internetDomain2 =  InternetDomain.From("example.com");
+
+        // Assert
+        Assert.Equal(internetDomain1, internetDomain2);
+    }
+    
+    [Fact]
+    public void Nox_InternetDomain_NotEqual_Tests()
+    {
+        // Arrange & Act
+        var internetDomain1 = InternetDomain.From("example.com");
+        var internetDomain2 =  InternetDomain.From("example.org");
+
+        // Assert
+        Assert.NotEqual(internetDomain1, internetDomain2);
     }
 }

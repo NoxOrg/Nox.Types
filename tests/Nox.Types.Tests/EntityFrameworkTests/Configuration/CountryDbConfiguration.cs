@@ -20,6 +20,7 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(e => e.CountryNumber).HasMaxLength(3).HasConversion<CountryNumberConverter>();
         builder.Property(e=>e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
         builder.Property(e => e.DistanceInKm).HasConversion<DistanceToKilometerConverter>();
+        builder.Property(e=> e.InternetDomain).HasConversion<InternetDomainConverter>();
 
         // Configure Multi-value ValueObjects
         builder.OwnsOne(e => e.LatLong).Ignore(p => p.Value);

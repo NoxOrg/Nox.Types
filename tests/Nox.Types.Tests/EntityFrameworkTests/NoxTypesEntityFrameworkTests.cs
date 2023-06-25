@@ -28,6 +28,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryNumber = CountryNumber.From(756),
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
+            InternetDomain = InternetDomain.From("admin.ch"),
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -52,5 +53,6 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(7, item.MonthOfPeakTourism.Value);
         Assert.Equal(129.522785, item.DistanceInKm.Value);
         Assert.Equal(DistanceTypeUnit.Kilometer, item.DistanceInKm.Unit);
+        Assert.Equal("admin.ch", item.InternetDomain.Value);
     }
 }
