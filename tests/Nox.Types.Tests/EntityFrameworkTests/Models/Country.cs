@@ -40,7 +40,7 @@ public sealed class Country
     /// <summary>
     /// Gets or sets the culture.
     /// </summary>
-    public Culture Culture { get; set; } = null!;
+    public CultureCode CultureCode { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the country number.

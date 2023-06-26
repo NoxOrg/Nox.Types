@@ -1,4 +1,6 @@
 ﻿// ReSharper disable once CheckNamespace
+using System.Globalization;
+
 namespace Nox.Types.Tests.Types;
 
 public class LatLongTests
@@ -62,10 +64,11 @@ public class LatLongTests
     }
 
     [Theory]
-    [InlineData("en-us","46.948090 7.447440")]
-    [InlineData("pt-PT","46.948090 7.447440")]
-    public void ToString_IsCultureIndependent(string culture, string expectedResult)
+    [InlineData("en-us")]
+    [InlineData("pt-PT")]
+    public void LatLong_ToString_IsCultureIndependent(string culture)
     {
+        string expectedResult = "46.948090 7.447440";
         void Test()
         {
             var coords = LatLong.From(46.94809, 7.44744);
@@ -75,13 +78,62 @@ public class LatLongTests
         TestUtility.RunInCulture(Test,culture);
     }
 
+    [Theory]
+    [InlineData("en-us", "46.94809 7.44744")]
+    [InlineData("pt-PT", "46,94809 7,44744")]
+    public void LatLong_ToStringFormatProvider_IsCultureDependent(string culture, string expectedResult)
+    {        
+        void Test()
+        {
+            var coords = LatLong.From(46.94809, 7.44744);
+
+            Assert.Equal(expectedResult, coords.ToString(new CultureInfo(culture)));
+        }
+
+        TestUtility.RunInCulture(Test, culture);
+    }
+
+
     [Fact]
-    public void Nox_LatLong_ToString_DMS_ReturnsString()
+    public void LatLong_ToString_DMS_ReturnsString()
     {
         var coords = LatLong.From(46.94809, 7.44744);
 
         var str = coords.ToString("dms");
 
         Assert.Equal("46°56'53.124\" N 7°26'50.784\" E", coords.ToString("dms"));
+    }
+
+    [Theory]
+    [InlineData("en-us")]
+    [InlineData("pt-PT")]
+    public void LatLong_ToString_DMS_IsCultureIndependent(string culture)
+    {
+        void Test()
+        {
+            var coords = LatLong.From(46.94809, 7.44744);
+
+            var dmsLatLongString = coords.ToString("dms");
+
+            Assert.Equal("46°56'53.124\" N 7°26'50.784\" E", dmsLatLongString);
+        }
+
+        TestUtility.RunInCulture(Test, culture);       
+    }
+    [Theory]
+    [InlineData("en-us")]
+    [InlineData("pt-PT")]
+    public void LatLong_ToString_DMS_IsCultureIndependent_For_InvalidFormat(string culture)
+    {
+        void Test()
+        {
+            var coords = LatLong.From(46.94809, 7.44744);
+
+            var dmsLatLongString = coords.ToString("INVALID");
+
+            Assert.Equal("46.948090 7.447440", dmsLatLongString);
+        }
+
+        TestUtility.RunInCulture(Test, culture);
     }
 }

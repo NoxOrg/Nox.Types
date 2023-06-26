@@ -131,17 +131,23 @@ public class DistanceTests
     [Fact]
     public void Nox_Distance_ValueInKilometers_ToString_ReturnsValueAndUnit()
     {
-        var distance = Distance.FromKilometers(314.159);
-
-        Assert.Equal("314.159 km", distance.ToString());
+        void Test()
+        {
+            var distance = Distance.FromKilometers(314.159);
+            Assert.Equal("314.159 km", distance.ToString());
+        }
+        TestUtility.RunInInvariantCulture(Test);
     }
 
     [Fact]
     public void Nox_Distance_ValueInMiles_ToString_ReturnsValueAndUnit()
     {
-        var distance = Distance.FromMiles(195.209);
-
-        Assert.Equal("195.209 mi", distance.ToString());
+        void Test()
+        {
+            var distance = Distance.FromMiles(195.209);
+            Assert.Equal("195.209 mi", distance.ToString());
+        }
+        TestUtility.RunInInvariantCulture(Test);
     }
 
     [Fact]
