@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Nox.Types;
 
@@ -8,7 +8,7 @@ namespace Nox.Types;
 /// </summary>
 public sealed class CurrencyCode3 : ValueObject<string, CurrencyCode3>
 {
-    private readonly string ThreeLettersCurrencyCode = @"^[A-Z]+$";
+    private readonly string[] CurrencyCodes = Enum.GetNames(typeof(CurrencyCode));
 
     /// <summary>
     /// Validates the <see cref="CurrencyCode3"/> object.
@@ -18,7 +18,7 @@ public sealed class CurrencyCode3 : ValueObject<string, CurrencyCode3>
     {
         var result = base.Validate();
 
-        if (!Regex.IsMatch(Value, ThreeLettersCurrencyCode) || !Enum.TryParse<CurrencyCode>(Value, out _))
+        if (!CurrencyCodes.Contains(Value))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox CurrencyCode3 type with unsupported value '{Value}'."));
         }
