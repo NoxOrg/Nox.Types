@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Nox.Types;
 
@@ -83,10 +84,10 @@ public class DateTimeRange : ValueObject<(DateTime Start, DateTime End), DateTim
     }
 
     public override string ToString()
-        => $"{Value.Start} - {Value.End}";
+        => $"{Value.Start.ToString(CultureInfo.InvariantCulture)} - {Value.End.ToString(CultureInfo.InvariantCulture)}";
 
     public string ToString(string format)
-    => $"{Value.Start.ToString(format)} - {Value.End.ToString(format)}";
+    => $"{Value.Start.ToString(format, CultureInfo.InvariantCulture)} - {Value.End.ToString(format, CultureInfo.InvariantCulture)}";
 
     public string ToString(IFormatProvider formatProvider)
     => $"{Value.Start.ToString(formatProvider)} - {Value.End.ToString(formatProvider)}";

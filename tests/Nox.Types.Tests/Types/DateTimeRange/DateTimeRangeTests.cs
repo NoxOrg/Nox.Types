@@ -231,8 +231,8 @@ public class DateTimeRangeTests
     }
 
     [Theory]
-    [InlineData("en-GB", "20/06/2023 10:05:00 - 20/08/2023 10:05:00")]
-    [InlineData("en-US", "6/20/2023 10:05:00 AM - 8/20/2023 10:05:00 AM")]
+    [InlineData("en-GB", "06/20/2023 10:05:00 - 08/20/2023 10:05:00")]
+    [InlineData("en-US", "06/20/2023 10:05:00 - 08/20/2023 10:05:00")]
     public void Nox_DateTimeRange_ToString_WithoutParameters_ReturnsString(string culture, string expectedResult)
     {
         void Test()
@@ -250,8 +250,8 @@ public class DateTimeRangeTests
     }
 
     [Theory]
-    [InlineData("en-GB", "d", "20/06/2023 - 20/08/2023")]
-    [InlineData("en-US", "d", "6/20/2023 - 8/20/2023")]
+    [InlineData("en-GB", "d", "06/20/2023 - 08/20/2023")]
+    [InlineData("en-US", "d", "06/20/2023 - 08/20/2023")]
     [InlineData("en-US", "dd/MM/yy", "20/06/23 - 20/08/23")]
     [InlineData("en-GB", "dd/MM/yy", "20/06/23 - 20/08/23")]
     [InlineData("en-GB", "dd MMM HH:mm:ss", "20 Jun 10:05:00 - 20 Aug 10:05:00")]
