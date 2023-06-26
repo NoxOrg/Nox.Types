@@ -39,6 +39,8 @@ public class InternetDomainTests
     [InlineData("example")]
     [InlineData("example.123")]
     [InlineData("example.org.1234")]
+    [InlineData("https://example.com")]
+    [InlineData("https://www.example.com")]
     public void InternetDomain_WithInvalidDomain_ShouldBeInvalid(string invalidDomain)
     {
         // Arrange & Act
@@ -50,7 +52,7 @@ public class InternetDomainTests
     }
     
     [Fact]
-    public void Nox_InternetDomain_Equality_Tests()
+    public void Compare_Same_InternetDomains_WithEqual_IsTrue()
     {
         // Arrange & Act
         var internetDomain1 = InternetDomain.From("example.com");
@@ -61,7 +63,7 @@ public class InternetDomainTests
     }
     
     [Fact]
-    public void Nox_InternetDomain_NotEqual_Tests()
+    public void Compare_Same_InternetDomains_WithEqual_IsFalse()
     {
         // Arrange & Act
         var internetDomain1 = InternetDomain.From("example.com");
