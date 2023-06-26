@@ -5,7 +5,7 @@ namespace Nox.Types.Tests.Types;
 public class DateTimeRangeTests
 {
     [Fact]
-    public void Nox_DateTimeRange_Constructor_ReturnsSameValue()
+    public void From_WithValidStartAndEnd_ReturnsValue()
     {
         var start = DateTime.UtcNow;
         var end = start.AddDays(1);
@@ -18,7 +18,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_Constructor_WithSameStartAndEnd_ReturnsSameValue()
+    public void From_WithSameStartAndEnd_ReturnsValue()
     {
         var start = DateTime.UtcNow;
         var end = start;
@@ -31,7 +31,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_Constructor_WithTimeSpan_ReturnsSameValue()
+    public void From_WithTimeSpan_ReturnsValue()
     {
         var start = DateTime.UtcNow;
         var timeSpan = TimeSpan.FromDays(20);
@@ -44,7 +44,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_Constructor_WithInvalidDates_ThrowsValidationException()
+    public void From_WithInvalidDates_ThrowsValidationException()
     {
         void Test()
         {
@@ -61,7 +61,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_Equality_Tests()
+    public void Equality_WithSameStartAndEnd_ShouldBeEquivalent()
     {
         var start = new DateTime(2020, 5, 1);
         var end = new DateTime(2020, 8, 1);
@@ -73,7 +73,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_Equality_WithRegularAndWithTimeSpanConstructors_Tests()
+    public void Equality_WithRegularAndWithTimeSpanConstructors_ShouldBeEquivalent()
     {
         var start = DateTime.UtcNow;
         var end = start.AddDays(1);
@@ -86,7 +86,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_Equality_WithRegularAndWithTupleConstructors_Tests()
+    public void Equality_WithRegularAndWithTupleConstructors_ShouldBeEquivalent()
     {
         var start = DateTime.UtcNow;
         var end = start.AddDays(1);
@@ -102,7 +102,7 @@ public class DateTimeRangeTests
     [InlineData("2021-01-01", "2021-05-01", "2023-01-01", "2023-05-01")]
     [InlineData("2021-01-01", "2021-05-01", "2021-01-01", "2023-05-01")]
     [InlineData("2021-01-01", "2021-05-01", "2020-01-01", "2021-05-01")]
-    public void Nox_DateTimeRange_NonEquality_Tests(string startStr1, string endStr1, string startStr2, string endStr2)
+    public void NonEquality_WithDifferentStartAndEnd_ShouldNotBeEquivalent(string startStr1, string endStr1, string startStr2, string endStr2)
     {
         var start1 = DateTime.Parse(startStr1);
         var end1 = DateTime.Parse(endStr1);
@@ -117,7 +117,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_NonEquality_WithRegularAndWithTimeSpanConstructors_Tests()
+    public void NonEquality_WithRegularAndWithTimeSpanConstructors_ShouldNotBeEquivalent()
     {
         var start = DateTime.UtcNow;
         var end = start.AddDays(1);
@@ -133,7 +133,7 @@ public class DateTimeRangeTests
     [InlineData("2021-01-01", "2021-05-01", "2023-01-01", "2023-05-01")]
     [InlineData("2021-01-01", "2021-05-01", "2021-01-01", "2023-05-01")]
     [InlineData("2021-01-01", "2021-05-01", "2020-01-01", "2021-05-01")]
-    public void Nox_DateTimeRange_NonEquality_WithRegularAndWithTupleConstructors_Tests(string startStr1, string endStr1, string startStr2, string endStr2)
+    public void NonEquality_WithRegularAndWithTupleConstructors_ShouldNotBeEquivalent(string startStr1, string endStr1, string startStr2, string endStr2)
     {
         var start1 = DateTime.Parse(startStr1);
         var end1 = DateTime.Parse(endStr1);
@@ -148,7 +148,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_Duration_ReturnsSameValue()
+    public void Duration_WithValidStarnAndEnd_ReturnsValue()
     {
         var start = new DateTime(2023, 01, 01);
         var end = new DateTime(2023, 01, 20);
@@ -163,7 +163,7 @@ public class DateTimeRangeTests
     [InlineData("2023-01-01")]
     [InlineData("2024-01-01")]
     [InlineData("2023-06-06")]
-    public void Nox_DateTimeRange_Contains_ReturnsTrue(string dateTimeStr)
+    public void Contains_WithDateWithinTheRange_ReturnsTrue(string dateTimeStr)
     {
         var dateTime = DateTime.Parse(dateTimeStr);
         var dateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2024, 01, 01));
@@ -175,7 +175,7 @@ public class DateTimeRangeTests
     [InlineData("2022-12-31")]
     [InlineData("2024-01-02")]
     [InlineData("2021-06-06")]
-    public void Nox_DateTimeRange_Contains_ReturnsFalse(string dateTimeStr)
+    public void Contains_WithDateOutsideTheRange_ReturnsFalse(string dateTimeStr)
     {
         var dateTime = DateTime.Parse(dateTimeStr);
         var dateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2024, 01, 01));
@@ -188,7 +188,7 @@ public class DateTimeRangeTests
     [InlineData("2023-01-01", "2023-04-01", "2023-02-01", "2023-06-01", "2023-02-01", "2023-04-01")]
     [InlineData("2023-02-01", "2023-06-01", "2023-01-01", "2023-04-01", "2023-02-01", "2023-04-01")]
     [InlineData("2023-01-01", "2023-02-01", "2023-02-01", "2023-04-01", "2023-02-01", "2023-02-01")]
-    public void Nox_DateTimeRange_Intersect_ReturnsIntersectedDateTimeRange(string startStr1, string endStr1, string startStr2, string endStr2, string expectedStartStr, string expectedEndStr)
+    public void Intersect_WithOverlappingRanges_ReturnsIntersectedDateTimeRange(string startStr1, string endStr1, string startStr2, string endStr2, string expectedStartStr, string expectedEndStr)
     {
         var start1 = DateTime.Parse(startStr1);
         var end1 = DateTime.Parse(endStr1);
@@ -212,7 +212,7 @@ public class DateTimeRangeTests
     }
 
     [Fact]
-    public void Nox_DateTimeRange_Intersect_ReturnsNull()
+    public void Intersect_WithNonOverlappingRanges_ReturnsNull()
     {
         var start1 = new DateTime(2023, 01, 01);
         var end1 = new DateTime(2023, 02, 01);
@@ -233,7 +233,7 @@ public class DateTimeRangeTests
     [Theory]
     [InlineData("en-GB", "06/20/2023 10:05:00 - 08/20/2023 10:05:00")]
     [InlineData("en-US", "06/20/2023 10:05:00 - 08/20/2023 10:05:00")]
-    public void Nox_DateTimeRange_ToString_WithoutParameters_ReturnsString(string culture, string expectedResult)
+    public void ToString_WithoutParameters_ReturnsFormattedStringInInvariantCulture(string culture, string expectedResult)
     {
         void Test()
         {
@@ -255,7 +255,7 @@ public class DateTimeRangeTests
     [InlineData("en-US", "dd/MM/yy", "20/06/23 - 20/08/23")]
     [InlineData("en-GB", "dd/MM/yy", "20/06/23 - 20/08/23")]
     [InlineData("en-GB", "dd MMM HH:mm:ss", "20 Jun 10:05:00 - 20 Aug 10:05:00")]
-    public void Nox_DateTimeRange_ToString_WithFormatParameter_ReturnsString(string culture, string format, string expectedResult)
+    public void ToString_WithFormatParameter_ReturnsFormattedStringInInvariantCulture(string culture, string format, string expectedResult)
     {
         void Test()
         {
@@ -274,7 +274,7 @@ public class DateTimeRangeTests
     [Theory]
     [InlineData("en-GB", "20/06/2023 10:05:00 - 20/08/2023 10:05:00")]
     [InlineData("en-US", "6/20/2023 10:05:00 AM - 8/20/2023 10:05:00 AM")]
-    public void Nox_DateTimeRange_ToString_WithCultureParameter_ReturnsString(string culture, string expectedResult)
+    public void ToString_WithCultureParameter_ReturnsFormattedString(string culture, string expectedResult)
     {
         var start = new DateTime(2023, 6, 20, 10, 5, 0);
         var end = new DateTime(2023, 8, 20, 10, 5, 0);
@@ -291,7 +291,7 @@ public class DateTimeRangeTests
     [InlineData("en-US", "dd/MM/yy", "20/06/23 - 20/08/23")]
     [InlineData("en-GB", "dd/MM/yy", "20/06/23 - 20/08/23")]
     [InlineData("en-GB", "dd MMM HH:mm:ss", "20 Jun 10:05:00 - 20 Aug 10:05:00")]
-    public void Nox_DateTimeRange_ToString_WithCultureAndFormatParameters_ReturnsString(string culture, string format, string expectedResult)
+    public void ToString_WithCultureAndFormatParameters_ReturnsFormattedString(string culture, string format, string expectedResult)
     {
         var start = new DateTime(2023, 6, 20, 10, 5, 0);
         var end = new DateTime(2023, 8, 20, 10, 5, 0);
