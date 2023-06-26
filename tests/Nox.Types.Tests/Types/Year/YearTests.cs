@@ -15,7 +15,7 @@ public class YearTests
     [Theory]
     [InlineData((ushort)0)]
     [InlineData((ushort)(19999))]
-    public void Nox_Year_Constructor_WithOutOfRangeYear_ThrowsValidationException(byte value)
+    public void Nox_Year_Constructor_WithOutOfRangeYear_ThrowsValidationException(ushort value)
     {
         // Arrange & Act
         var exception = Assert.Throws<TypeValidationException>(() => _ =
