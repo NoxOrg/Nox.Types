@@ -4,21 +4,31 @@ namespace Nox.Types.Tests.Types;
 public class StreetAddressTests
 {
     [Theory]
-    [InlineData("Line1", "", "", "City", "11111", "UA", "Line1, City, UA 11111")]
-    [InlineData("", "Line2", "", "City", "11111", "UA", "Line2, City, UA 11111")]
-    [InlineData("", "", "Line3", "City", "11111", "UA", "Line3, City, UA 11111")]
-    [InlineData("Line1", "Line2", "Line3", "City", "11111", "UA", "Line1 Line2 Line3, City, UA 11111")]
+    [InlineData(5, "Line1", "", "Locality", "11111", "UA", "Line1, Locality, UA 11111")]
+    [InlineData(5, "", "Line2", "Locality", "11111", "UA", "Line2, Locality, UA 11111")]
+    [InlineData(5, "", "", "Locality", "11111", "UA", "Locality, UA 11111")]
+    [InlineData(5, "Line1", "Line2", "Locality", "11111", "UA", "Line1 Line2, Locality, UA 11111")]
     public void Nox_StreetAddress_AddressString_ReturnsValidAddress(
-        string line1,
-        string line2,
-        string line3,
-        string city,
-        string zipCode,
+        int streetNumber,
+        string addressLine1,
+        string addressLine2,
+        string locality,
+        string postalCode,
         string countryCode,
         string expectedAddress)
     {
         var countryCode2 = CountryCode2.From(countryCode);
-        var address = StreetAddress.From((line1, line2, line3, zipCode, city, countryCode2));
+        var address = StreetAddress.From(
+            (streetNumber,
+            addressLine1,
+            addressLine2,
+            "Route",
+            locality,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            postalCode,
+            countryCode2));
 
         Assert.Equal(expectedAddress, address.ToString());
     }
@@ -26,11 +36,21 @@ public class StreetAddressTests
     [Fact]
     public void Nox_StreetAddress_WrongZipCode_Throws()
     {
-        var zipCode = "1abcd11";
+        var postalCode = "1abcd11";
         var countryCode2 = CountryCode2.From("CH");
 
-        var exception = Assert.Throws<TypeValidationException>(() => StreetAddress.From(("Line1", string.Empty, string.Empty, zipCode, "Test", countryCode2)));
+        var exception = Assert.Throws<TypeValidationException>(() => StreetAddress.From((
+            1,
+            "Line1",
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            postalCode,
+            "Test", countryCode2)
+        ));
 
-        Assert.Contains(exception.Errors, t => t.Variable == "ZipCode");
+        Assert.Contains(exception.Errors, t => t.Variable == "PostalCode");
     }
 }

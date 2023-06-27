@@ -1,12 +1,9 @@
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Nox.Types.Tests.EntityFrameworkTests;
 
 public class NoxTypesEntityFrameworkTests : TestWithSqlite
 {
- 
-
     [Fact]
     public async Task DatabaseIsAvailableAndCanBeConnectedTo()
     {
@@ -17,7 +14,6 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
     public void TableShouldGetCreated()
     {
         Assert.False(DbContext.Countries.Any());
-        Assert.False(DbContext.StreetAddresses.Any());
     }
 
     [Fact]
@@ -39,7 +35,8 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
             InternetDomain = InternetDomain.From("admin.ch"),
-            CountryCode3 = CountryCode3.From("CHE")
+            CountryCode3 = CountryCode3.From("CHE"),
+            StreetAddress = CreateStreetAddress()
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -69,7 +66,8 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
             InternetDomain = InternetDomain.From("admin.ch"),
-            CountryCode3 = CountryCode3.From("CHE")
+            CountryCode3 = CountryCode3.From("CHE"),
+            StreetAddress = CreateStreetAddress()
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -97,5 +95,20 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(7, item.MonthOfPeakTourism.Value);
         Assert.Equal(129.522785, item.DistanceInKm.Value);
         Assert.Equal(DistanceTypeUnit.Kilometer, item.DistanceInKm.Unit);
+    }
+
+    private static StreetAddress CreateStreetAddress()
+    {
+        return StreetAddress.From((
+               15,
+               "AddressLine1",
+               "AddressLine2",
+               "Route",
+               "Locality",
+               "Neighborhood",
+               "AdministrativeArea1",
+               "AdministrativeArea2",
+               "12345",
+               CountryCode2.From("CH")));
     }
 }

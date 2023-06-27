@@ -4,7 +4,7 @@ using Nox.Types.EntityFramework.Types;
 
 namespace Nox.Types.Tests.EntityFrameworkTests;
 
-class CountryConfiguration : IEntityTypeConfiguration<Country>
+internal class CountryConfiguration : IEntityTypeConfiguration<Country>
 {
     public void Configure(EntityTypeBuilder<Country> builder)
     {
@@ -18,13 +18,14 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(e => e.AreaInSqKm).HasConversion<AreaToSquareMeterConverter>();
         builder.Property(e => e.CultureCode).HasConversion<CultureCodeConverter>();
         builder.Property(e => e.CountryNumber).HasMaxLength(3).HasConversion<CountryNumberConverter>();
-        builder.Property(e=>e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
+        builder.Property(e => e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
         builder.Property(e => e.DistanceInKm).HasConversion<DistanceToKilometerConverter>();
-        builder.Property(e=> e.InternetDomain).HasConversion<InternetDomainConverter>();
+        builder.Property(e => e.InternetDomain).HasConversion<InternetDomainConverter>();
         builder.Property(e => e.CountryCode3).HasConversion<CountryCode3Converter>();
 
         // Configure Multi-value ValueObjects
         builder.OwnsOne(e => e.LatLong).Ignore(p => p.Value);
-        builder.OwnsOne(e => e.GrossDomesticProduct).Ignore(p=>p.Value);
+        builder.OwnsOne(e => e.GrossDomesticProduct).Ignore(p => p.Value);
+        builder.OwnsOne(e => e.StreetAddress).Ignore(p => p.Value);
     }
 }
