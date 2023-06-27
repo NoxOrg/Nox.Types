@@ -10,9 +10,16 @@ public sealed class LatLong : ValueObject<(double Latitude, double Longitude), L
 {
     public LatLong() { Value = (Latitude: 0, Longitude: 0); } // Null Island
 
-    public double Latitude => Value.Latitude;
-
-    public double Longitude => Value.Longitude;
+    public double Latitude
+    {
+        get => Value.Latitude;
+        private set => Value = (Latitude: value, Longitude: Value.Longitude);
+    }
+    public double Longitude
+    {
+        get => Value.Longitude;
+        private set => Value = (Latitude: Value.Latitude, Longitude: value);
+    }
 
     public static LatLong From(double latitude, double longitude)
         => From((latitude,longitude));
