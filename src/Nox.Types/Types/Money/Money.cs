@@ -12,9 +12,17 @@ namespace Nox.Types;
 [Serializable]
 public sealed class Money : ValueObject<(decimal Amount, CurrencyCode CurrencyCode), Money>
 {
-    public decimal Amount => Value.Amount;
-    public string CurrencyCode => Value.CurrencyCode.ToString();
+    public decimal Amount
+    {
+        get => Value.Amount;
+        private set => Value = (value, Value.CurrencyCode);
+    }
 
+    public string CurrencyCode
+    {
+        get => Value.CurrencyCode.ToString();
+        private set => Value = (Value.Amount, (CurrencyCode)Enum.Parse(typeof(CurrencyCode),value));
+    }
     /// <summary>
     /// Initializes a new instance of the <see cref="Money"/> class with default values.
     /// </summary>
