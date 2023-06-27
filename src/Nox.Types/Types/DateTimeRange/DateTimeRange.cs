@@ -11,12 +11,20 @@ public class DateTimeRange : ValueObject<(DateTime Start, DateTime End), DateTim
     /// <summary>
     /// Gets the start of the date time range.
     /// </summary>
-    public DateTime Start => Value.Start;
+    public DateTime Start
+    {
+        get => Value.Start;
+        private set => Value = (Start: value, End: Value.End);
+    }
 
     /// <summary>
     /// Gets the end of the date time range.
     /// </summary>
-    public DateTime End => Value.End;
+    public DateTime End
+    {
+        get => Value.End;
+        private set => Value = (Start: Value.Start, End: value);
+    }
 
     /// <summary>
     /// Gets the duration of the date time range.
