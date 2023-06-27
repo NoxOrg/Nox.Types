@@ -18,8 +18,9 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(e => e.AreaInSqKm).HasConversion<AreaToSquareMeterConverter>();
         builder.Property(e => e.CultureCode).HasConversion<CultureCodeConverter>();
         builder.Property(e => e.CountryNumber).HasMaxLength(3).HasConversion<CountryNumberConverter>();
-        builder.Property(e=>e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
+        builder.Property(e => e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
         builder.Property(e => e.DistanceInKm).HasConversion<DistanceToKilometerConverter>();
+        builder.Property(e => e.IPAddress).HasConversion<IpAddressConverter>();
 
         // Configure Multi-value ValueObjects
         builder.OwnsOne(e => e.LatLong).Ignore(p => p.Value);
