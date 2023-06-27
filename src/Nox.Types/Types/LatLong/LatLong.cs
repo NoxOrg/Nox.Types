@@ -15,6 +15,7 @@ public sealed class LatLong : ValueObject<(double Latitude, double Longitude), L
         get => Value.Latitude;
         private set => Value = (Latitude: value, Longitude: Value.Longitude);
     }
+
     public double Longitude
     {
         get => Value.Longitude;

@@ -13,7 +13,6 @@ public abstract class TestWithSqlite : IDisposable
 
     protected TestWithSqlite()
     {
-        var c = Environment.CurrentDirectory;
         _connection = new SqliteConnection(InMemoryConnectionString);
         _connection.Open();
         DbContext = CreateDbContext(_connection);
