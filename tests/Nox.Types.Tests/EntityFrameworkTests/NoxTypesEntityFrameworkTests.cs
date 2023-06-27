@@ -1,7 +1,12 @@
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+
 namespace Nox.Types.Tests.EntityFrameworkTests;
 
 public class NoxTypesEntityFrameworkTests : TestWithSqlite
 {
+ 
+
     [Fact]
     public async Task DatabaseIsAvailableAndCanBeConnectedTo()
     {
@@ -13,6 +18,39 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
     {
         Assert.False(DbContext.Countries.Any());
         Assert.False(DbContext.StreetAddresses.Any());
+    }
+
+    [Fact]
+    public void Countries_CanRead_LatLong()
+    {
+        double latitude = 46.802496;
+        double longitude = 8.234392;
+
+        var newItem = new Country()
+        {
+            Name = Text.From("Switzerland"),
+            LatLong = LatLong.From(latitude, longitude),
+            Population = Number.From(8_703_654),
+            GrossDomesticProduct = Money.From(717_341_603_000, CurrencyCode.CHF),
+            CountryCode2 = CountryCode2.From("CH"),
+            AreaInSqKm = Area.From(41_290_000),
+            CultureCode = CultureCode.From("de-CH"),
+            CountryNumber = CountryNumber.From(756),
+            MonthOfPeakTourism = Month.From(7),
+            DistanceInKm = Distance.From(129.522785),
+            InternetDomain = InternetDomain.From("admin.ch"),
+            CountryCode3 = CountryCode3.From("CHE")
+        };
+        DbContext.Countries.Add(newItem);
+        DbContext.SaveChanges();
+
+        //Force the recreation of DBContext and ensure we have fresh data from database
+        RecreateDbContext();
+
+        var country = DbContext.Countries.First();
+
+        country.LatLong.Latitude.Should().Be(latitude);
+        country.LatLong.Longitude.Should().Be(longitude);
     }
 
     [Fact]
@@ -30,9 +68,14 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryNumber = CountryNumber.From(756),
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
+            InternetDomain = InternetDomain.From("admin.ch"),
+            CountryCode3 = CountryCode3.From("CHE")
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
+
+        //Force the recreation of DBContext and ensure we have fresh data from database
+        RecreateDbContext();
 
         Assert.Equal(CountryId.From(1), newItem.Id);
 
