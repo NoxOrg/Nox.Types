@@ -62,4 +62,9 @@ public sealed class Country
     /// Gets or sets the internet domain associated with the country.
     /// </summary>
     public InternetDomain InternetDomain { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the country ISO 3 code.
+    /// </summary>
+    public CountryCode3 CountryCode3 { get; set; } = null!;
 }
