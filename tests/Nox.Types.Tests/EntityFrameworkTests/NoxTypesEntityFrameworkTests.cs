@@ -12,12 +12,14 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
     public void TableShouldGetCreated()
     {
         Assert.False(DbContext.Countries.Any());
+        Assert.False(DbContext.StreetAddresses.Any());
     }
 
     [Fact]
     public void AddedItemShouldGetGeneratedId()
     {
-        var newItem = new Country() { 
+        var newItem = new Country()
+        {
             Name = Text.From("Switzerland"),
             LatLong = LatLong.From(46.802496, 8.234392),
             Population = Number.From(8_703_654),
