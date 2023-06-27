@@ -28,7 +28,7 @@ public sealed class Country
     public Money GrossDomesticProduct { get; set; } = null!;
 
     /// <summary>
-    /// Gets or sets the country ISO 2 code.
+    /// Gets or sets the country ISO code.
     /// </summary>
     public CountryCode2 CountryCode2 { get; set; } = null!;
 
@@ -57,6 +57,11 @@ public sealed class Country
     /// Gets or sets the distance in kilometers.
     /// </summary>
     public Distance DistanceInKm { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets the internet domain associated with the country.
+    /// </summary>
+    public InternetDomain InternetDomain { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the country ISO 3 code.
