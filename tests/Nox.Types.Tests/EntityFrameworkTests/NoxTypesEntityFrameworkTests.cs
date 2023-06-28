@@ -38,7 +38,6 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             InternetDomain = InternetDomain.From("admin.ch"),
             CountryCode3 = CountryCode3.From("CHE"),
             IPAddress = IpAddress.From("102.129.143.255"),
-            CountryCode3 = CountryCode3.From("CHE"),
             DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
         };
         DbContext.Countries.Add(newItem);

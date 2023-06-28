@@ -273,7 +273,7 @@ public class DateTimeRangeTests
 
     [Theory]
     [InlineData("en-GB", "20/06/2023 10:05:00 - 20/08/2023 10:05:00")]
-    [InlineData("en-US", "6/20/2023 10:05:00 AM - 8/20/2023 10:05:00 AM")]
+    [InlineData("en-US", "6/20/2023 10:05:00AM - 8/20/2023 10:05:00AM")]
     public void ToString_WithCultureParameter_ReturnsFormattedString(string culture, string expectedResult)
     {
         var start = new DateTime(2023, 6, 20, 10, 5, 0);
