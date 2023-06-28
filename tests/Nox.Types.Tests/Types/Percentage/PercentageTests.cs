@@ -37,9 +37,9 @@ public class PercentageTests
     {
         var testPercentage = 0.4f;
 
-        var percentage = Number.From(testPercentage);
+        var percentage = Percentage.From(testPercentage);
 
-        Assert.Equal(40, percentage.Value);
+        Assert.Equal(0.4, percentage.Value);
     }
 
     [Fact]
@@ -49,7 +49,7 @@ public class PercentageTests
         {
             var pecentageValue = 0.45f;
 
-            var percentage = Number.From(pecentageValue);
+            var percentage = Percentage.From(pecentageValue);
 
             var percentageAsString = percentage.ToString();
 
