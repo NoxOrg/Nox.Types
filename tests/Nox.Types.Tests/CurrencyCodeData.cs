@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 
 namespace Nox.Types.Tests.Types;
 public class CurrencyCodeData : IEnumerable<object[]>
