@@ -3,7 +3,7 @@
 public class YearTests
 {
     [Fact]
-    public void Nox_Year_Constructor_ReturnsSameValue()
+    public void Year_Constructor_ReturnsSameValue()
     {
         var testYear = (ushort)1;
 
@@ -15,7 +15,7 @@ public class YearTests
     [Theory]
     [InlineData((ushort)0)]
     [InlineData((ushort)(19999))]
-    public void Nox_Year_Constructor_WithOutOfRangeYear_ThrowsValidationException(ushort value)
+    public void Year_Constructor_WithoutRangeYear_ThrowsValidationException(ushort value)
     {
         // Arrange & Act
         var exception = Assert.Throws<TypeValidationException>(() => _ =
@@ -27,7 +27,7 @@ public class YearTests
     }
 
     [Fact]
-    public void Nox_Year_Equality_Tests()
+    public void Year_Equal_Tests()
     {
         // Arrange
         var year1 = Year.From(1);
@@ -39,7 +39,7 @@ public class YearTests
     }
 
     [Fact]
-    public void Nox_Year_NotEqual_Tests()
+    public void Year_NotEqual_Tests()
     {
         // Arrange
         var year1 = Year.From(1);
@@ -52,7 +52,7 @@ public class YearTests
 
 
     [Fact]
-    public void Nox_Year_ToString_ReturnsString()
+    public void Year_ToString_ReturnsString()
     {
         // Arrange
         var year = Year.From(1);
