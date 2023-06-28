@@ -8,9 +8,9 @@ namespace Nox.Types;
 /// </summary>
 public class Area : ValueObject<QuantityValue, Area>
 {
-    private const int QUANTITY_VALUE_DECIMAL_PRECISION = 6;
+    private const int QuantityValueDecimalPrecision = 6;
     
-    private const long EARTHS_SURFACE_AREA_IN_SQUARE_METERS = 510_072_000_000_000;
+    private const long EarthsSurfaceAreaInSquareMeters = 510_072_000_000_000;
 
     public AreaTypeUnit Unit { get; private set; } = AreaTypeUnit.SquareMeter;
 
@@ -83,7 +83,7 @@ public class Area : ValueObject<QuantityValue, Area>
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as negative area value {Value} is not allowed."));
         }
 
-        if (ToSquareMeters() > EARTHS_SURFACE_AREA_IN_SQUARE_METERS)
+        if (ToSquareMeters() > EarthsSurfaceAreaInSquareMeters)
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Area type as value {Value} is greater than the surface area of the Earth."));
         }
@@ -119,5 +119,5 @@ public class Area : ValueObject<QuantityValue, Area>
     }
 
     private static QuantityValue Round(QuantityValue value)
-        => Math.Round((double)value, QUANTITY_VALUE_DECIMAL_PRECISION);
+        => Math.Round((double)value, QuantityValueDecimalPrecision);
 }

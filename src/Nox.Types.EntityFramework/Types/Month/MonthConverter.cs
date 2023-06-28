@@ -4,5 +4,5 @@ namespace Nox.Types.EntityFramework.Types;
 
 public class MonthToByteConverter: ValueConverter<Month, byte>
 {
-    public MonthToByteConverter() : base(month => month.Value, n => Month.From(n)) { }
+    public MonthToByteConverter() : base(month => month.Value, monthValue => Month.From(monthValue)) { }
 }
