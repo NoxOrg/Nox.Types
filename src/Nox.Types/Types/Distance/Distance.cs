@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nox.Common;
+using System;
 using System.Collections.Generic;
 
 namespace Nox.Types;
@@ -122,18 +123,10 @@ public class Distance : ValueObject<QuantityValue, Distance>
 
     public QuantityValue ToMiles() => (_miles ??= GetDistanceIn(DistanceTypeUnit.Mile));
 
-    private QuantityValue GetDistanceIn(DistanceTypeUnit unit)
+    private QuantityValue GetDistanceIn(DistanceTypeUnit targetUnit)
     {
-        if (Unit == unit)
-            return Round(Value);
-
-        else if (Unit == DistanceTypeUnit.Kilometer && unit == DistanceTypeUnit.Mile)
-            return Round(Value * 0.62137119102);
-
-        else if (Unit == DistanceTypeUnit.Mile && unit == DistanceTypeUnit.Kilometer)
-            return Round(Value * 1.60934400315);
-
-        throw new NotImplementedException($"No conversion defined from {Unit} to {unit}.");
+        var factor = new MeasurementConversionFactor(Unit, targetUnit).Value;
+        return Round(Value * factor);
     }
 
     private static QuantityValue Round(QuantityValue value)

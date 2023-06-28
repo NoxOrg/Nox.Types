@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nox.Common;
+using System;
 using System.Collections.Generic;
 
 namespace Nox.Types;
@@ -104,18 +105,10 @@ public class Area : ValueObject<QuantityValue, Area>
     private QuantityValue? _squareFeet;
     public QuantityValue ToSquareFeet() => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
 
-    private QuantityValue GetAreaIn(AreaTypeUnit unit)
+    private QuantityValue GetAreaIn(AreaTypeUnit targetUnit)
     {
-        if (Unit == unit)
-            return Round(Value);
-
-        else if (Unit == AreaTypeUnit.SquareMeter && unit == AreaTypeUnit.SquareFoot)
-            return Round(Value * 10.76391042);
-
-        else if (Unit == AreaTypeUnit.SquareFoot && unit == AreaTypeUnit.SquareMeter)
-            return Round(Value * 0.09290304);
-
-        throw new NotImplementedException($"No conversion defined from {Unit} to {unit}.");
+        var factor = new MeasurementConversionFactor(Unit, targetUnit).Value;
+        return Round(Value * factor);
     }
 
     private static QuantityValue Round(QuantityValue value)
