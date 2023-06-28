@@ -8,5 +8,5 @@ public class LengthToFootConverter : ValueConverter<Length, double>
 }
 public class LengthToMeterConverter : ValueConverter<Length, double>
 {
-    public LengthToMeterConverter() : base(lemgth => (double)lemgth.ToMeters(), lengthValue => Length.FromMeters(lengthValue)) { }
+    public LengthToMeterConverter() : base(length => (double)length.ToMeters(), lengthValue => Length.FromMeters(lengthValue)) { }
 }
