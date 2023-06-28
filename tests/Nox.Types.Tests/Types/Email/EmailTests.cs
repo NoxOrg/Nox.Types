@@ -3,7 +3,7 @@
 public class EmailTests
 {
     [Fact]
-    public void Nox_Email_Constructor_ReturnsSameValue()
+    public void Email_Constructor_ReturnsSameValue()
     {
         var testEmail = "douglas.adams@domain.com";
 
@@ -13,7 +13,7 @@ public class EmailTests
     }
 
     [Fact]
-    public void Nox_Email_Constructor_WithInvalidInput_ThrowsValidationException()
+    public void Email_Constructor_WithInvalidInput_ThrowsValidationException()
     {
         var testEmail = "It's a test designed to provoke an emotional response - Holden";
 
@@ -23,7 +23,7 @@ public class EmailTests
     }
 
     [Fact]
-    public void Nox_Email_User_ReturnsUserPart()
+    public void Email_User_ReturnsUserPart()
     {
         var testEmail = "douglas.adams@domain.com";
 
@@ -35,7 +35,7 @@ public class EmailTests
     }
 
     [Fact]
-    public void Nox_Email_Domain_ReturnsDomainPart()
+    public void Email_Domain_ReturnsDomainPart()
     {
         var testEmail = "douglas.adams@domain.com";
 
@@ -47,7 +47,7 @@ public class EmailTests
     }
 
     [Fact]
-    public void Nox_Email_Equality_Tests()
+    public void Email_Equality_Tests()
     {
         var testEmail1 = "douglas.adams@domain.com";
         var testEmail2 = "Douglas.Adams@domain.com";
@@ -63,7 +63,7 @@ public class EmailTests
     }
 
     [Fact]
-    public void Nox_Email_Constructor_FromFullNameEmail_ReturnsEmailAndNameParts()
+    public void Email_Constructor_FromFullNameEmail_ReturnsEmailAndNameParts()
     {
         var testEmail = "Doug Adams <douglas.adams@domain.com>";
 

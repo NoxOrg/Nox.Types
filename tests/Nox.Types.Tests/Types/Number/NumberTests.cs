@@ -3,7 +3,7 @@
 public class NumberTests
 {
     [Fact]
-    public void Nox_Number_Constructor_ReturnsSameValue()
+    public void Number_Constructor_ReturnsSameValue()
     {
         var testNumber = 3.14m;
 
@@ -13,7 +13,7 @@ public class NumberTests
     }
 
     [Fact]
-    public void Nox_Number_Constructor_SpecifyingMaxValue_WithGreaterValueInput_ThrowsException()
+    public void Number_Constructor_SpecifyingMaxValue_WithGreaterValueInput_ThrowsException()
     {
         var testNumber = 3.14m;
 
@@ -23,7 +23,7 @@ public class NumberTests
     }
 
     [Fact]
-    public void Nox_Number_Constructor_SpecifyingMinValue_WithLesserValueInput_ThrowsException()
+    public void Number_Constructor_SpecifyingMinValue_WithLesserValueInput_ThrowsException()
     {
         var testNumber = 3.14m;
 
@@ -33,7 +33,7 @@ public class NumberTests
     }
 
     [Fact]
-    public void Nox_Number_Constructor_SpecifyingDecimalDigits_WithDecimalValueInput_RoundsTheValueDown()
+    public void Number_Constructor_SpecifyingDecimalDigits_WithDecimalValueInput_RoundsTheValueDown()
     {
         var testNumber = 3.14m;
 
@@ -43,7 +43,7 @@ public class NumberTests
     }
 
     [Fact]
-    public void Nox_Number_Constructor_SpecifyingDecimalDigits_WithDecimalValueInput_RoundsTheValueUp()
+    public void Number_Constructor_SpecifyingDecimalDigits_WithDecimalValueInput_RoundsTheValueUp()
     {
         var testNumber = 3.94m;
 
@@ -53,7 +53,7 @@ public class NumberTests
     }
 
     [Fact]
-    public void Nox_Number_ToString_Returns_Value()
+    public void Number_ToString_Returns_Value()
     {
         void Test()
         {
@@ -70,7 +70,7 @@ public class NumberTests
     }
 
     [Fact]
-    public void Nox_Number_Constructor_UsingIntegralNumberTypes_ReturnsSameValue()
+    public void Number_Constructor_UsingIntegralNumberTypes_ReturnsSameValue()
     {
         Number number;
 
@@ -96,7 +96,7 @@ public class NumberTests
     }
 
     [Fact]
-    public void Nox_Number_Constructor_UsingIntegralNumberTypes_ReturnsBestUnderlyingType()
+    public void Number_Constructor_UsingIntegralNumberTypes_ReturnsBestUnderlyingType()
     {
         Number number;
 

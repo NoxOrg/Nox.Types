@@ -4,7 +4,7 @@ namespace Nox.Types.Tests.Types;
 public class NoxMonthTests
 {
     [Fact]
-    public void Nox_Month_Constructor_ReturnsSameValue()
+    public void Month_Constructor_ReturnsSameValue()
     {
         // Arrange & Act
         var month = Month.From(1);
@@ -16,7 +16,7 @@ public class NoxMonthTests
     [Theory]
     [InlineData((byte)0)]
     [InlineData((byte)(13))]
-    public void Nox_Month_Constructor_WithOutOfRangeMonth_ThrowsValidationException(byte value)
+    public void Month_Constructor_WithOutOfRangeMonth_ThrowsValidationException(byte value)
     {
         // Arrange & Act
         var exception = Assert.Throws<TypeValidationException>(() => _ =
@@ -28,7 +28,7 @@ public class NoxMonthTests
     }
     
     [Fact]
-    public void Nox_Month_Equality_Tests()
+    public void Month_Equality_Tests()
     {
         // Arrange
         var month1 = Month.From(1);
@@ -40,7 +40,7 @@ public class NoxMonthTests
     }
     
     [Fact]
-    public void Nox_Month_NotEqual_Tests()
+    public void Month_NotEqual_Tests()
     {
         // Arrange
         var month1 = Month.From(1);
@@ -53,7 +53,7 @@ public class NoxMonthTests
     
     
     [Fact]
-    public void Nox_Month_ToString_ReturnsString()
+    public void Month_ToString_ReturnsString()
     {
         // Arrange
         var month = Month.From(1);
