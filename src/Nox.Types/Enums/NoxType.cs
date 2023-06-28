@@ -13,6 +13,7 @@ public enum NoxType
     [CompoundType] Money,
     [CompoundType] StreetAddress,
     [CompoundType] TranslatedText,
+    [CompoundType] DateTimeRange,
 
     // Simple Types
     Area,
@@ -31,7 +32,6 @@ public enum NoxType
     Year,
     DateTime,
     DateTimeDuration,
-    DateTimeRange,
     DateTimeSchedule,
     Distance,
     Email,

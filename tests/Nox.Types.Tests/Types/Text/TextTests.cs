@@ -3,7 +3,7 @@
 public class TextTests
 {
     [Fact]
-    public void Nox_Text_Constructor_ReturnsSameValue()
+    public void Text_Constructor_ReturnsSameValue()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
@@ -13,7 +13,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_TextOptions_Constructor_ReturnsDefaults()
+    public void TextOptions_Constructor_ReturnsDefaults()
     {
         var textOptions = new TextTypeOptions();
 
@@ -24,7 +24,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_Constructor_SpecifyingNonUnicode_WithNonUnicodeCharacterInput_ReturnsSameValue()
+    public void Text_Constructor_SpecifyingNonUnicode_WithNonUnicodeCharacterInput_ReturnsSameValue()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
@@ -35,7 +35,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_Constructor_SpecifyingNonUnicode_WithUnicodeCharacterInput_ThrowsValidationException()
+    public void Text_Constructor_SpecifyingNonUnicode_WithUnicodeCharacterInput_ThrowsValidationException()
 
     {
         var testString = "二兎を追う者は一兎をも得ず。"; // English translation: “Those who chase two hares won’t even catch one.”
@@ -47,7 +47,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_Constructor_SpecifyingMaxLength_WithLongerLengthInput_ThrowsValidationException()
+    public void Text_Constructor_SpecifyingMaxLength_WithLongerLengthInput_ThrowsValidationException()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
@@ -57,7 +57,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_Constructor_SpecifyingMinLength_WithShorterLengthInput_ThrowsValidationException()
+    public void Text_Constructor_SpecifyingMinLength_WithShorterLengthInput_ThrowsValidationException()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
@@ -67,7 +67,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_Constructor_SpecifyingUppercase_WithNormalCaseInput_ReturnsUpperInvariantCase()
+    public void Text_Constructor_SpecifyingUppercase_WithNormalCaseInput_ReturnsUpperInvariantCase()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
@@ -77,7 +77,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_Constructor_SpecifyingLowercase_WithNormalCaseInput_ReturnsLowerInvariantCase()
+    public void Text_Constructor_SpecifyingLowercase_WithNormalCaseInput_ReturnsLowerInvariantCase()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
@@ -87,7 +87,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_Equality_Tests()
+    public void Text_Equality_Tests()
     {
         var testString1 = "It's a test designed to provoke an emotional response - Holden";
 
@@ -109,7 +109,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_NonEquality_Tests()
+    public void Text_NonEquality_Tests()
     {
         var testString1 = "It's a test designed to provoke an emotional response - Holden";
 
@@ -131,7 +131,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_ToString_Returns_Value()
+    public void Text_ToString_Returns_Value()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 
@@ -143,7 +143,7 @@ public class TextTests
     }
 
     [Fact]
-    public void Nox_Text_GetCopy_ReturnsCopy()
+    public void Text_GetCopy_ReturnsCopy()
     {
         var testString = "It's a test designed to provoke an emotional response - Holden";
 

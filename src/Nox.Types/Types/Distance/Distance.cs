@@ -6,7 +6,7 @@ namespace Nox.Types;
 
 public class Distance : ValueObject<QuantityValue, Distance>
 {
-    private const int QUANTITY_VALUE_DECIMAL_PRECISION = 6;
+    private const int QuantityValueDecimalPrecision = 6;
 
     public DistanceTypeUnit Unit { get; private set; } = DistanceTypeUnit.Kilometer;
 
@@ -130,7 +130,7 @@ public class Distance : ValueObject<QuantityValue, Distance>
     }
 
     private static QuantityValue Round(QuantityValue value)
-        => Math.Round((double)value, QUANTITY_VALUE_DECIMAL_PRECISION);
+        => Math.Round((double)value, QuantityValueDecimalPrecision);
 
     private static double CalculateDistanceInKilometers(LatLong origin, LatLong destination)
         => new HaversineDistanceCalculator().Calculate(origin, destination);
