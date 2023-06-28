@@ -5,8 +5,6 @@ namespace Nox.Types.Tests.EntityFrameworkTests;
 
 public class NoxTypesEntityFrameworkTests : TestWithSqlite
 {
- 
-
     [Fact]
     public async Task DatabaseIsAvailableAndCanBeConnectedTo()
     {
@@ -38,7 +36,8 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
             InternetDomain = InternetDomain.From("admin.ch"),
-            CountryCode3 = CountryCode3.From("CHE")
+            CountryCode3 = CountryCode3.From("CHE"),
+            DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -66,6 +65,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryNumber = CountryNumber.From(756),
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
+            DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
             InternetDomain = InternetDomain.From("admin.ch"),
             CountryCode3 = CountryCode3.From("CHE")
         };
@@ -95,5 +95,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(7, item.MonthOfPeakTourism.Value);
         Assert.Equal(129.522785, item.DistanceInKm.Value);
         Assert.Equal(DistanceTypeUnit.Kilometer, item.DistanceInKm.Unit);
+        Assert.Equal(new DateTime(2023, 01, 01), item.DateTimeRange.Start);
+        Assert.Equal(new DateTime(2023, 02, 01), item.DateTimeRange.End);
     }
 }
