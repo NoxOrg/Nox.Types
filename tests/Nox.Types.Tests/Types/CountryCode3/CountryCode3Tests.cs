@@ -2,10 +2,10 @@
 
 namespace Nox.Types.Tests;
 
-public class CountryCode3Test
+public class CountryCode3Tests
 {
     [Theory]
-    [ClassData(typeof(CountryCode3TestDataClass))]
+    [ClassData(typeof(CountryCode3TestsDataClass))]
     public void CreatingCountryCode3_From_IsValid(string countryCode3String)
     {
         var countryCode3 = CountryCode3.From(countryCode3String);
