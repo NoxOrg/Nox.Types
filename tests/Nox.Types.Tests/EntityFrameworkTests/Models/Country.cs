@@ -16,7 +16,7 @@ public sealed class Country
     /// Gets or sets the population.
     /// </summary>
     public Number? Population { get; set; } = null!;
-    
+
     /// <summary>
     /// Gets or sets the latitude and longitude.
     /// </summary>
@@ -57,6 +57,11 @@ public sealed class Country
     /// Gets or sets the distance in kilometers.
     /// </summary>
     public Distance DistanceInKm { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the date time range.
+    /// </summary>
+    public DateTimeRange DateTimeRange { get; set; } = null!;
     
     /// <summary>
     /// Gets or sets the internet domain associated with the country.
