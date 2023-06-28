@@ -77,4 +77,9 @@ public sealed class Country
     /// Gets or sets the IP Address.
     /// </summary>
     public IpAddress IPAddress { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the longest hiking trail in meters.
+    /// </summary>
+    public Length LongestHikingTrailInMeters { get; set; } = null!;
 }
