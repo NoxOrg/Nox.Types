@@ -29,6 +29,7 @@ jobs:
         
       - name: Display GitVersion outputs (step output)
         run: |
+          echo "Branch: ${{ github.ref }}"
           echo "Major: ${{ steps.gitversion.outputs.major }}"
           echo "Minor: ${{ steps.gitversion.outputs.minor }}"
           echo "Patch: ${{ steps.gitversion.outputs.patch }}"
@@ -75,9 +76,9 @@ jobs:
         run: dotnet pack --no-build ./src/Nox.Types --configuration Release -o ./artifacts     
 
       - name: Publish Nox.Lib
-        if: github.ref == 'refs/heads/main'
+        if: contains('refs/heads/main',github.ref)
         run: dotnet nuget push ./artifacts/Nox.Types.*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
 
       - name:  Publish Nox.Lib Warning
-        if: github.ref != 'refs/heads/main'
+        if: contains('refs/heads/main',github.ref) == false
         run: echo "Skipping publishing, not in main branch"
