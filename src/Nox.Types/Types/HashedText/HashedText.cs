@@ -22,12 +22,6 @@ public sealed class HashedText : ValueObject<string, HashedText>
             options = new HashedTextTypeOptions();
         }
 
-        var hashedOptionsValidationResult = HashedTextTypeOptions.ValidateHashingAlgorithm(options.HashingAlgorithm);
-        if (hashedOptionsValidationResult.Errors.Any())
-        {
-            throw new TypeValidationException(hashedOptionsValidationResult.Errors);
-        }
-
         var newObject = new HashedText
         {
             Value = HashText(value, options),
@@ -59,13 +53,13 @@ public sealed class HashedText : ValueObject<string, HashedText>
         return hashedText.Equals(Value);
     }
 
-    private static string HashText(string value, HashedTextTypeOptions hashedTextTypeOptions)
+    private static string HashText(string plainText, HashedTextTypeOptions hashedTextTypeOptions)
     {
         string hashedText = string.Empty;
         using (var hasher = CreateHasher(hashedTextTypeOptions.HashingAlgorithm))
         {
-            byte[] valueBytes = Encoding.UTF8.GetBytes(value);
-            byte[] hashBytes = hasher.ComputeHash(valueBytes);
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes($"{plainText}{hashedTextTypeOptions.Salt}");
+            byte[] hashBytes = hasher.ComputeHash(plainTextBytes);
             hashedText = Convert.ToBase64String(hashBytes);
         }
 
@@ -73,9 +67,9 @@ public sealed class HashedText : ValueObject<string, HashedText>
     }
 
 
-    static HashAlgorithm CreateHasher(string hashAlgorithm)
+    static HashAlgorithm CreateHasher(HashingAlgorithm hashAlgorithm)
     {
-        HashAlgorithm hasher = HashAlgorithm.Create(hashAlgorithm);
+        HashAlgorithm hasher = HashAlgorithm.Create(hashAlgorithm.ToString());
 
         return hasher ?? throw new CryptographicException("Invalid hash algorithm");
     }

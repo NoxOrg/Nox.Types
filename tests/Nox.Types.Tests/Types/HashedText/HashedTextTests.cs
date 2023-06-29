@@ -21,29 +21,19 @@ public class HashedTextTests
     [Fact]
     public void Nox_HashedText_Constructor_WithOptions_ReturnsHashedValue()
     {
-        string text = "ajla becic";
+        string text = "Text to hash";
         string textHashedExpected = string.Empty;
 
-        using (var sha = SHA512.Create())
+        using (var sha = SHA256.Create())
         {
             byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
             byte[] hash = sha.ComputeHash(textData);
             textHashedExpected = Convert.ToBase64String(hash);
         }
 
-        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = "SHA512"});
+        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA256});
 
         Assert.Equal(textHashedExpected, hashedText.Value);
-    }
-
-
-    [Fact]
-    public void Nox_HashedText_Constructor_HashingAlgorithm_NotSupported()
-    {
-        string text = "ajla becic";
-
-        Assert.Throws<TypeValidationException>(() => _ =
-            HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = "algorithm" }));
     }
 
     [Fact]
@@ -67,7 +57,7 @@ public class HashedTextTests
     [Fact]
     public void Nox_HashedText_Equal_CompareHashedValues()
     {
-        string text = "ajla becic";
+        string text = "Text to hash";
         string textHashedExpected = string.Empty;
 
         using (var sha = SHA256.Create())
@@ -85,7 +75,7 @@ public class HashedTextTests
     [Fact]
     public void Nox_HashedText_Equals_ReturnsTrue()
     {
-        string text = "ajla becic";
+        string text = "Text to hash";
         var hashedText = HashedText.From(text);
 
         Assert.True(hashedText.Equals(text));
@@ -94,7 +84,7 @@ public class HashedTextTests
     [Fact]
     public void Nox_HashedText_Equals_ReturnsFalse()
     {
-        string text = "ajla becic";
+        string text = "Text to hash";
         var hashedText = HashedText.From($"{text} 1");
 
         Assert.False(hashedText.Equals(text));
