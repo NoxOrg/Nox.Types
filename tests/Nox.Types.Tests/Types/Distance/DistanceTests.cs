@@ -3,7 +3,7 @@
 public class DistanceTests
 {
     [Fact]
-    public void Nox_Distance_Constructor_ReturnsSameValueAndDefaultUnit()
+    public void Distance_Constructor_ReturnsSameValueAndDefaultUnit()
     {
         var distance = Distance.From(314.159);
 
@@ -12,7 +12,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithUnit_ReturnsSameValueAndUnit()
+    public void Distance_Constructor_WithUnit_ReturnsSameValueAndUnit()
     {
         var distance = Distance.From(195.209, DistanceTypeUnit.Mile);
 
@@ -21,7 +21,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithUnitInKilometers_ReturnsSameValueAndUnit()
+    public void Distance_Constructor_WithUnitInKilometers_ReturnsSameValueAndUnit()
     {
         var distance = Distance.FromKilometers(314.159);
 
@@ -30,7 +30,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithLatLongAndUnitInKilometers_ReturnsCalculatedValueAndSameUnit()
+    public void Distance_Constructor_WithLatLongAndUnitInKilometers_ReturnsCalculatedValueAndSameUnit()
     {
         var origin = LatLong.From(46.94809, 7.44744);
         var destination = LatLong.From(46.204391, 6.143158);
@@ -42,7 +42,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithUnitInMiles_ReturnsSameValueAndUnit()
+    public void Distance_Constructor_WithUnitInMiles_ReturnsSameValueAndUnit()
     {
         var distance = Distance.FromMiles(195.209);
 
@@ -51,7 +51,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithLatLongAndUnitInMiles_ReturnsCalculatedValueAndSameUnit()
+    public void Distance_Constructor_WithLatLongAndUnitInMiles_ReturnsCalculatedValueAndSameUnit()
     {
         var origin = LatLong.From(46.94809, 7.44744);
         var destination = LatLong.From(46.204391, 6.143158);
@@ -63,7 +63,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithNegativeValueInput_ThrowsException()
+    public void Distance_Constructor_WithNegativeValueInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Distance.From(-100)
@@ -73,7 +73,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithNaNValueInput_ThrowsException()
+    public void Distance_Constructor_WithNaNValueInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Distance.From(double.NaN)
@@ -83,7 +83,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithPositiveInfinityValueInput_ThrowsException()
+    public void Distance_Constructor_WithPositiveInfinityValueInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Distance.From(double.PositiveInfinity)
@@ -93,7 +93,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithNegativeInfinityValueInput_ThrowsException()
+    public void Distance_Constructor_WithNegativeInfinityValueInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Distance.From(double.NegativeInfinity)
@@ -103,7 +103,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Constructor_WithWithUnsupportedUnitInput_ThrowsException()
+    public void Distance_Constructor_WithWithUnsupportedUnitInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Distance.From(314.159, (DistanceTypeUnit)1001)
@@ -113,7 +113,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_ToKilometers_ReturnsValueInKilometers()
+    public void Distance_ToKilometers_ReturnsValueInKilometers()
     {
         var distance = Distance.FromKilometers(314.159);
 
@@ -121,7 +121,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_ToMiles_ReturnsValueInMiles()
+    public void Distance_ToMiles_ReturnsValueInMiles()
     {
         var distance = Distance.FromKilometers(314.159);
 
@@ -129,29 +129,31 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_ValueInKilometers_ToString_ReturnsValueAndUnit()
+    public void Distance_ValueInKilometers_ToString_ReturnsValueAndUnit()
     {
         void Test()
         {
             var distance = Distance.FromKilometers(314.159);
             Assert.Equal("314.159 km", distance.ToString());
         }
+
         TestUtility.RunInInvariantCulture(Test);
     }
 
     [Fact]
-    public void Nox_Distance_ValueInMiles_ToString_ReturnsValueAndUnit()
+    public void Distance_ValueInMiles_ToString_ReturnsValueAndUnit()
     {
         void Test()
         {
             var distance = Distance.FromMiles(195.209);
             Assert.Equal("195.209 mi", distance.ToString());
         }
+
         TestUtility.RunInInvariantCulture(Test);
     }
 
     [Fact]
-    public void Nox_Distance_Equality_SpecifyingDistanceUnit_WithSameUnit_Tests()
+    public void Distance_Equality_SpecifyingDistanceUnit_WithSameUnit_Tests()
     {
         var distance1 = Distance.FromKilometers(314.159);
 
@@ -161,7 +163,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_Equality_SpecifyingDistanceUnit_WithDifferentUnit_Tests()
+    public void Distance_Equality_SpecifyingDistanceUnit_WithDifferentUnit_Tests()
     {
         var distance1 = Distance.FromKilometers(314.159);
 
@@ -171,7 +173,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_NonEquality_SpecifyingDistanceUnit_WithSameUnit_Tests()
+    public void Distance_NonEquality_SpecifyingDistanceUnit_WithSameUnit_Tests()
     {
         var distance1 = Distance.FromKilometers(314.159);
 
@@ -181,7 +183,7 @@ public class DistanceTests
     }
 
     [Fact]
-    public void Nox_Distance_NonEquality_SpecifyingDistanceUnit_WithDifferentUnit_Tests()
+    public void Distance_NonEquality_SpecifyingDistanceUnit_WithDifferentUnit_Tests()
     {
         var distance1 = Distance.FromKilometers(314.159);
 

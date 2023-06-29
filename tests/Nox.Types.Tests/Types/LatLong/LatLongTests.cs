@@ -6,7 +6,7 @@ namespace Nox.Types.Tests.Types;
 public class LatLongTests
 {
     [Fact]
-    public void Nox_LatLong_Constructor_ReturnsSameValue()
+    public void LatLong_Constructor_ReturnsSameValue()
     {
         var coords = LatLong.From(46.94809, 7.44744);
 
@@ -14,7 +14,7 @@ public class LatLongTests
     }
 
     [Fact]
-    public void Nox_LatLong_Constructor_WithOutOfRangeLatitude_ThrowsValidationException()
+    public void LatLong_Constructor_WithOutOfRangeLatitude_ThrowsValidationException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
           LatLong.From(100, 0)
@@ -24,7 +24,7 @@ public class LatLongTests
     }
 
     [Fact]
-    public void Nox_LatLong_Constructor_WithOutOfRangeLongitude_ThrowsValidationException()
+    public void LatLong_Constructor_WithOutOfRangeLongitude_ThrowsValidationException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
           LatLong.From(0, 200)
@@ -34,7 +34,7 @@ public class LatLongTests
     }
 
     [Fact]
-    public void Nox_LatLong_Equality_Tests()
+    public void LatLong_Equality_Tests()
     {
         var coords1 = LatLong.From(46.94809, 7.44744);
 
@@ -44,7 +44,7 @@ public class LatLongTests
     }
 
     [Fact]
-    public void Nox_LatLong_Equality_WithDifferentContructor_Tests()
+    public void LatLong_Equality_WithDifferentContructor_Tests()
     {
         var coords1 = LatLong.From(46.94809, 7.44744);
 
@@ -54,7 +54,7 @@ public class LatLongTests
     }
 
     [Fact]
-    public void Nox_LatLong_NotEqual_Tests()
+    public void LatLong_NotEqual_Tests()
     {
         var coords1 = LatLong.From(46.94809, 7.44744);
 

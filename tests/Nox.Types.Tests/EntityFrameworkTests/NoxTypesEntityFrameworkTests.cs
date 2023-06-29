@@ -36,6 +36,8 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             DistanceInKm = Distance.From(129.522785),
             InternetDomain = InternetDomain.From("admin.ch"),
             CountryCode3 = CountryCode3.From("CHE"),
+            IPAddress = IpAddress.From("102.129.143.255"),
+            DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
             StreetAddress = CreateStreetAddress()
         };
         DbContext.Countries.Add(newItem);
@@ -53,6 +55,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
     [Fact]
     public void AddedItemShouldGetGeneratedId()
     {
+        var streetAddress = CreateStreetAddress();
         var newItem = new Country()
         {
             Name = Text.From("Switzerland"),
@@ -65,9 +68,11 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryNumber = CountryNumber.From(756),
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
+            DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
             InternetDomain = InternetDomain.From("admin.ch"),
             CountryCode3 = CountryCode3.From("CHE"),
-            StreetAddress = CreateStreetAddress()
+            IPAddress = IpAddress.From("102.129.143.255"),
+            StreetAddress = streetAddress
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -95,6 +100,13 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(7, item.MonthOfPeakTourism.Value);
         Assert.Equal(129.522785, item.DistanceInKm.Value);
         Assert.Equal(DistanceTypeUnit.Kilometer, item.DistanceInKm.Unit);
+        Assert.Equal("admin.ch", item.InternetDomain.Value);
+        Assert.Equal("CHE", item.CountryCode3.Value);
+        Assert.Equal("102.129.143.255", item.IPAddress.Value);
+        Assert.Equal(new DateTime(2023, 01, 01), item.DateTimeRange.Start);
+        Assert.Equal(new DateTime(2023, 02, 01), item.DateTimeRange.End);
+
+        AssertStreetAddress(streetAddress, item.StreetAddress);
     }
 
     private static StreetAddress CreateStreetAddress()
@@ -110,5 +122,22 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
                "AdministrativeArea2",
                "12345",
                CountryCode2.From("CH")));
+    }
+
+    private static void AssertStreetAddress(StreetAddress expectedAddress, StreetAddress actualAddress)
+    {
+        var expectedAddressValue = expectedAddress.Value;
+        var actualAddressValue = actualAddress.Value;
+
+        Assert.Equal(expectedAddressValue.AddressLine1, actualAddressValue.AddressLine1);
+        Assert.Equal(expectedAddressValue.AddressLine2, actualAddressValue.AddressLine2);
+        Assert.Equal(expectedAddressValue.Locality, actualAddressValue.Locality);
+        Assert.Equal(expectedAddressValue.Neighborhood, actualAddressValue.Neighborhood);
+        Assert.Equal(expectedAddressValue.PostalCode, actualAddressValue.PostalCode);
+        Assert.Equal(expectedAddressValue.AdministrativeArea1, actualAddressValue.AdministrativeArea1);
+        Assert.Equal(expectedAddressValue.AdministrativeArea2, actualAddressValue.AdministrativeArea2);
+        Assert.Equal(expectedAddressValue.Route, actualAddressValue.Route);
+        Assert.Equal(expectedAddressValue.StreetNumber, actualAddressValue.StreetNumber);
+        Assert.Equal(expectedAddressValue.CountryId.Value, actualAddressValue.CountryId.Value);
     }
 }

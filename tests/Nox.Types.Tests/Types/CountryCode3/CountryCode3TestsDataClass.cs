@@ -2,7 +2,7 @@
 
 namespace Nox.Types.Tests.Types.CountryCode3;
 
-public class CountryCode3TestDataClass : IEnumerable<object[]>
+public class CountryCode3TestsDataClass : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
