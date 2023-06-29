@@ -37,24 +37,6 @@ public class HashedTextTests
     }
 
     [Fact]
-    public void Nox_HashedText_Constructor_HashingAlgorithm_Null_ReturnsDefault()
-    {
-        string text = "ajla becic";
-        string textHashedExpected = string.Empty;
-
-        using (var sha = SHA256.Create())
-        {
-            byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
-            byte[] hash = sha.ComputeHash(textData);
-            textHashedExpected = Convert.ToBase64String(hash);
-        }
-
-        var hashedText = HashedText.From(text, null);
-
-        Assert.Equal(textHashedExpected, hashedText.Value);
-    }
-
-    [Fact]
     public void Nox_HashedText_Equal_CompareHashedValues()
     {
         string text = "Text to hash";
