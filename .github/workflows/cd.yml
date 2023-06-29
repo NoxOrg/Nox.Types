@@ -76,9 +76,9 @@ jobs:
         run: dotnet pack --no-build ./src/Nox.Types --configuration Release -o ./artifacts     
 
       - name: Publish Nox.Lib
-        if: contains('refs/heads/main',github.ref)
+        if: contains('refs/tags/v',github.ref)
         run: dotnet nuget push ./artifacts/Nox.Types.*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
 
       - name:  Publish Nox.Lib Warning
-        if: contains('refs/heads/main',github.ref) == false
+        if: contains('refs/tags/v',github.ref) == false
         run: echo "Skipping publishing, not in main branch"
