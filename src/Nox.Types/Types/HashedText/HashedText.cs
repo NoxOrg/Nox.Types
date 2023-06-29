@@ -17,10 +17,7 @@ public sealed class HashedText : ValueObject<string, HashedText>
 
     public static HashedText From(string value, HashedTextTypeOptions options)
     {
-        if (options == null)
-        {
-            options = new HashedTextTypeOptions();
-        }
+        options ??= new HashedTextTypeOptions();
 
         var newObject = new HashedText
         {
