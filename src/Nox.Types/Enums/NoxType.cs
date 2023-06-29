@@ -6,6 +6,8 @@ public enum NoxType
     @Array,
     @Collection,
     @Object,
+    // This is complex, needs to include CountryCode 
+    VatNumber, 
 
     // Compound Types - requires multiple fields to persist
     [CompoundType] Entity,
