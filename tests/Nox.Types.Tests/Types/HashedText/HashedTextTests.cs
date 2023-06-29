@@ -24,32 +24,32 @@ public class HashedTextTests
         string text = "Text to hash";
         string textHashedExpected = string.Empty;
 
-        using (var sha = SHA256.Create())
+        using (var sha = SHA512.Create())
         {
             byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
             byte[] hash = sha.ComputeHash(textData);
             textHashedExpected = Convert.ToBase64String(hash);
         }
 
-        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA256});
+        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt="" });
 
         Assert.Equal(textHashedExpected, hashedText.Value);
     }
 
     [Fact]
-    public void Nox_HashedText_Equal_CompareHashedValues()
+    public void Nox_HashedText_Equal_CompareHashedValues_NoSalting()
     {
         string text = "Text to hash";
         string textHashedExpected = string.Empty;
 
-        using (var sha = SHA256.Create())
+        using (var sha = SHA512.Create())
         {
             byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
             byte[] hash = sha.ComputeHash(textData);
             textHashedExpected = Convert.ToBase64String(hash);
         }
 
-        var hashedText = HashedText.From(text);
+        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt="" });
 
         Assert.True(hashedText.Equals(textHashedExpected));
     }
