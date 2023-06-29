@@ -1,6 +1,7 @@
 ﻿using Nox.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Nox.Types;
 
@@ -75,7 +76,7 @@ public sealed class Length : ValueObject<QuantityValue, Length>
     {
         var result = Value.Validate();
 
-        if (Value < 0)
+        if (Value < 0 && !double.IsNaN((double)Value) && !double.IsInfinity((double)Value))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Length type as negative length value {Value} is not allowed."));
         }
@@ -93,9 +94,16 @@ public sealed class Length : ValueObject<QuantityValue, Length>
         yield return new KeyValuePair<string, object>(nameof(Value), ToMeters());
     }
 
-
     public override string ToString()
-        => $"{Value:G} {Unit.ToSymbol()}";
+        => $"{Value.ToString($"0.{new string('#', QuantityValueDecimalPrecision)}", CultureInfo.InvariantCulture)} {Unit.ToSymbol()}";
+
+    /// <summary>
+    /// Returns a string representation of the <see cref="Length"/> object using the specified <see cref="IFormatProvider"/>.
+    /// </summary>
+    /// <param name="formatProvider">The format provider for the length value.</param>
+    /// <returns>A string representation of the <see cref="Length"/> object with the value formatted using the specified <see cref="IFormatProvider"/>.</returns>
+    public string ToString(IFormatProvider formatProvider)
+        => $"{Value.ToString(formatProvider)} {Unit.ToSymbol()}";
 
     private QuantityValue? _meters;
 
@@ -109,7 +117,7 @@ public sealed class Length : ValueObject<QuantityValue, Length>
 
     private QuantityValue GetLengthIn(LengthTypeUnit targetUnit)
     {
-        var factor = new MeasurementConversionFactor(Unit, targetUnit).Value;
+        var factor = new MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
         return Round(Value * factor);
     }
 

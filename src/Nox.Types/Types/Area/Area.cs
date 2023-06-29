@@ -1,6 +1,7 @@
 ﻿using Nox.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Nox.Types;
 
@@ -92,7 +93,16 @@ public class Area : ValueObject<QuantityValue, Area>
         return result;
     }
 
-    public override string ToString() => $"{Value:G} {Unit.ToSymbol()}";
+    public override string ToString()
+        => $"{Value.ToString($"0.{new string('#', QuantityValueDecimalPrecision)}", CultureInfo.InvariantCulture)} {Unit.ToSymbol()}";
+
+    /// <summary>
+    /// Returns a string representation of the <see cref="Length"/> object using the specified <see cref="IFormatProvider"/>.
+    /// </summary>
+    /// <param name="formatProvider">The format provider for the length value.</param>
+    /// <returns>A string representation of the <see cref="Length"/> object with the value formatted using the specified <see cref="IFormatProvider"/>.</returns>
+    public string ToString(IFormatProvider formatProvider)
+        => $"{Value.ToString(formatProvider)} {Unit.ToSymbol()}";
 
     protected override IEnumerable<KeyValuePair<string, object>> GetEqualityComponents()
     {
@@ -107,7 +117,7 @@ public class Area : ValueObject<QuantityValue, Area>
 
     private QuantityValue GetAreaIn(AreaTypeUnit targetUnit)
     {
-        var factor = new MeasurementConversionFactor(Unit, targetUnit).Value;
+        var factor = new MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
         return Round(Value * factor);
     }
 

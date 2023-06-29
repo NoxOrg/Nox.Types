@@ -4,8 +4,8 @@ namespace Nox.Types;
 
 public enum LengthTypeUnit
 {
-    Foot,
-    Meter
+    Foot = 1,
+    Meter = 2,
 }
 
 public static class LengthTypeUnitExtensions

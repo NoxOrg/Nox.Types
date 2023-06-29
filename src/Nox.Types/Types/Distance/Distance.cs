@@ -1,6 +1,7 @@
 ﻿using Nox.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Nox.Types;
 
@@ -113,7 +114,16 @@ public class Distance : ValueObject<QuantityValue, Distance>
         yield return new KeyValuePair<string, object>(nameof(Value), ToKilometers());
     }
 
-    public override string ToString() => $"{Value:G} {Unit.ToSymbol()}";
+    public override string ToString()
+        => $"{Value.ToString($"0.{new string('#', QuantityValueDecimalPrecision)}", CultureInfo.InvariantCulture)} {Unit.ToSymbol()}";
+
+    /// <summary>
+    /// Returns a string representation of the <see cref="Length"/> object using the specified <see cref="IFormatProvider"/>.
+    /// </summary>
+    /// <param name="formatProvider">The format provider for the length value.</param>
+    /// <returns>A string representation of the <see cref="Length"/> object with the value formatted using the specified <see cref="IFormatProvider"/>.</returns>
+    public string ToString(IFormatProvider formatProvider)
+        => $"{Value.ToString(formatProvider)} {Unit.ToSymbol()}";
 
     private QuantityValue? _kilometers;
 
@@ -125,7 +135,7 @@ public class Distance : ValueObject<QuantityValue, Distance>
 
     private QuantityValue GetDistanceIn(DistanceTypeUnit targetUnit)
     {
-        var factor = new MeasurementConversionFactor(Unit, targetUnit).Value;
+        var factor = new MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
         return Round(Value * factor);
     }
 

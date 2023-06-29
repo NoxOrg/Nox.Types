@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Nox.Types.Tests.Types;
 
 public class AreaTests
@@ -145,30 +147,60 @@ public class AreaTests
         Assert.Equal(134.54888, area.ToSquareFeet());
     }
 
-    [Fact]
-    public void Area_ValueInSquareMeters_ToString_ReturnsString()
+    [Theory]
+    [InlineData("en-US")]
+    [InlineData("pt-PT")]
+    public void Area_ValueInSquareMeters_ToString_IsCultureIndepdendent(string culture)
     {
         void Test()
         {
             var area = Area.FromSquareMeters(12.5);
-
             Assert.Equal("12.5 m²", area.ToString());
         }
 
-        TestUtility.RunInInvariantCulture(Test);
+        TestUtility.RunInCulture(Test, culture);
     }
 
-    [Fact]
-    public void Area_ValueInSquareFeet_ToString_ReturnsString()
+    [Theory]
+    [InlineData("en-US", "12.5 m²")]
+    [InlineData("pt-PT", "12,5 m²")]
+    public void Area_ValueInSquareMeters_ToString_IsCultureDependent(string culture, string expected)
+    {
+        void Test()
+        {
+            var area = Area.FromSquareMeters(12.5);
+            Assert.Equal(expected, area.ToString(new CultureInfo(culture)));
+        }
+
+        TestUtility.RunInCulture(Test, culture);
+    }
+
+    [Theory]
+    [InlineData("en-US")]
+    [InlineData("pt-PT")]
+    public void Area_ValueInSquareFeet_ToString_IsCultureIndependent(string culture)
     {
         void Test()
         {
             var area = Area.FromSquareFeet(134.548880);
-
             Assert.Equal("134.54888 ft²", area.ToString());
         }
 
-        TestUtility.RunInInvariantCulture(Test);
+        TestUtility.RunInCulture(Test, culture);
+    }
+
+    [Theory]
+    [InlineData("en-US", "134.54888 ft²")]
+    [InlineData("pt-PT", "134,54888 ft²")]
+    public void Area_ValueInSquareFeet_ToString_IsCultureDependent(string culture, string expected)
+    {
+        void Test()
+        {
+            var area = Area.FromSquareFeet(134.548880);
+            Assert.Equal(expected, area.ToString(new CultureInfo(culture)));
+        }
+
+        TestUtility.RunInCulture(Test, culture);
     }
 
     [Fact]

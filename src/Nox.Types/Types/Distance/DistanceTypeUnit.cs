@@ -4,8 +4,8 @@ namespace Nox.Types;
 
 public enum DistanceTypeUnit
 {
-    Kilometer,
-    Mile
+    Kilometer = 3,
+    Mile = 4,
 }
 
 public static class DistanceTypeUnitExtensions
