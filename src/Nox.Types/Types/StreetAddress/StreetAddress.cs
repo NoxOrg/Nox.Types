@@ -199,23 +199,19 @@ public sealed class StreetAddress : ValueObject<
 
     public override string ToString()
     {
-        var addressLine = string.Join(" ", new[]
-            { Value.AddressLine1, Value.AddressLine2}
+        var addressLine = JoinStringParts(" ", Value.AddressLine1, Value.AddressLine2);
+        var areaLine = JoinStringParts(" ", Value.AdministrativeArea1, Value.AdministrativeArea2, Value.PostalCode);
+
+        return JoinStringParts(", ",
+            addressLine,
+            Value.Locality,
+            areaLine,
+            Value.CountryId.Value);
+    }
+
+    private string JoinStringParts(string separator, params string[] parts)
+    {
+        return string.Join(separator, parts
             .Where(x => !string.IsNullOrWhiteSpace(x)));
-
-        var areaLine = string.Join(" ", new[]
-            { Value.AdministrativeArea1, Value.AdministrativeArea2}
-            .Where(x => !string.IsNullOrWhiteSpace(x)));
-
-        if (!string.IsNullOrWhiteSpace(areaLine))
-        {
-            areaLine += " ";
-        }
-
-        if (!string.IsNullOrWhiteSpace(addressLine))
-        {
-            addressLine += ", ";
-        }
-        return $"{addressLine}{Value.Locality}, {areaLine}{Value.PostalCode}, {Value.CountryId}";
     }
 }
