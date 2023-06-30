@@ -1,4 +1,6 @@
-﻿namespace Nox.Types.Tests.Types;
+﻿using System.Globalization;
+
+namespace Nox.Types.Tests.Types;
 
 public class DistanceTests
 {
@@ -128,8 +130,10 @@ public class DistanceTests
         Assert.Equal(195.209352, distance.ToMiles());
     }
 
-    [Fact]
-    public void Distance_ValueInKilometers_ToString_ReturnsValueAndUnit()
+    [Theory]
+    [InlineData("en-US")]
+    [InlineData("pt-PT")]
+    public void Distance_ValueInKilometers_ToString_IsCultureIndepdendent(string culture)
     {
         void Test()
         {
@@ -137,11 +141,27 @@ public class DistanceTests
             Assert.Equal("314.159 km", distance.ToString());
         }
 
-        TestUtility.RunInInvariantCulture(Test);
+        TestUtility.RunInCulture(Test, culture);
     }
 
-    [Fact]
-    public void Distance_ValueInMiles_ToString_ReturnsValueAndUnit()
+    [Theory]
+    [InlineData("en-US", "314.159 km")]
+    [InlineData("pt-PT", "314,159 km")]
+    public void Distance_ValueInKilometers_ToString_IsCultureDependent(string culture, string expected)
+    {
+        void Test()
+        {
+            var distance = Distance.FromKilometers(314.159);
+            Assert.Equal(expected, distance.ToString(new CultureInfo(culture)));
+        }
+
+        TestUtility.RunInCulture(Test, culture);
+    }
+
+    [Theory]
+    [InlineData("en-US")]
+    [InlineData("pt-PT")]
+    public void Distance_ValueInMiles_ToString_IsCultureIndependent(string culture)
     {
         void Test()
         {
@@ -149,7 +169,21 @@ public class DistanceTests
             Assert.Equal("195.209 mi", distance.ToString());
         }
 
-        TestUtility.RunInInvariantCulture(Test);
+        TestUtility.RunInCulture(Test, culture);
+    }
+
+    [Theory]
+    [InlineData("en-US", "195.209 mi")]
+    [InlineData("pt-PT", "195,209 mi")]
+    public void Distance_ValueInMiles_ToString_IsCultureDependent(string culture, string expected)
+    {
+        void Test()
+        {
+            var distance = Distance.FromMiles(195.209);
+            Assert.Equal(expected, distance.ToString(new CultureInfo(culture)));
+        }
+
+        TestUtility.RunInCulture(Test, culture);
     }
 
     [Fact]

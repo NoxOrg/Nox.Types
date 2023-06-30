@@ -4,8 +4,8 @@ namespace Nox.Types;
 
 public enum AreaTypeUnit
 {
-    SquareFoot,
-    SquareMeter,
+    SquareFoot = 5,
+    SquareMeter = 6,
 }
 
 public static class AreaTypeUnitExtensions

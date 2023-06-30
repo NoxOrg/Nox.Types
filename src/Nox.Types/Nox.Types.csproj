@@ -21,5 +21,6 @@
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\images\nox.png" Pack="true" PackagePath="" />
+		<InternalsVisibleTo Include="Nox.Types.Tests" />
     </ItemGroup>
 </Project>
