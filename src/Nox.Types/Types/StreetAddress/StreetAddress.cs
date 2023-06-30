@@ -203,11 +203,19 @@ public sealed class StreetAddress : ValueObject<
             { Value.AddressLine1, Value.AddressLine2}
             .Where(x => !string.IsNullOrWhiteSpace(x)));
 
+        var areaLine = string.Join(" ", new[]
+            { Value.AdministrativeArea1, Value.AdministrativeArea2}
+            .Where(x => !string.IsNullOrWhiteSpace(x)));
+
+        if (!string.IsNullOrWhiteSpace(areaLine))
+        {
+            areaLine += " ";
+        }
+
         if (!string.IsNullOrWhiteSpace(addressLine))
         {
             addressLine += ", ";
         }
-
-        return $"{addressLine}{Value.Locality}, {Value.CountryId} {Value.PostalCode}";
+        return $"{addressLine}{Value.Locality}, {areaLine}{Value.PostalCode}, {Value.CountryId}";
     }
 }

@@ -4,10 +4,10 @@ namespace Nox.Types.Tests.Types;
 public class StreetAddressTests
 {
     [Theory]
-    [InlineData(5, "Line1", "", "Locality", "11111", "UA", "Line1, Locality, UA 11111")]
-    [InlineData(5, "", "Line2", "Locality", "11111", "UA", "Line2, Locality, UA 11111")]
-    [InlineData(5, "", "", "Locality", "11111", "UA", "Locality, UA 11111")]
-    [InlineData(5, "Line1", "Line2", "Locality", "11111", "UA", "Line1 Line2, Locality, UA 11111")]
+    [InlineData(5, "Line1", "", "Locality", "11111", "UA", "", "Line1, Locality, 11111, UA")]
+    [InlineData(5, "", "Line2", "Locality", "11111", "UA", "", "Line2, Locality, 11111, UA")]
+    [InlineData(5, "", "", "Locality", "11111", "UA", "", "Locality, 11111, UA")]
+    [InlineData(5, "Line1", "Line2", "Locality", "11111", "UA", "KH", "Line1 Line2, Locality, KH 11111, UA")]
     public void Nox_StreetAddress_AddressString_ReturnsValidAddress(
         int streetNumber,
         string addressLine1,
@@ -15,6 +15,7 @@ public class StreetAddressTests
         string locality,
         string postalCode,
         string countryCode,
+        string administrativeArea1,
         string expectedAddress)
     {
         var countryCode2 = CountryCode2.From(countryCode);
@@ -25,7 +26,7 @@ public class StreetAddressTests
             "Route",
             locality,
             string.Empty,
-            string.Empty,
+            administrativeArea1,
             string.Empty,
             postalCode,
             countryCode2));
