@@ -23,4 +23,10 @@
         <None Include="..\..\images\nox.png" Pack="true" PackagePath="" />
 		<InternalsVisibleTo Include="Nox.Types.Tests" />
     </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
 </Project>
