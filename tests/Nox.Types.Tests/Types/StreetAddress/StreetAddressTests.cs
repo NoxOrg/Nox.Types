@@ -8,7 +8,7 @@ public class StreetAddressTests
     [InlineData(5, "", "Line2", "Locality", "11111", "UA", "", "Line2, Locality, 11111, UA")]
     [InlineData(5, "", "", "Locality", "11111", "UA", "", "Locality, 11111, UA")]
     [InlineData(5, "Line1", "Line2", "Locality", "11111", "UA", "KH", "Line1 Line2, Locality, KH 11111, UA")]
-    public void StreetAddress_AddressString_ReturnsValidAddress(
+    public void StreetAddress_ToString_ReturnsValidAddress(
         int streetNumber,
         string addressLine1,
         string addressLine2,
