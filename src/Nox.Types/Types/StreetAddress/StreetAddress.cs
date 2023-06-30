@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Nox.Types;
 
@@ -9,11 +8,9 @@ namespace Nox.Types;
 /// <remarks>Compound type that represents street address.</remarks>
 public sealed class StreetAddress : ValueObject<StreetAddressItem, StreetAddress>
 {
-    private readonly Regex _postalCodeRegex = new("^\\d{5}(?:[-\\s]\\d{4})?$");
-
     public override StreetAddressItem Value { get; protected set; } = new StreetAddressItem();
 
-    public int? StreetNumber
+    public int StreetNumber
     {
         get => Value.StreetNumber;
         private set => Value.StreetNumber = value;
@@ -67,7 +64,7 @@ public sealed class StreetAddress : ValueObject<StreetAddressItem, StreetAddress
         private set => Value.PostalCode = value;
     }
 
-    public CountryCode2? CountryId
+    public CountryCode2 CountryId
     {
         get => Value.CountryId;
         private set => Value.CountryId = value;
@@ -77,17 +74,14 @@ public sealed class StreetAddress : ValueObject<StreetAddressItem, StreetAddress
     {
         var result = base.Validate();
 
-        var zipCodeMatch = _postalCodeRegex.IsMatch(Value.PostalCode);
-        if (!zipCodeMatch)
+        var isPostalCodeMatch = CountryPostalCodeValidator.IsValid(Value.CountryId.Value, Value.PostalCode);
+        if (!isPostalCodeMatch)
         {
             result.Errors.Add(new ValidationFailure(nameof(Value.PostalCode), "PostalCode value doesn't match valid postal code pattern."));
         }
 
-        var countryValidation = Value.CountryId?.Validate();
-        if (countryValidation != null)
-        {
-            result.Errors.AddRange(countryValidation.Errors);
-        }
+        var countryValidation = Value.CountryId.Validate();
+        result.Errors.AddRange(countryValidation.Errors);
 
         return result;
     }
@@ -101,7 +95,7 @@ public sealed class StreetAddress : ValueObject<StreetAddressItem, StreetAddress
             addressLine,
             Value.Locality,
             areaLine,
-            Value.CountryId?.Value ?? string.Empty);
+            Value.CountryId.Value ?? string.Empty);
     }
 
     private string JoinStringParts(string separator, params string[] parts)

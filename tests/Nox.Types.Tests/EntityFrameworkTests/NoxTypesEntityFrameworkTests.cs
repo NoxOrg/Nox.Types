@@ -121,7 +121,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             Neighborhood = "Neighborhood",
             AdministrativeArea1 = "AdministrativeArea1",
             AdministrativeArea2 = "AdministrativeArea2",
-            PostalCode = "12345",
+            PostalCode = "1234",
             CountryId = CountryCode2.From("CH")
         });
     }

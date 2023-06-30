@@ -34,14 +34,35 @@ public class StreetAddressTests
         Assert.Equal(expectedAddress, address.ToString());
     }
 
-    [Fact]
-    public void StreetAddress_WrongZipCode_Throws()
+    [Theory]
+    [InlineData("CH")]
+    [InlineData("UA")]
+    [InlineData("US")]
+    [InlineData("GB")]
+    public void StreetAddress_WrongPostalCode_Throws(string countryCode)
     {
         var exception = Assert.Throws<TypeValidationException>(() => StreetAddress.From(new StreetAddressItem
         {
-            PostalCode = "1abcd11"
+            PostalCode = "123456",
+            CountryId = CountryCode2.From(countryCode)
         }));
 
         Assert.Contains(exception.Errors, t => t.Variable == "PostalCode");
+    }
+
+    [Theory]
+    [InlineData("CH", "1234")]
+    [InlineData("UA", "12345")]
+    [InlineData("US", "99577-0727")]
+    [InlineData("GB", "BT41 1AA")]
+    public void StreetAddress_ValidPostalCode_NotThrow(string countryCode, string postalCode)
+    {
+        var address = StreetAddress.From(new StreetAddressItem
+        {
+            PostalCode = postalCode,
+            CountryId = CountryCode2.From(countryCode)
+        });
+
+        Assert.Equal(postalCode, address.PostalCode);
     }
 }
