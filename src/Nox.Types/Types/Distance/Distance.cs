@@ -135,7 +135,7 @@ public class Distance : ValueObject<QuantityValue, Distance>
 
     private QuantityValue GetDistanceIn(DistanceTypeUnit targetUnit)
     {
-        var factor = new MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
+        var factor = new Common.MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
         return Round(Value * factor);
     }
 

@@ -8,7 +8,7 @@ public class MeasurementConversionFactorTests
     [Fact]
     public void MeasurementUnitConverter_GetConversionFactor_FromFootToMeter_ReturnsValue()
     {
-        var factor = new MeasurementConversionFactor(MeasurementTypeUnit.Foot, MeasurementTypeUnit.Meter);
+        var factor = new Nox.Common.MeasurementConversionFactor(MeasurementTypeUnit.Foot, MeasurementTypeUnit.Meter);
 
         factor.Value.Should().Be(0.30480000033);
     }
@@ -16,7 +16,7 @@ public class MeasurementConversionFactorTests
     [Fact]
     public void MeasurementUnitConverter_GetConversionFactor_FromMeterToFoot_ReturnsValue()
     {
-        var factor = new MeasurementConversionFactor(MeasurementTypeUnit.Meter, MeasurementTypeUnit.Foot);
+        var factor = new Nox.Common.MeasurementConversionFactor(MeasurementTypeUnit.Meter, MeasurementTypeUnit.Foot);
 
         factor.Value.Should().Be(3.28083989142);
     }
@@ -24,7 +24,7 @@ public class MeasurementConversionFactorTests
     [Fact]
     public void MeasurementUnitConverter_GetConversionFactor_FromKilometerToMile_ReturnsValue()
     {
-        var factor = new MeasurementConversionFactor(MeasurementTypeUnit.Kilometer, MeasurementTypeUnit.Mile);
+        var factor = new Nox.Common.MeasurementConversionFactor(MeasurementTypeUnit.Kilometer, MeasurementTypeUnit.Mile);
 
         factor.Value.Should().Be(0.62137119102);
     }
@@ -32,7 +32,7 @@ public class MeasurementConversionFactorTests
     [Fact]
     public void MeasurementUnitConverter_GetConversionFactor_FromMileToKilometer_ReturnsValue()
     {
-        var factor = new MeasurementConversionFactor(MeasurementTypeUnit.Mile, MeasurementTypeUnit.Kilometer);
+        var factor = new Nox.Common.MeasurementConversionFactor(MeasurementTypeUnit.Mile, MeasurementTypeUnit.Kilometer);
 
         factor.Value.Should().Be(1.60934400315);
     }
@@ -40,7 +40,7 @@ public class MeasurementConversionFactorTests
     [Fact]
     public void MeasurementUnitConverter_GetConversionFactor_FromSquareFootToSquareMeter_ReturnsValue()
     {
-        var factor = new MeasurementConversionFactor(MeasurementTypeUnit.SquareFoot, MeasurementTypeUnit.SquareMeter);
+        var factor = new Nox.Common.MeasurementConversionFactor(MeasurementTypeUnit.SquareFoot, MeasurementTypeUnit.SquareMeter);
 
         factor.Value.Should().Be(0.09290304);
     }
@@ -48,7 +48,7 @@ public class MeasurementConversionFactorTests
     [Fact]
     public void MeasurementUnitConverter_GetConversionFactor_FromSquareMeterToSquareFoot_ReturnsValue()
     {
-        var factor = new MeasurementConversionFactor(MeasurementTypeUnit.SquareMeter, MeasurementTypeUnit.SquareFoot);
+        var factor = new Nox.Common.MeasurementConversionFactor(MeasurementTypeUnit.SquareMeter, MeasurementTypeUnit.SquareFoot);
 
         factor.Value.Should().Be(10.76391042);
     }
@@ -56,7 +56,7 @@ public class MeasurementConversionFactorTests
     [Fact]
     public void MeasurementUnitConverter_GetConversionFactor_WithSameSourceAndTargetUnit_ReturnsValue()
     {
-        var factor = new MeasurementConversionFactor(MeasurementTypeUnit.Foot, MeasurementTypeUnit.Foot);
+        var factor = new Nox.Common.MeasurementConversionFactor(MeasurementTypeUnit.Foot, MeasurementTypeUnit.Foot);
 
         factor.Value.Should().Be(1);
     }
@@ -64,7 +64,7 @@ public class MeasurementConversionFactorTests
     [Fact]
     public void MeasurementUnitConverter_GetConversionFactor_WithUnsupportedConversion_ThrowsException()
     {
-        var action = () => new MeasurementConversionFactor(MeasurementTypeUnit.SquareMeter, MeasurementTypeUnit.Meter);
+        var action = () => new Nox.Common.MeasurementConversionFactor(MeasurementTypeUnit.SquareMeter, MeasurementTypeUnit.Meter);
 
         action.Should().Throw<NotImplementedException>()
             .WithMessage("No conversion defined from SquareMeter to Meter.");
