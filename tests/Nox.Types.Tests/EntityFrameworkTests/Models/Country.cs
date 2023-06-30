@@ -59,7 +59,7 @@ public sealed class Country
     public Distance DistanceInKm { get; set; } = null!;
 
     /// <summary>
-    /// 
+    /// Gets or sets hashed value
     /// </summary>
     public HashedText HashedText { get; set; } = null!;
 }
