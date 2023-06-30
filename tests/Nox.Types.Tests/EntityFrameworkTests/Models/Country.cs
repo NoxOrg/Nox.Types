@@ -79,6 +79,11 @@ public sealed class Country
     public IpAddress IPAddress { get; set; } = null!;
 
     /// <summary>
+    /// Gets or sets the longest hiking trail in meters.
+    /// </summary>
+    public Length LongestHikingTrailInMeters { get; set; } = null!;
+
+    /// <summary>
     /// Gets or sets the StreetAddress.
     /// </summary>
     public StreetAddress StreetAddress { get; set; } = null!;

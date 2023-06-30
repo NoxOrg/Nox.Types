@@ -38,6 +38,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryCode3 = CountryCode3.From("CHE"),
             IPAddress = IpAddress.From("102.129.143.255"),
             DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
+            LongestHikingTrailInMeters = Length.From(390_000),
             StreetAddress = CreateStreetAddress()
         };
         DbContext.Countries.Add(newItem);
@@ -72,6 +73,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             InternetDomain = InternetDomain.From("admin.ch"),
             CountryCode3 = CountryCode3.From("CHE"),
             IPAddress = IpAddress.From("102.129.143.255"),
+            LongestHikingTrailInMeters = Length.From(390_000),
             StreetAddress = streetAddress
         };
         DbContext.Countries.Add(newItem);
@@ -105,6 +107,8 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal("102.129.143.255", item.IPAddress.Value);
         Assert.Equal(new DateTime(2023, 01, 01), item.DateTimeRange.Start);
         Assert.Equal(new DateTime(2023, 02, 01), item.DateTimeRange.End);
+        Assert.Equal(390_000, item.LongestHikingTrailInMeters.Value);
+        Assert.Equal(LengthTypeUnit.Meter, item.LongestHikingTrailInMeters.Unit);
 
         AssertStreetAddress(streetAddress, item.StreetAddress);
     }

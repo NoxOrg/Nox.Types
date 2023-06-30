@@ -29,6 +29,7 @@ jobs:
         
       - name: Display GitVersion outputs (step output)
         run: |
+          echo "Branch: ${{ github.ref }}"
           echo "Major: ${{ steps.gitversion.outputs.major }}"
           echo "Minor: ${{ steps.gitversion.outputs.minor }}"
           echo "Patch: ${{ steps.gitversion.outputs.patch }}"
@@ -69,15 +70,18 @@ jobs:
           additionalArguments: '/showConfig'
           
       - name: Build
-        run: dotnet build ./src/Nox.Types --warnaserror --configuration Release
+        run: dotnet build ./src/ --warnaserror --configuration Release
 
       - name: Pack Nox.Types        
         run: dotnet pack --no-build ./src/Nox.Types --configuration Release -o ./artifacts     
 
+      - name: Pack Nox.EntityFramework.Types        
+        run: dotnet pack --no-build ./src/Nox.Types.EntityFramework --configuration Release -o ./artifacts 
+        
       - name: Publish Nox.Lib
-        if: github.ref == 'refs/heads/main'
+        if: contains(github.ref,'refs/tags/v') || contains(github.ref,'refs/heads/main')
         run: dotnet nuget push ./artifacts/Nox.Types.*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
 
       - name:  Publish Nox.Lib Warning
-        if: github.ref != 'refs/heads/main'
-        run: echo "Skipping publishing, not in main branch"
+        if: contains(github.ref,'refs/tags/v') == false && contains(github.ref,'refs/heads/main') == false
+        run: echo "Skipping publishing, not in main branch or not building a tag. Current ${{ github.ref }}"

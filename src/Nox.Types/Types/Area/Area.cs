@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Nox.Common;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Nox.Types;
 
@@ -91,7 +93,16 @@ public class Area : ValueObject<QuantityValue, Area>
         return result;
     }
 
-    public override string ToString() => $"{Value:G} {Unit.ToSymbol()}";
+    public override string ToString()
+        => $"{Value.ToString($"0.{new string('#', QuantityValueDecimalPrecision)}", CultureInfo.InvariantCulture)} {Unit.ToSymbol()}";
+
+    /// <summary>
+    /// Returns a string representation of the <see cref="Length"/> object using the specified <see cref="IFormatProvider"/>.
+    /// </summary>
+    /// <param name="formatProvider">The format provider for the length value.</param>
+    /// <returns>A string representation of the <see cref="Length"/> object with the value formatted using the specified <see cref="IFormatProvider"/>.</returns>
+    public string ToString(IFormatProvider formatProvider)
+        => $"{Value.ToString(formatProvider)} {Unit.ToSymbol()}";
 
     protected override IEnumerable<KeyValuePair<string, object>> GetEqualityComponents()
     {
@@ -104,18 +115,10 @@ public class Area : ValueObject<QuantityValue, Area>
     private QuantityValue? _squareFeet;
     public QuantityValue ToSquareFeet() => (_squareFeet ??= GetAreaIn(AreaTypeUnit.SquareFoot));
 
-    private QuantityValue GetAreaIn(AreaTypeUnit unit)
+    private QuantityValue GetAreaIn(AreaTypeUnit targetUnit)
     {
-        if (Unit == unit)
-            return Round(Value);
-
-        else if (Unit == AreaTypeUnit.SquareMeter && unit == AreaTypeUnit.SquareFoot)
-            return Round(Value * 10.76391042);
-
-        else if (Unit == AreaTypeUnit.SquareFoot && unit == AreaTypeUnit.SquareMeter)
-            return Round(Value * 0.09290304);
-
-        throw new NotImplementedException($"No conversion defined from {Unit} to {unit}.");
+        var factor = new MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
+        return Round(Value * factor);
     }
 
     private static QuantityValue Round(QuantityValue value)
