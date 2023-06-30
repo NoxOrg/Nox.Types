@@ -111,17 +111,19 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
 
     private static StreetAddress CreateStreetAddress()
     {
-        return StreetAddress.From((
-               15,
-               "AddressLine1",
-               "AddressLine2",
-               "Route",
-               "Locality",
-               "Neighborhood",
-               "AdministrativeArea1",
-               "AdministrativeArea2",
-               "12345",
-               CountryCode2.From("CH")));
+        return StreetAddress.From(new StreetAddressItem
+        {
+            StreetNumber = 15,
+            AddressLine1 = "AddressLine1",
+            AddressLine2 = "AddressLine2",
+            Route = "Route",
+            Locality = "Locality",
+            Neighborhood = "Neighborhood",
+            AdministrativeArea1 = "AdministrativeArea1",
+            AdministrativeArea2 = "AdministrativeArea2",
+            PostalCode = "12345",
+            CountryId = CountryCode2.From("CH")
+        });
     }
 
     private static void AssertStreetAddress(StreetAddress expectedAddress, StreetAddress actualAddress)
