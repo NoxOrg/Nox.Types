@@ -7,7 +7,7 @@ public class HashedTextTests
 {
 
     [Fact]
-    public void Nox_HashedText_Constructor_WithoutOptions_ReturnsHashedValue()
+    public void HashedText_Constructor_WithoutOptions_ReturnsHashedValue()
     {
         string text = "Text to hash";
         var hashedText = HashedText.From(text);
@@ -19,7 +19,7 @@ public class HashedTextTests
 
 
     [Fact]
-    public void Nox_HashedText_Constructor_WithOptions_ReturnsHashedValue()
+    public void HashedText_Constructor_WithOptions_ReturnsHashedValue()
     {
         string text = "Text to hash";
         string textHashedExpected = string.Empty;
@@ -37,7 +37,7 @@ public class HashedTextTests
     }
 
     [Fact]
-    public void Nox_HashedText_Equal_CompareHashedValues_NoSalting()
+    public void HashedText_Equals_ReturnsTrue()
     {
         string text = "Text to hash";
         string textHashedExpected = string.Empty;
@@ -50,25 +50,28 @@ public class HashedTextTests
         }
 
         var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt="" });
+        var expectedHashedText = HashedText.FromHashedValue(textHashedExpected);
 
-        Assert.True(hashedText.Equals(textHashedExpected));
+        Assert.True(hashedText.Equals(expectedHashedText));
     }
 
     [Fact]
-    public void Nox_HashedText_Equals_ReturnsTrue()
+    public void HashedText_Equals_ReturnsFalse_Salting()
     {
         string text = "Text to hash";
-        var hashedText = HashedText.From(text);
+        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = "salt" });
+        var hashedTextNoSalting = HashedText.From(text);
 
-        Assert.True(hashedText.Equals(text));
+        Assert.False(hashedText.Equals(hashedTextNoSalting));
     }
 
     [Fact]
-    public void Nox_HashedText_Equals_ReturnsFalse()
+    public void HashedText_Equals_ReturnsFalse()
     {
         string text = "Text to hash";
         var hashedText = HashedText.From($"{text} 1");
+        var expectedHashedText = HashedText.From(text);
 
-        Assert.False(hashedText.Equals(text));
+        Assert.False(hashedText.Equals(expectedHashedText));
     }
 }

@@ -8,12 +8,32 @@ namespace Nox.Types;
 /// <summary>
 /// Represents a Nox <see cref="HashedText"/> type and value object.
 /// </summary>
-/// <remarks>Placeholder, needs to be implemented</remarks>
 public sealed class HashedText : ValueObject<string, HashedText>
 {
     public HashedText() : base() { Value = string.Empty; }
 
-    private HashedTextTypeOptions _hashedTextTypeOptions = new();
+    /// <summary>
+    /// Creates HashedText object from already hashed value
+    /// </summary>
+    /// <param name="hashedValue"></param>
+    /// <returns>HashedText object</returns>
+    /// <exception cref="TypeValidationException"></exception>
+    public static HashedText FromHashedValue(string hashedValue)
+    {
+        var newObject = new HashedText
+        {
+            Value = hashedValue,
+        };
+
+        var validationResult = newObject.Validate();
+
+        if (!validationResult.IsValid)
+        {
+            throw new TypeValidationException(validationResult.Errors);
+        }
+
+        return newObject;
+    }
 
     public static HashedText From(string value, HashedTextTypeOptions options)
     {
@@ -21,8 +41,7 @@ public sealed class HashedText : ValueObject<string, HashedText>
 
         var newObject = new HashedText
         {
-            Value = HashText(value, options),
-            _hashedTextTypeOptions = options
+            Value = HashText(value, options)
         };
 
         var validationResult = newObject.Validate();
@@ -37,18 +56,6 @@ public sealed class HashedText : ValueObject<string, HashedText>
 
     new public static HashedText From(string value)
         => From(value, new HashedTextTypeOptions());
-
-    public bool Equals(string value)
-    {
-        if (value == null) throw new ArgumentNullException("value", "Text to hash cannot be null.");
-
-        // check if value is already hashed
-        if(value.Equals(Value)) return true;
-
-        string hashedText = HashText(value, _hashedTextTypeOptions);
-
-        return hashedText.Equals(Value);
-    }
 
     private static string HashText(string plainText, HashedTextTypeOptions hashedTextTypeOptions)
     {

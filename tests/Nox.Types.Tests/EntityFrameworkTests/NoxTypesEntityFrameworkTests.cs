@@ -17,7 +17,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
     [Fact]
     public void AddedItemShouldGetGeneratedId()
     {
-        var newItem = new Country() { 
+        var newItem = new Country() {
             Name = Text.From("Switzerland"),
             LatLong = LatLong.From(46.802496, 8.234392),
             Population = Number.From(8_703_654),
@@ -28,6 +28,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryNumber = CountryNumber.From(756),
             MonthOfPeakTourism = Month.From(7),
             DistanceInKm = Distance.From(129.522785),
+            HashedText = HashedText.From("Test123.")
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -52,5 +53,6 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(7, item.MonthOfPeakTourism.Value);
         Assert.Equal(129.522785, item.DistanceInKm.Value);
         Assert.Equal(DistanceTypeUnit.Kilometer, item.DistanceInKm.Unit);
+        Assert.Equal(newItem.HashedText.Value, item.HashedText.Value);
     }
 }

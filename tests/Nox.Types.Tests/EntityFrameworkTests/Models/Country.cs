@@ -57,4 +57,9 @@ public sealed class Country
     /// Gets or sets the distance in kilometers.
     /// </summary>
     public Distance DistanceInKm { get; set; } = null!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public HashedText HashedText { get; set; } = null!;
 }
