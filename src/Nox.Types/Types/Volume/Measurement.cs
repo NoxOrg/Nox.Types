@@ -65,12 +65,14 @@ public abstract class Measurement<TValueObject, TUnitType> : ValueObject<Quantit
     public string ToString(IFormatProvider formatProvider)
         => $"{Value.ToString(formatProvider)} {Unit}";
 
-    protected QuantityValue GetMeasurementIn(MeasurementUnit targetUnit)
+    protected QuantityValue GetMeasurementIn(TUnitType targetUnit)
     {
-        var factor = new MeasurementConversionFactor(Unit, targetUnit).Value;
+        var factor = ResolveUnitConversionFactor(Unit, targetUnit);
         return Round(Value * factor);
     }
 
     private static QuantityValue Round(QuantityValue value)
         => Math.Round((double)value, QuantityValueDecimalPrecision);
+
+    protected abstract MeasurementConversionFactor<TUnitType> ResolveUnitConversionFactor(TUnitType sourceUnit, TUnitType targetUnit);
 }

@@ -46,4 +46,7 @@ public sealed class Volume : Measurement<Volume, VolumeUnit>
     {
         yield return new KeyValuePair<string, object>(nameof(Value), ToCubicMeters());
     }
+
+    protected override MeasurementConversionFactor<VolumeUnit> ResolveUnitConversionFactor(VolumeUnit sourceUnit, VolumeUnit targetUnit)
+        => new VolumeConversionFactor(sourceUnit, targetUnit);
 }
