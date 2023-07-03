@@ -33,7 +33,7 @@ public class CultureCodeTests
     }
     
     [Fact]
-    public void Nox_Culture_Equality_Tests()
+    public void Culture_Equality_Tests()
     {
         // Arrange & Act
         var culture1 = CultureCode.From("tr-TR");
@@ -44,7 +44,7 @@ public class CultureCodeTests
     }
     
     [Fact]
-    public void Nox_Culture_NotEqual_Tests()
+    public void Culture_NotEqual_Tests()
     {
         // Arrange & Act
         var culture1 = CultureCode.From("tr-TR");
@@ -55,7 +55,7 @@ public class CultureCodeTests
     }
     
     [Fact]
-    public void Nox_Culture_ToString_ReturnsString()
+    public void Culture_ToString_ReturnsString()
     {
         // Arrange & Act
         var culture = CultureCode.From("tr-TR");

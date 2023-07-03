@@ -18,12 +18,17 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(e => e.AreaInSqKm).HasConversion<AreaToSquareMeterConverter>();
         builder.Property(e => e.CultureCode).HasConversion<CultureCodeConverter>();
         builder.Property(e => e.CountryNumber).HasMaxLength(3).HasConversion<CountryNumberConverter>();
-        builder.Property(e=>e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
+        builder.Property(e => e.MonthOfPeakTourism).HasConversion<MonthToByteConverter>();
         builder.Property(e => e.DistanceInKm).HasConversion<DistanceToKilometerConverter>();
+        builder.Property(e => e.InternetDomain).HasConversion<InternetDomainConverter>();
+        builder.Property(e => e.CountryCode3).HasConversion<CountryCode3Converter>();
+        builder.Property(e => e.IPAddress).HasConversion<IpAddressConverter>();
+        builder.Property(e => e.LongestHikingTrailInMeters).HasConversion<LengthToMeterConverter>();
         builder.Property(e => e.HashedText).HasConversion<HashedTextConverter>();
 
         // Configure Multi-value ValueObjects
         builder.OwnsOne(e => e.LatLong).Ignore(p => p.Value);
-        builder.OwnsOne(e => e.GrossDomesticProduct).Ignore(p=>p.Value);
+        builder.OwnsOne(e => e.GrossDomesticProduct).Ignore(p => p.Value);
+        builder.OwnsOne(e => e.DateTimeRange).Ignore(p => p.Value);
     }
 }

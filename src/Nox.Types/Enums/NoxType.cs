@@ -6,6 +6,8 @@ public enum NoxType
     @Array,
     @Collection,
     @Object,
+    // This is complex, needs to include CountryCode 
+    VatNumber, 
 
     // Compound Types - requires multiple fields to persist
     [CompoundType] Entity,
@@ -13,6 +15,7 @@ public enum NoxType
     [CompoundType] Money,
     [CompoundType] StreetAddress,
     [CompoundType] TranslatedText,
+    [CompoundType] DateTimeRange,
 
     // Simple Types
     Area,
@@ -31,7 +34,6 @@ public enum NoxType
     Year,
     DateTime,
     DateTimeDuration,
-    DateTimeRange,
     DateTimeSchedule,
     Distance,
     Email,

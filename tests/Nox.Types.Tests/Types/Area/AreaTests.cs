@@ -1,9 +1,11 @@
+using System.Globalization;
+
 namespace Nox.Types.Tests.Types;
 
 public class AreaTests
 {
     [Fact]
-    public void Nox_Area_Constructor_ReturnsDefaultValueAndUnit()
+    public void Area_Constructor_ReturnsDefaultValueAndUnit()
     {
         var area = new Area();
 
@@ -12,7 +14,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_ReturnsSameValueAndDefaultUnit()
+    public void Area_Constructor_ReturnsSameValueAndDefaultUnit()
     {
         var area = Area.From(12.5);
 
@@ -21,7 +23,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_ReturnsRoundedValueAndDefaultUnit()
+    public void Area_Constructor_ReturnsRoundedValueAndDefaultUnit()
     {
         var area = Area.From(12.54888020887151);
 
@@ -30,7 +32,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithUnit_ReturnsSameValueAndUnit()
+    public void Area_Constructor_WithUnit_ReturnsSameValueAndUnit()
     {
         var area = Area.From(12.5, AreaTypeUnit.SquareMeter);
 
@@ -39,7 +41,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithUnitInSquareMeters_ReturnsSameValueAndUnit()
+    public void Area_Constructor_WithUnitInSquareMeters_ReturnsSameValueAndUnit()
     {
         var area = Area.FromSquareMeters(12.5);
 
@@ -48,7 +50,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithUnitInSquareFeet_ReturnsSameValueAndUnit()
+    public void Area_Constructor_WithUnitInSquareFeet_ReturnsSameValueAndUnit()
     {
         var area = Area.FromSquareFeet(134.548880);
 
@@ -57,7 +59,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithNegativeValueInput_ThrowsException()
+    public void Area_Constructor_WithNegativeValueInput_ThrowsException()
     {
         void Test()
         {
@@ -72,7 +74,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithNaNValueInput_ThrowsException()
+    public void Area_Constructor_WithNaNValueInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(double.NaN)
@@ -82,7 +84,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithPositiveInfinityValueInput_ThrowsException()
+    public void Area_Constructor_WithPositiveInfinityValueInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(double.PositiveInfinity)
@@ -93,7 +95,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithNegativeInfinityValueInput_ThrowsException()
+    public void Area_Constructor_WithNegativeInfinityValueInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(double.NegativeInfinity)
@@ -104,7 +106,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithWithUnsupportedUnitInput_ThrowsException()
+    public void Area_Constructor_WithWithUnsupportedUnitInput_ThrowsException()
     {
         var exception = Assert.Throws<NotImplementedException>(() => _ =
             Area.From(12.5, (AreaTypeUnit)1001)
@@ -114,7 +116,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Constructor_WithNotAllowedValueInput_ThrowsException()
+    public void Area_Constructor_WithNotAllowedValueInput_ThrowsException()
     {
         var exception = Assert.Throws<TypeValidationException>(() => _ =
             Area.From(510_072_000_000_001)
@@ -126,7 +128,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_ToSquareMeters_ReturnsValue()
+    public void Area_ToSquareMeters_ReturnsValue()
     {
         var squareMeters = 12.5;
 
@@ -136,7 +138,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_ToSquareFeet_ReturnsValue()
+    public void Area_ToSquareFeet_ReturnsValue()
     {
         var squareMeters = 12.5;
 
@@ -145,34 +147,64 @@ public class AreaTests
         Assert.Equal(134.54888, area.ToSquareFeet());
     }
 
-    [Fact]
-    public void Nox_Area_ValueInSquareMeters_ToString_ReturnsString()
+    [Theory]
+    [InlineData("en-US")]
+    [InlineData("pt-PT")]
+    public void Area_ValueInSquareMeters_ToString_IsCultureIndepdendent(string culture)
     {
         void Test()
         {
             var area = Area.FromSquareMeters(12.5);
-
             Assert.Equal("12.5 m²", area.ToString());
         }
 
-        TestUtility.RunInInvariantCulture(Test);
+        TestUtility.RunInCulture(Test, culture);
     }
 
-    [Fact]
-    public void Nox_Area_ValueInSquareFeet_ToString_ReturnsString()
+    [Theory]
+    [InlineData("en-US", "12.5 m²")]
+    [InlineData("pt-PT", "12,5 m²")]
+    public void Area_ValueInSquareMeters_ToString_IsCultureDependent(string culture, string expected)
+    {
+        void Test()
+        {
+            var area = Area.FromSquareMeters(12.5);
+            Assert.Equal(expected, area.ToString(new CultureInfo(culture)));
+        }
+
+        TestUtility.RunInCulture(Test, culture);
+    }
+
+    [Theory]
+    [InlineData("en-US")]
+    [InlineData("pt-PT")]
+    public void Area_ValueInSquareFeet_ToString_IsCultureIndependent(string culture)
     {
         void Test()
         {
             var area = Area.FromSquareFeet(134.548880);
-
             Assert.Equal("134.54888 ft²", area.ToString());
         }
 
-        TestUtility.RunInInvariantCulture(Test);
+        TestUtility.RunInCulture(Test, culture);
+    }
+
+    [Theory]
+    [InlineData("en-US", "134.54888 ft²")]
+    [InlineData("pt-PT", "134,54888 ft²")]
+    public void Area_ValueInSquareFeet_ToString_IsCultureDependent(string culture, string expected)
+    {
+        void Test()
+        {
+            var area = Area.FromSquareFeet(134.548880);
+            Assert.Equal(expected, area.ToString(new CultureInfo(culture)));
+        }
+
+        TestUtility.RunInCulture(Test, culture);
     }
 
     [Fact]
-    public void Nox_Area_Equality_WithSameAreaUnit_Tests()
+    public void Area_Equality_WithSameAreaUnit_Tests()
     {
         var squareMeters = 12.5;
 
@@ -184,7 +216,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_Equality_WithDifferentAreaUnit_Tests()
+    public void Area_Equality_WithDifferentAreaUnit_Tests()
     {
         var squareMeters = 12.5;
         var area1 = Area.From(squareMeters, AreaTypeUnit.SquareMeter);
@@ -196,7 +228,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_NonEquality_SpecifyingAreaUnit_WithSameUnit_Tests()
+    public void Area_NonEquality_SpecifyingAreaUnit_WithSameUnit_Tests()
     {
         var squareMeters1 = 12.5;
         var area1 = Area.From(squareMeters1, AreaTypeUnit.SquareMeter);
@@ -208,7 +240,7 @@ public class AreaTests
     }
 
     [Fact]
-    public void Nox_Area_NonEquality_SpecifyingAreaUnit_WithDifferentUnit_Tests()
+    public void Area_NonEquality_SpecifyingAreaUnit_WithDifferentUnit_Tests()
     {
         var squareMeters = 12.5;
         var area1 = Area.From(squareMeters, AreaTypeUnit.SquareMeter);
