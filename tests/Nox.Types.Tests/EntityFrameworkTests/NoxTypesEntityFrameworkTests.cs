@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Nox.Types.Tests.EntityFrameworkTests;
 
@@ -40,6 +39,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             IPAddress = IpAddress.From("102.129.143.255"),
             DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
             LongestHikingTrailInMeters = Length.From(390_000),
+            StreetAddress = CreateStreetAddress()
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -56,7 +56,9 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
     [Fact]
     public void AddedItemShouldGetGeneratedId()
     {
-        var newItem = new Country() { 
+        var streetAddress = CreateStreetAddress();
+        var newItem = new Country()
+        {
             Name = Text.From("Switzerland"),
             LatLong = LatLong.From(46.802496, 8.234392),
             Population = Number.From(8_703_654),
@@ -72,6 +74,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryCode3 = CountryCode3.From("CHE"),
             IPAddress = IpAddress.From("102.129.143.255"),
             LongestHikingTrailInMeters = Length.From(390_000),
+            StreetAddress = streetAddress
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
@@ -106,5 +109,41 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
         Assert.Equal(new DateTime(2023, 02, 01), item.DateTimeRange.End);
         Assert.Equal(390_000, item.LongestHikingTrailInMeters.Value);
         Assert.Equal(LengthTypeUnit.Meter, item.LongestHikingTrailInMeters.Unit);
+
+        AssertStreetAddress(streetAddress, item.StreetAddress);
+    }
+
+    private static StreetAddress CreateStreetAddress()
+    {
+        return StreetAddress.From(new StreetAddressItem
+        {
+            StreetNumber = 15,
+            AddressLine1 = "AddressLine1",
+            AddressLine2 = "AddressLine2",
+            Route = "Route",
+            Locality = "Locality",
+            Neighborhood = "Neighborhood",
+            AdministrativeArea1 = "AdministrativeArea1",
+            AdministrativeArea2 = "AdministrativeArea2",
+            PostalCode = "1234",
+            CountryId = CountryCode2.From("CH")
+        });
+    }
+
+    private static void AssertStreetAddress(StreetAddress expectedAddress, StreetAddress actualAddress)
+    {
+        var expectedAddressValue = expectedAddress.Value;
+        var actualAddressValue = actualAddress.Value;
+
+        Assert.Equal(expectedAddressValue.AddressLine1, actualAddressValue.AddressLine1);
+        Assert.Equal(expectedAddressValue.AddressLine2, actualAddressValue.AddressLine2);
+        Assert.Equal(expectedAddressValue.Locality, actualAddressValue.Locality);
+        Assert.Equal(expectedAddressValue.Neighborhood, actualAddressValue.Neighborhood);
+        Assert.Equal(expectedAddressValue.PostalCode, actualAddressValue.PostalCode);
+        Assert.Equal(expectedAddressValue.AdministrativeArea1, actualAddressValue.AdministrativeArea1);
+        Assert.Equal(expectedAddressValue.AdministrativeArea2, actualAddressValue.AdministrativeArea2);
+        Assert.Equal(expectedAddressValue.Route, actualAddressValue.Route);
+        Assert.Equal(expectedAddressValue.StreetNumber, actualAddressValue.StreetNumber);
+        Assert.Equal(expectedAddressValue.CountryId.Value, actualAddressValue.CountryId.Value);
     }
 }

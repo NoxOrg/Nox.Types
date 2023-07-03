@@ -4,7 +4,7 @@ using Nox.Types.EntityFramework.Types;
 
 namespace Nox.Types.Tests.EntityFrameworkTests;
 
-class CountryConfiguration : IEntityTypeConfiguration<Country>
+internal class CountryConfiguration : IEntityTypeConfiguration<Country>
 {
     public void Configure(EntityTypeBuilder<Country> builder)
     {
@@ -29,5 +29,9 @@ class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.OwnsOne(e => e.LatLong).Ignore(p => p.Value);
         builder.OwnsOne(e => e.GrossDomesticProduct).Ignore(p => p.Value);
         builder.OwnsOne(e => e.DateTimeRange).Ignore(p => p.Value);
+        builder.OwnsOne(e => e.StreetAddress)
+            .Ignore(p => p.Value)
+            .Property(x => x.CountryId)
+            .HasConversion<CountryCode2Converter>();
     }
 }
