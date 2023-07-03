@@ -22,8 +22,6 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
 
     public HashedText() { Value = (string.Empty, string.Empty); } 
 
-    
-
     public static HashedText From(string value, HashedTextTypeOptions options)
     {
         options ??= new HashedTextTypeOptions();
@@ -59,7 +57,7 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
         using (var hasher = CreateHasher(hashedTextTypeOptions.HashingAlgorithm))
         {
             byte[] saltBytes = GetSalt(hashedTextTypeOptions.Salt);
-            byte[] plainTextBytes = Encoding.UTF8.GetBytes($"{plainText}");
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             AppendBytes(ref plainTextBytes, saltBytes);
             byte[] hashBytes = hasher.ComputeHash(plainTextBytes);
 
