@@ -13,8 +13,8 @@ public class HashedTextTests
         var hashedText = HashedText.From(text);
 
         Assert.NotNull(hashedText);
-        Assert.NotNull(hashedText.Value);
-        Assert.NotEqual(text, hashedText.Value);
+        Assert.NotNull(hashedText.Salt);
+        Assert.NotEqual(text, hashedText.HashText);
     }
 
 
@@ -26,20 +26,20 @@ public class HashedTextTests
         byte[] hash = SHA512.HashData(textData);
         var textHashedExpected = Convert.ToBase64String(hash);
 
-        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = "" });
+        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = 0 });
 
-        Assert.Equal(textHashedExpected, hashedText.Value);
+        Assert.Equal(textHashedExpected, hashedText.HashText);
     }
 
     [Fact]
     public void HashedText_Equals_ReturnsTrue()
     {
         string text = "Text to hash";
-        byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
-        byte[] hash = SHA512.HashData(textData);
+        byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(text);
+        byte[] hash = SHA512.HashData(textBytes);
         var textHashedExpected = Convert.ToBase64String(hash);
 
-        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = "" });
+        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = 0 });
         var expectedHashedText = HashedText.FromHashedValue(textHashedExpected);
 
         Assert.True(hashedText.Equals(expectedHashedText));
@@ -49,7 +49,7 @@ public class HashedTextTests
     public void HashedText_Equals_ReturnsFalse_Salting()
     {
         string text = "Text to hash";
-        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = "salt" });
+        var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = 0 });
         var hashedTextNoSalting = HashedText.From(text);
 
         Assert.False(hashedText.Equals(hashedTextNoSalting));
@@ -64,5 +64,27 @@ public class HashedTextTests
         var hashedText = HashedText.From(text);
 
         Assert.False(hashedText.Equals(hashedText1));
+    }
+
+    [Fact]
+    public void HashedText_FromHashedValue_Delimiter()
+    {
+        string text = "Text to hash";
+        string salt = "Salt";
+        var hashedText = HashedText.FromHashedValue($"{text}||{salt}");
+
+        Assert.Equal(text, hashedText.HashText);
+        Assert.Equal(salt, hashedText.Salt);
+    }
+
+    [Fact]
+    public void HashedText_FromHashedValue_Delimiter_NoSalt()
+    {
+        string text = "Text to hash";
+        string salt = string.Empty;
+        var hashedText = HashedText.FromHashedValue($"{text}||{salt}");
+
+        Assert.Equal(text, hashedText.HashText);
+        Assert.Equal(salt, hashedText.Salt);
     }
 }
