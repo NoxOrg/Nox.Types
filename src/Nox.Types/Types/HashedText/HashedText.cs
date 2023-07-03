@@ -13,6 +13,8 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
     public string Salt => Value.Salt;
     private const string delimiter = "||";
 
+    public HashedText() { Value = (string.Empty, string.Empty); } // Null Island
+
     /// <summary>
     /// Creates HashedText object from already hashed value
     /// </summary>
@@ -66,6 +68,12 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
 
     public override string ToString() => $"{Value.HashText}{delimiter}{Value.Salt}";
 
+    /// <summary>
+    /// Creates hashed value of plainText using HashedTextTypeOptions
+    /// </summary>
+    /// <param name="plainText"></param>
+    /// <param name="hashedTextTypeOptions"></param>
+    /// <returns>Hashed value of plainText</returns>
     private static HashedText GetHashText(string plainText, HashedTextTypeOptions hashedTextTypeOptions)
     {
         string hashedText = string.Empty;
@@ -85,7 +93,12 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
         return new HashedText { Value = (hashedText, salt) };
     }
 
-
+    /// <summary>
+    /// Returns hasher with sent algorithm
+    /// </summary>
+    /// <param name="hashAlgorithm"></param>
+    /// <returns></returns>
+    /// <exception cref="CryptographicException"></exception>
     private static HashAlgorithm CreateHasher(HashingAlgorithm hashAlgorithm)
     {
         HashAlgorithm hasher = HashAlgorithm.Create(hashAlgorithm.ToString());
@@ -93,6 +106,11 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
         return hasher ?? throw new CryptographicException("Invalid hash algorithm");
     }
 
+    /// <summary>
+    /// Creates salt byte array with length byteCount
+    /// </summary>
+    /// <param name="byteCount">array length</param>
+    /// <returns></returns>
     private static byte[] GetSalt(int byteCount)
     {
         byte[] salt = new byte[byteCount];
@@ -102,6 +120,11 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
         return salt;
     }
 
+    /// <summary>
+    /// Merges two byte arrays
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="source"></param>
     public static void AppendBytes(ref byte[] target, byte[] source)
     {
         int targetLength = target.Length;

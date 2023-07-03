@@ -40,6 +40,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             IPAddress = IpAddress.From("102.129.143.255"),
             DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
             LongestHikingTrailInMeters = Length.From(390_000),
+            HashedText = HashedText.From("Test123."),
         };
         DbContext.Countries.Add(newItem);
         DbContext.SaveChanges();
