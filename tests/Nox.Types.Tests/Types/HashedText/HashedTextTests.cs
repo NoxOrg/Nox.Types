@@ -40,7 +40,7 @@ public class HashedTextTests
         var textHashedExpected = Convert.ToBase64String(hash);
 
         var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = 0 });
-        var expectedHashedText = HashedText.FromHashedValue(textHashedExpected);
+        var expectedHashedText = HashedText.From((textHashedExpected, ""));
 
         Assert.True(hashedText.Equals(expectedHashedText));
     }
@@ -71,7 +71,7 @@ public class HashedTextTests
     {
         string text = "Text to hash";
         string salt = "Salt";
-        var hashedText = HashedText.FromHashedValue($"{text}||{salt}");
+        var hashedText = HashedText.From((text, salt));
 
         Assert.Equal(text, hashedText.HashText);
         Assert.Equal(salt, hashedText.Salt);
@@ -82,7 +82,7 @@ public class HashedTextTests
     {
         string text = "Text to hash";
         string salt = string.Empty;
-        var hashedText = HashedText.FromHashedValue($"{text}||{salt}");
+        var hashedText = HashedText.From((text, salt));
 
         Assert.Equal(text, hashedText.HashText);
         Assert.Equal(salt, hashedText.Salt);

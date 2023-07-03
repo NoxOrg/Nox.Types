@@ -9,43 +9,20 @@ namespace Nox.Types;
 /// </summary>
 public sealed class HashedText : ValueObject<(string HashText, string Salt), HashedText>
 {
-    public string HashText => Value.HashText;
-    public string Salt => Value.Salt;
-    private const string delimiter = "||";
-
-    public HashedText() { Value = (string.Empty, string.Empty); } // Null Island
-
-    /// <summary>
-    /// Creates HashedText object from already hashed value
-    /// </summary>
-    /// <param name="hashedValue"></param>
-    /// <returns>HashedText object</returns>
-    /// <exception cref="TypeValidationException"></exception>
-    public static HashedText FromHashedValue(string hashedValue)
+    public string HashText
     {
-        string salt = string.Empty;
-
-        int delimiterLocation = hashedValue.IndexOf(delimiter, StringComparison.Ordinal);
-        if (delimiterLocation > 0)
-        {
-            salt = hashedValue.Substring(delimiterLocation + delimiter.Length);
-            hashedValue = hashedValue.Substring(0, delimiterLocation);
-        }
-
-        var newObject = new HashedText
-        {
-            Value = (hashedValue, salt),
-        };
-
-        var validationResult = newObject.Validate();
-
-        if (!validationResult.IsValid)
-        {
-            throw new TypeValidationException(validationResult.Errors);
-        }
-
-        return newObject;
+        get => Value.HashText;
+        private set => Value = (HashText: value, Salt: Value.Salt);
     }
+    public string Salt
+    {
+        get => Value.Salt;
+        private set => Value = (HashText: Value.HashText, Salt: value);
+    }
+
+    public HashedText() { Value = (string.Empty, string.Empty); } 
+
+    
 
     public static HashedText From(string value, HashedTextTypeOptions options)
     {
@@ -66,7 +43,7 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
     public static HashedText From(string value)
         => From(value, new HashedTextTypeOptions());
 
-    public override string ToString() => $"{Value.HashText}{delimiter}{Value.Salt}";
+    public override string ToString() => $"{Value.HashText}||{Value.Salt}";
 
     /// <summary>
     /// Creates hashed value of plainText using HashedTextTypeOptions
