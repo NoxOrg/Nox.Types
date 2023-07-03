@@ -26,7 +26,7 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
         int delimiterLocation = hashedValue.IndexOf(delimiter, StringComparison.Ordinal);
         if (delimiterLocation > 0)
         {
-            salt = hashedValue.Substring(delimiterLocation + 1);
+            salt = hashedValue.Substring(delimiterLocation + delimiter.Length);
             hashedValue = hashedValue.Substring(0, delimiterLocation);
         }
 
