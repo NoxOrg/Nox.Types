@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Nox.Types;
 
@@ -33,7 +34,13 @@ public sealed class Percentage : ValueObject<float, Percentage>
     }
 
     public override string ToString()
-    {
-        return $"{Value * 100}%";
-    }
+        => $"{(Value * 100).ToString($"0.{new string('#', _percentageTypeOptions.Digits)}", CultureInfo.InvariantCulture)}%";
+
+    /// <summary>
+    /// Returns a string representation of the <see cref="Percentage"/> object using the specified <see cref="IFormatProvider"/>.
+    /// </summary>
+    /// <param name="formatProvider">The format provider for the length value.</param>
+    /// <returns>A string representation of the <see cref="Percentage"/> object with the value formatted using the specified <see cref="IFormatProvider"/>.</returns>
+    public string ToString(IFormatProvider formatProvider)
+        => $"{Value.ToString(formatProvider)}%";
 }
