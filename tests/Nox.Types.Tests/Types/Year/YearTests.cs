@@ -1,4 +1,6 @@
-﻿namespace Nox.Types.Tests.Types;
+﻿using FluentAssertions;
+
+namespace Nox.Types.Tests.Types;
 
 public class YearTests
 {
@@ -9,7 +11,7 @@ public class YearTests
 
         var number = Year.From(testYear);
 
-        Assert.Equal(testYear, number.Value);
+        number.Value.Should().Be(testYear);
     }
 
     [Theory]
@@ -20,12 +22,10 @@ public class YearTests
     public void Year_Constructor_WithValueLess_ThanMinimiunSpecified_ThrowsValidationException(ushort value)
     {
         // Arrange & Act
-        var exception = Assert.Throws<TypeValidationException>(() => _ =
-          Year.From(value)
-        );
+        var action = () => Year.From(value);
 
         // Assert
-        Assert.Equal($"Could not create a Nox Year type as value {value} is less than the minimum specified value of 1900", exception.Errors.First().ErrorMessage);
+        action.Should().Throw<TypeValidationException>().And.Errors.Should().BeEquivalentTo(new[] { new ValidationFailure("Value", $"Could not create a Nox Year type as value {value} is less than the minimum specified value of 1900") });
     }
 
     [Theory]
@@ -36,12 +36,10 @@ public class YearTests
     public void Year_Constructor_WithValueGreater_ThanMaximunSpecified_ThrowsValidationException(ushort value)
     {
         // Arrange & Act
-        var exception = Assert.Throws<TypeValidationException>(() => _ =
-          Year.From(value)
-        );
+        var action = () => Year.From(value);
 
         // Assert
-        Assert.Equal($"Could not create a Nox Year type a value {value} is greater than the maximum specified value of 3000", exception.Errors.First().ErrorMessage);
+        action.Should().Throw<TypeValidationException>().And.Errors.Should().BeEquivalentTo(new[] { new ValidationFailure("Value", $"Could not create a Nox Year type a value {value} is greater than the maximum specified value of 3000") });
     }
 
     [Fact]
@@ -53,7 +51,7 @@ public class YearTests
         var year2 = Year.From(1900);
 
         // Assert
-        Assert.Equal(year1, year2);
+        year1.Should().Be(year2);
     }
 
     [Fact]
@@ -65,7 +63,7 @@ public class YearTests
         var year2 = Year.From(2002);
 
         // Assert
-        Assert.NotEqual(year1, year2);
+        year1.Should().NotBe(year2);
     }
 
 
@@ -77,37 +75,46 @@ public class YearTests
         var year2 = Year.From(1990);
 
         // Assert
-        Assert.Equal("1900", year.ToString());
-        Assert.Equal("1990", year2.ToString());
+        year.ToString().Should().Be("1900");
+        year2.ToString().Should().Be("1990");
     }
 
     [Fact]
     public void Year_Constructor_SpecifyingAllowFutureOnly_WithPassYearInput_ThrowsException()
     {
+        // Arrange
         var yearValue = (ushort)2020;
 
-        Assert.Throws<TypeValidationException>(() => _ =
-            Year.From(yearValue, new YearTypeOptions { AllowFutureOnly = true })
-        );
+        // Act 
+        var action = () => Year.From(yearValue, new YearTypeOptions { AllowFutureOnly = true });
+
+        // Assert 
+        action.Should().Throw<TypeValidationException>();
     }
 
     [Fact]
     public void Year_Constructor_SpecifyingMaxValue_WithGreaterValueInput_ThrowsException()
     {
+        // Arrange
         var yearValue = (ushort)1900;
 
-        Assert.Throws<TypeValidationException>(() => _ =
-            Year.From(yearValue, new YearTypeOptions { MaxValue = 10 })
-        );
+        // Act
+        var action = () => Year.From(yearValue, new YearTypeOptions { MaxValue = 10 });
+
+        // Assert 
+        action.Should().Throw<TypeValidationException>();
     }
 
     [Fact]
     public void Year_Constructor_SpecifyingMinValue_WithLesserValueInput_ThrowsException()
     {
+        // Arrange
         var yearValue = (ushort)1;
 
-        Assert.Throws<TypeValidationException>(() => _ =
-            Year.From(yearValue, new YearTypeOptions { MinValue = 50 })
-        );
+        // Act
+        var action = () => Year.From(yearValue, new YearTypeOptions { MinValue = 50 });
+
+        // Assert 
+        action.Should().Throw<TypeValidationException>();
     }
 }
