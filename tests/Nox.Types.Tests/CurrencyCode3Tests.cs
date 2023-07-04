@@ -1,7 +1,7 @@
 ﻿using Nox.Types.Tests.Types;
 
 namespace Nox.Types.Tests;
-public class NoxCurrencyCode3Tests
+public class CurrencyCode3Tests
 {
     [Theory]
     [ClassData(typeof(CurrencyCodeData))]
