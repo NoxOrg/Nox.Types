@@ -84,6 +84,11 @@ public sealed class Country
     public Length LongestHikingTrailInMeters { get; set; } = null!;
 
     /// <summary>
+    /// Gets or sets the StreetAddress.
+    /// </summary>
+    public StreetAddress StreetAddress { get; set; } = null!;
+
+    /// <summary>
     /// Gets or sets hashed value
     /// </summary>
     public HashedText HashedText { get; set; } = null!;
