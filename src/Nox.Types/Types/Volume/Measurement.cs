@@ -41,7 +41,7 @@ public abstract class Measurement<TValueObject, TUnitType> : ValueObject<Quantit
     /// <summary>
     /// Validates a <see cref="TValueObject"/> object.
     /// </summary>
-    /// <returns>true if the <see cref="Length2"/> value is valid.</returns>
+    /// <returns>true if the <see cref="TValueObject"/> value is valid.</returns>
     internal override ValidationResult Validate()
     {
         var result = Value.Validate();
@@ -58,10 +58,10 @@ public abstract class Measurement<TValueObject, TUnitType> : ValueObject<Quantit
         => $"{Value.ToString($"0.{new string('#', QuantityValueDecimalPrecision)}", CultureInfo.InvariantCulture)} {Unit}";
 
     /// <summary>
-    /// Returns a string representation of the <see cref="Length"/> object using the specified <see cref="IFormatProvider"/>.
+    /// Returns a string representation of the <see cref="TValueObject"/> object using the specified <see cref="IFormatProvider"/>.
     /// </summary>
-    /// <param name="formatProvider">The format provider for the length value.</param>
-    /// <returns>A string representation of the <see cref="Length"/> object with the value formatted using the specified <see cref="IFormatProvider"/>.</returns>
+    /// <param name="formatProvider">The format provider for the measurement value.</param>
+    /// <returns>A string representation of the <see cref="TValueObject"/> object with the value formatted using the specified <see cref="IFormatProvider"/>.</returns>
     public string ToString(IFormatProvider formatProvider)
         => $"{Value.ToString(formatProvider)} {Unit}";
 
