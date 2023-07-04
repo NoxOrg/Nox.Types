@@ -8,7 +8,31 @@ namespace Nox.Types;
 /// </summary>
 public sealed class Percentage : ValueObject<float, Percentage>
 {
-    private readonly PercentageTypeOptions _percentageTypeOptions = new();
+    private PercentageTypeOptions _percentageTypeOptions = new();
+
+    /// <summary>
+    /// Creates a new instance of <see cref="Percentage"/> class with the specified values.
+    /// </summary>
+    /// <param name="value">The value to create the <see cref="Percentage"/> with</param>
+    /// <returns></returns>
+    /// <exception cref="TypeValidationException"></exception>
+    public static Percentage From(float value, PercentageTypeOptions options)
+    {
+        var newObject = new Percentage
+        {
+            Value = value,
+            _percentageTypeOptions = options
+        };
+
+        var validationResult = newObject.Validate();
+
+        if (!validationResult.IsValid)
+        {
+            throw new TypeValidationException(validationResult.Errors);
+        }
+
+        return newObject;
+    }
 
     /// <summary>
     /// Validates a <see cref="Percentage"/> object.
@@ -18,12 +42,12 @@ public sealed class Percentage : ValueObject<float, Percentage>
     {
         var result = base.Validate();
 
-        if (Value < _percentageTypeOptions.MinValue)
+        if (Value < _percentageTypeOptions.MinValue && !float.IsNaN(Value) && !float.IsInfinity(Value))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Percentage type as value {Value} is less than than the minimum specified value of {_percentageTypeOptions.MinValue}"));
         }
 
-        if (Value > _percentageTypeOptions.MaxValue)
+        if (Value > _percentageTypeOptions.MaxValue && !float.IsNaN(Value) && !float.IsInfinity(Value))
         {
             result.Errors.Add(new ValidationFailure(nameof(Value), $"Could not create a Nox Percentage type a value {Value} is greater than than the maximum specified value of {_percentageTypeOptions.MaxValue}"));
         }

@@ -1,4 +1,7 @@
-﻿namespace Nox.Types.Tests.Types;
+﻿using FluentAssertions;
+using System.Globalization;
+
+namespace Nox.Types.Tests.Types;
 
 public class PercentageTests
 {
@@ -9,7 +12,7 @@ public class PercentageTests
 
         var number = Percentage.From(testPercentage);
 
-        Assert.Equal(testPercentage, number.Value);
+        number.Value.Should().Be(testPercentage);
     }
 
     [Fact]
@@ -17,9 +20,11 @@ public class PercentageTests
     {
         var testPercentage = 3.2f;
 
-        Assert.Throws<TypeValidationException>(() => _ =
-            Percentage.From(testPercentage)
-        );
+        var action = () => Percentage.From(testPercentage);
+
+        action.Should().Throw<TypeValidationException>()
+            .And.Errors.Should().BeEquivalentTo(new[] { new ValidationFailure("Value", "Could not create a Nox Percentage type a value 3.2 is greater than than the maximum specified value of 1") });
+
     }
 
     [Fact]
@@ -27,9 +32,10 @@ public class PercentageTests
     {
         var testPercentage = -0.3f;
 
-        Assert.Throws<TypeValidationException>(() => _ =
-            Percentage.From(testPercentage)
-        );
+        var action = () => Percentage.From(testPercentage);
+
+        action.Should().Throw<TypeValidationException>()
+            .And.Errors.Should().BeEquivalentTo(new[] { new ValidationFailure("Value", "Could not create a Nox Percentage type as value -0.3 is less than than the minimum specified value of 0") });
     }
 
     [Fact]
@@ -39,7 +45,7 @@ public class PercentageTests
 
         var percentage = Percentage.From(testPercentage);
 
-        Assert.Equal(0.4f, percentage.Value);
+        percentage.Value.Should().Be(0.4f);
     }
 
     [Fact]
@@ -57,5 +63,33 @@ public class PercentageTests
         }
 
         TestUtility.RunInInvariantCulture(Test);
+    }
+
+    [Theory]
+    [InlineData("en-US")]
+    [InlineData("pt-PT")]
+    public void Percentage_ValueInFloat_ToString_IsCultureIndepdendent(string culture)
+    {
+        void Test()
+        {
+            var percentage = Percentage.From(0.25f);
+            percentage.ToString().Should().Be("25%");
+        }
+
+        TestUtility.RunInCulture(Test, culture);
+    }
+
+    [Theory]
+    [InlineData("en-US", "0.43%")]
+    [InlineData("pt-PT", "0,43%")]
+    public void Percentage_ValueInFloat_ToString_IsCultureDependent(string culture, string expected)
+    {
+        void Test()
+        {
+            var percentage = Percentage.From(0.43f);
+            percentage.ToString(new CultureInfo(culture)).Should().Be(expected);
+        }
+
+        TestUtility.RunInCulture(Test, culture);
     }
 }
