@@ -39,7 +39,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             IPAddress = IpAddress.From("102.129.143.255"),
             DateTimeRange = DateTimeRange.From(new DateTime(2023, 01, 01), new DateTime(2023, 02, 01)),
             LongestHikingTrailInMeters = Length.From(390_000),
-            StreetAddress = CreateStreetAddress()
+            StreetAddress = CreateStreetAddress(),
             HashedText = HashedText.From("Test123."),
         };
         DbContext.Countries.Add(newItem);
@@ -75,7 +75,7 @@ public class NoxTypesEntityFrameworkTests : TestWithSqlite
             CountryCode3 = CountryCode3.From("CHE"),
             IPAddress = IpAddress.From("102.129.143.255"),
             LongestHikingTrailInMeters = Length.From(390_000),
-            StreetAddress = streetAddress
+            StreetAddress = streetAddress,
             HashedText = HashedText.From(("Test123.","salt"))
         };
         DbContext.Countries.Add(newItem);
