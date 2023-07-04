@@ -1,5 +1,6 @@
 ﻿// ReSharper disable once CheckNamespace
 using System.Security.Cryptography;
+using FluentAssertions;
 
 namespace Nox.Types.Tests.Types;
 
@@ -12,9 +13,8 @@ public class HashedTextTests
         string text = "Text to hash";
         var hashedText = HashedText.From(text);
 
-        Assert.NotNull(hashedText);
-        Assert.NotNull(hashedText.Salt);
-        Assert.NotEqual(text, hashedText.HashText);
+        hashedText.Should().NotBeNull();
+        hashedText.Value.Salt.Should().NotBeNull().And.NotBe(text);
     }
 
 
@@ -28,7 +28,7 @@ public class HashedTextTests
 
         var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = 0 });
 
-        Assert.Equal(textHashedExpected, hashedText.HashText);
+        hashedText.Value.HashText.Should().Be(textHashedExpected);
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public class HashedTextTests
         var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = 0 });
         var expectedHashedText = HashedText.From((textHashedExpected, ""));
 
-        Assert.True(hashedText.Equals(expectedHashedText));
+        hashedText.Equals(expectedHashedText).Should().BeTrue();
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public class HashedTextTests
         var hashedText = HashedText.From(text, new HashedTextTypeOptions() { HashingAlgorithm = HashingAlgorithm.SHA512, Salt = 0 });
         var hashedTextNoSalting = HashedText.From(text);
 
-        Assert.False(hashedText.Equals(hashedTextNoSalting));
+        hashedText.Equals(hashedTextNoSalting).Should().BeFalse();
     }
 
     [Fact]
@@ -63,28 +63,17 @@ public class HashedTextTests
         var hashedText1 = HashedText.From(text1);
         var hashedText = HashedText.From(text);
 
-        Assert.False(hashedText.Equals(hashedText1));
-    }
-
-    [Fact]
-    public void HashedText_FromHashedValue_Delimiter()
-    {
-        string text = "Text to hash";
-        string salt = "Salt";
-        var hashedText = HashedText.From((text, salt));
-
-        Assert.Equal(text, hashedText.HashText);
-        Assert.Equal(salt, hashedText.Salt);
+        hashedText.Equals(hashedText1).Should().BeFalse();
     }
 
     [Fact]
     public void HashedText_FromHashedValue_Delimiter_NoSalt()
     {
         string text = "Text to hash";
-        string salt = string.Empty;
+        string salt = "Salt";
         var hashedText = HashedText.From((text, salt));
 
-        Assert.Equal(text, hashedText.HashText);
-        Assert.Equal(salt, hashedText.Salt);
+        hashedText.Value.HashText.Should().Be(text);
+        hashedText.Value.Salt.Should().Be(salt);
     }
 }

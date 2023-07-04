@@ -41,7 +41,7 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
     public static HashedText From(string value)
         => From(value, new HashedTextTypeOptions());
 
-    public override string ToString() => $"{Value.HashText}||{Value.Salt}";
+    public override string ToString() => $"{Value.HashText}";
 
     /// <summary>
     /// Creates hashed value of plainText using HashedTextTypeOptions
@@ -100,7 +100,7 @@ public sealed class HashedText : ValueObject<(string HashText, string Salt), Has
     /// </summary>
     /// <param name="target"></param>
     /// <param name="source"></param>
-    public static void AppendBytes(ref byte[] target, byte[] source)
+    private static void AppendBytes(ref byte[] target, byte[] source)
     {
         int targetLength = target.Length;
         int sourceLength = source.Length;
