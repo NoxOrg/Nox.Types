@@ -87,4 +87,5 @@ public sealed class Country
     /// Gets or sets the StreetAddress.
     /// </summary>
     public StreetAddress StreetAddress { get; set; } = null!;
+    public DateTime? CreateDate { get; set; } = null!;
 }

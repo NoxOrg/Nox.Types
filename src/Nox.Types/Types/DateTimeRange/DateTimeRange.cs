@@ -49,7 +49,10 @@ public class DateTimeRange : ValueObject<(DateTime Start, DateTime End), DateTim
     /// <returns></returns>
     /// <exception cref="ValidationException"></exception>
     public static DateTimeRange From(DateTime start, TimeSpan duration)
-        => From((start, start.Add(duration)));
+    {
+        var end = DateTime.From(start.Value.Add(duration));
+        return From((start, end));
+    }
 
     internal override ValidationResult Validate()
     {
