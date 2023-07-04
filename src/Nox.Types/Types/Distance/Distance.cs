@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Nox.Common;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Nox.Types;
 
@@ -112,7 +114,16 @@ public class Distance : ValueObject<QuantityValue, Distance>
         yield return new KeyValuePair<string, object>(nameof(Value), ToKilometers());
     }
 
-    public override string ToString() => $"{Value:G} {Unit.ToSymbol()}";
+    public override string ToString()
+        => $"{Value.ToString($"0.{new string('#', QuantityValueDecimalPrecision)}", CultureInfo.InvariantCulture)} {Unit.ToSymbol()}";
+
+    /// <summary>
+    /// Returns a string representation of the <see cref="Length"/> object using the specified <see cref="IFormatProvider"/>.
+    /// </summary>
+    /// <param name="formatProvider">The format provider for the length value.</param>
+    /// <returns>A string representation of the <see cref="Length"/> object with the value formatted using the specified <see cref="IFormatProvider"/>.</returns>
+    public string ToString(IFormatProvider formatProvider)
+        => $"{Value.ToString(formatProvider)} {Unit.ToSymbol()}";
 
     private QuantityValue? _kilometers;
 
@@ -122,18 +133,10 @@ public class Distance : ValueObject<QuantityValue, Distance>
 
     public QuantityValue ToMiles() => (_miles ??= GetDistanceIn(DistanceTypeUnit.Mile));
 
-    private QuantityValue GetDistanceIn(DistanceTypeUnit unit)
+    private QuantityValue GetDistanceIn(DistanceTypeUnit targetUnit)
     {
-        if (Unit == unit)
-            return Round(Value);
-
-        else if (Unit == DistanceTypeUnit.Kilometer && unit == DistanceTypeUnit.Mile)
-            return Round(Value * 0.62137119102);
-
-        else if (Unit == DistanceTypeUnit.Mile && unit == DistanceTypeUnit.Kilometer)
-            return Round(Value * 1.60934400315);
-
-        throw new NotImplementedException($"No conversion defined from {Unit} to {unit}.");
+        var factor = new MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
+        return Round(Value * factor);
     }
 
     private static QuantityValue Round(QuantityValue value)

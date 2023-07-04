@@ -31,3 +31,21 @@ public string ToString(IFormatProvider formatProvider)
     return $"{Value.Latitude.ToString(formatProvider)} {Value.Longitude.ToString(formatProvider)}";
 }
 ```
+
+## Versioning
+
+We are using [SemVer](https://semver.org/) for versioning our deliverables.
+
+To manage this version we are using [GitVersion](https://github.com/GitTools/GitVersion) tool.
+
+### Using it locally
+
+You can use gitversion locally to test and setup configuration. To do that intall the dotnet tool `dotnet tool install --global GitVersion.Tool --version 5.*`
+
+run `dotnet-gitversion` to see the current variables of git version
+
+run `dotnet-gitversion /updateprojectfiles` to update csproject files
+
+## Release
+
+Just Create a release in GitHub, tag it properly, and that is all. In the future we want to automate this process.

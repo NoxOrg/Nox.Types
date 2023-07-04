@@ -13,10 +13,7 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <Copyright>Copyright (c) Andre Sharpe 2022</Copyright>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <AssemblyVersion>1.0.8.0</AssemblyVersion>
-        <FileVersion>1.0.8.0</FileVersion>
-        <PackageVersion>1.0.8</PackageVersion>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/NoxOrg/Nox</PackageProjectUrl>
         <RepositoryUrl>https://github.com/NoxOrg/Nox.Types.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
@@ -24,5 +21,12 @@
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\images\nox.png" Pack="true" PackagePath="" />
+		<InternalsVisibleTo Include="Nox.Types.Tests" />
     </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
 </Project>
