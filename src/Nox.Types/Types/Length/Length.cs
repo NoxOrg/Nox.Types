@@ -117,7 +117,7 @@ public sealed class Length : ValueObject<QuantityValue, Length>
 
     private QuantityValue GetLengthIn(LengthTypeUnit targetUnit)
     {
-        var factor = new MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
+        var factor = new Common.MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
         return Round(Value * factor);
     }
 

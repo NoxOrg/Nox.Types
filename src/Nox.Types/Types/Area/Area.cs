@@ -117,7 +117,7 @@ public class Area : ValueObject<QuantityValue, Area>
 
     private QuantityValue GetAreaIn(AreaTypeUnit targetUnit)
     {
-        var factor = new MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
+        var factor = new Common.MeasurementConversionFactor((MeasurementTypeUnit)Unit, (MeasurementTypeUnit)targetUnit).Value;
         return Round(Value * factor);
     }
 
