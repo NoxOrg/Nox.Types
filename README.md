@@ -1,3 +1,9 @@
+# Welcome
+
+:no_entry: [DEPRECATED] Active at https://github.com/NoxOrg/Nox.Generator
+
+deprecated / obsolete
+
 # Nox.Types
 
 a Domain driven type system for Nox solutions
